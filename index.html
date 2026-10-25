@@ -7,9 +7,9 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="کافه خلوت">
-    <title>کافه خلوت | پناهگاه دیجیتال ما (v1.1.3)</title>
+    <title>کافه خلوت | پناهگاه دیجیتال ما (v1.1.4)</title>
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
-    <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
+    <script src="https://unpkg.com/mqtt@4.3.7/dist/mqtt.min.js"></script>
     <style id="embedded-rooyin-fonts"></style>
     <style>
         @font-face {
@@ -234,30 +234,6 @@
             gap: 0.4rem;
         }
 
-        .asset-status-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 0.4rem;
-            background: var(--bg-espresso);
-            border: 1px solid var(--bg-wood-light);
-            border-radius: 8px;
-            padding: 0.55rem;
-            font-size: 0.73rem;
-            margin-top: 0.5rem;
-            text-align: right;
-        }
-
-        .asset-badge {
-            display: flex;
-            align-items: center;
-            gap: 0.3rem;
-            color: var(--cream-muted);
-        }
-
-        .asset-badge.ready {
-            color: var(--online-green);
-        }
-
         .top-hud {
             width: 100%;
             padding: 6px 10px;
@@ -388,23 +364,11 @@
             image-rendering: crisp-edges;
         }
 
-        #ref-cafe-img {
-            z-index: 2;
-        }
+        #ref-cafe-img { z-index: 2; }
+        #pixel-ref-canvas { z-index: 1; }
+        #cafe-dynamic-svg { z-index: 5; pointer-events: none; }
 
-        #pixel-ref-canvas {
-            z-index: 1;
-        }
-
-        #cafe-dynamic-svg {
-            z-index: 5;
-            pointer-events: none;
-        }
-
-        .interactive-hotspot {
-            pointer-events: auto;
-            cursor: pointer;
-        }
+        .interactive-hotspot { pointer-events: auto; cursor: pointer; }
 
         #floating-chat-panel {
             width: 100%;
@@ -434,13 +398,11 @@
                 padding: 10px;
                 gap: 14px;
             }
-
             #cafe-stage-wrapper {
                 flex: 1;
                 height: 100% !important;
                 padding: 0;
             }
-
             #floating-chat-panel {
                 width: 400px;
                 height: 100% !important;
@@ -448,37 +410,26 @@
                 border-radius: 14px;
                 box-shadow: 0 12px 35px rgba(0,0,0,0.85);
             }
-
-            #main-sanctuary.chat-minimized #floating-chat-panel {
-                width: 0 !important;
-                padding: 0;
-                margin: 0;
-            }
         }
 
         @keyframes lampFlicker {
             0%, 100% { opacity: 0.78; transform: scale(1); }
             50% { opacity: 1; transform: scale(1.04); }
-            75% { opacity: 0.7; transform: scale(0.98); }
         }
-
         @keyframes candleFlame {
             0%, 100% { transform: scaleY(1) rotate(-1deg); opacity: 0.95; }
             50% { transform: scaleY(1.18) rotate(2deg); opacity: 1; }
         }
-
         @keyframes steamRise {
             0% { transform: translateY(0) translateX(0); opacity: 0.8; }
             50% { transform: translateY(-14px) translateX(3px); opacity: 0.5; }
             100% { transform: translateY(-28px) translateX(-2px); opacity: 0; }
         }
-
         @keyframes noteFloat {
             0% { transform: translate(0, 0) scale(0.75); opacity: 0; }
             25% { opacity: 1; }
             100% { transform: translate(-18px, -42px) scale(1.18); opacity: 0; }
         }
-
         @keyframes svgPopReaction {
             0% { transform: translateY(10px) scale(0.4); opacity: 0; }
             18% { transform: translateY(-10px) scale(1.12); opacity: 1; }
@@ -486,18 +437,8 @@
             100% { transform: translateY(-35px) scale(0.85); opacity: 0; }
         }
 
-        .lamp-glow {
-            animation: lampFlicker 3.8s infinite ease-in-out;
-            transform-origin: center;
-            transform-box: fill-box;
-        }
-
-        .candle-flicker {
-            animation: candleFlame 1.8s infinite ease-in-out;
-            transform-origin: bottom center;
-            transform-box: fill-box;
-        }
-
+        .lamp-glow { animation: lampFlicker 3.8s infinite ease-in-out; transform-origin: center; transform-box: fill-box; }
+        .candle-flicker { animation: candleFlame 1.8s infinite ease-in-out; transform-origin: bottom center; transform-box: fill-box; }
         .steam-p1 { animation: steamRise 2.6s infinite linear; }
         .steam-p2 { animation: steamRise 2.6s infinite linear 1.3s; }
         .music-note-1 { animation: noteFloat 2.5s infinite ease-out; }
@@ -522,11 +463,7 @@
             box-shadow: 0 6px 20px rgba(0,0,0,0.8);
             white-space: nowrap;
         }
-
-        #presence-toast.show {
-            opacity: 1;
-            transform: translateX(-50%) translateY(0);
-        }
+        #presence-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
         .cafe-modal {
             position: fixed;
@@ -546,10 +483,7 @@
             flex-direction: column;
             gap: 0.65rem;
         }
-
-        .cafe-modal.open {
-            display: flex;
-        }
+        .cafe-modal.open { display: flex; }
 
         .modal-header {
             display: flex;
@@ -558,20 +492,8 @@
             border-bottom: 1px solid var(--bg-wood-light);
             padding-bottom: 0.45rem;
         }
-
-        .modal-header h3 {
-            font-size: 0.9rem;
-            color: var(--amber-bright);
-        }
-
-        .close-modal-btn {
-            background: none;
-            border: none;
-            color: var(--cream-muted);
-            font-size: 1.05rem;
-            cursor: pointer;
-            padding: 0 0.3rem;
-        }
+        .modal-header h3 { font-size: 0.9rem; color: var(--amber-bright); }
+        .close-modal-btn { background: none; border: none; color: var(--cream-muted); font-size: 1.05rem; cursor: pointer; }
 
         .now-playing-box {
             background: var(--bg-espresso);
@@ -583,27 +505,9 @@
             align-items: center;
             gap: 0.5rem;
         }
-
-        .np-info {
-            display: flex;
-            flex-direction: column;
-            gap: 0.15rem;
-            overflow: hidden;
-            text-align: right;
-        }
-
-        .np-title {
-            font-size: 0.82rem;
-            color: var(--cream-soft);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .np-sub {
-            font-size: 0.68rem;
-            color: var(--amber-glow);
-        }
+        .np-info { display: flex; flex-direction: column; gap: 0.15rem; overflow: hidden; text-align: right; }
+        .np-title { font-size: 0.82rem; color: var(--cream-soft); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .np-sub { font-size: 0.68rem; color: var(--amber-glow); }
 
         .gram-ctrl-btn {
             background: linear-gradient(135deg, #e0872b, #a85017);
@@ -616,14 +520,7 @@
             white-space: nowrap;
         }
 
-        .track-list {
-            display: flex;
-            flex-direction: column;
-            gap: 0.35rem;
-            max-height: 145px;
-            overflow-y: auto;
-        }
-
+        .track-list { display: flex; flex-direction: column; gap: 0.35rem; max-height: 145px; overflow-y: auto; }
         .track-item {
             background: rgba(58, 34, 23, 0.52);
             border: 1px solid var(--bg-wood-light);
@@ -634,66 +531,8 @@
             align-items: center;
             cursor: pointer;
             font-size: 0.76rem;
-            transition: all 0.15s;
         }
-
-        .track-item:hover {
-            border-color: var(--amber-glow);
-            background: rgba(240, 157, 56, 0.15);
-        }
-
-        .track-item.active {
-            border-color: var(--amber-bright);
-            background: rgba(240, 157, 56, 0.25);
-            color: var(--amber-bright);
-        }
-
-        .add-track-form {
-            border-top: 1px dashed var(--bg-wood-light);
-            padding-top: 0.55rem;
-            display: flex;
-            flex-direction: column;
-            gap: 0.4rem;
-            text-align: right;
-        }
-
-        .add-track-form label {
-            font-size: 0.73rem;
-            color: var(--cream-muted);
-        }
-
-        .mini-input-row {
-            display: flex;
-            gap: 0.35rem;
-        }
-
-        .mini-input {
-            flex: 1;
-            background: var(--bg-espresso);
-            border: 1px solid var(--bg-wood-light);
-            border-radius: 6px;
-            padding: 0.38rem 0.55rem;
-            color: var(--cream-soft);
-            font-size: 0.76rem;
-            outline: none;
-        }
-
-        .mini-input:focus {
-            border-color: var(--amber-glow);
-        }
-
-        .volume-row {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 0.73rem;
-            color: var(--cream-muted);
-        }
-
-        .volume-row input[type="range"] {
-            flex: 1;
-            accent-color: var(--amber-glow);
-        }
+        .track-item.active { border-color: var(--amber-bright); background: rgba(240, 157, 56, 0.25); color: var(--amber-bright); }
 
         .chat-top-bar {
             display: flex;
@@ -704,16 +543,8 @@
             border-bottom: 1px solid var(--bg-wood-light);
             flex-shrink: 0;
         }
-
-        .cafe-actions-bar {
-            display: flex;
-            gap: 0.3rem;
-            overflow-x: auto;
-            scrollbar-width: none;
-        }
-
+        .cafe-actions-bar { display: flex; gap: 0.3rem; overflow-x: auto; scrollbar-width: none; }
         .cafe-actions-bar::-webkit-scrollbar { display: none; }
-
         .act-btn {
             background: rgba(92, 56, 40, 0.5);
             border: 1px solid var(--pixel-border);
@@ -723,14 +554,7 @@
             font-size: 0.72rem;
             cursor: pointer;
             white-space: nowrap;
-            transition: all 0.15s;
         }
-
-        .act-btn:hover {
-            background: rgba(240, 157, 56, 0.25);
-            border-color: var(--amber-glow);
-        }
-
         .hide-chat-btn {
             background: rgba(255,255,255,0.06);
             border: 1px solid var(--bg-wood-light);
@@ -739,8 +563,6 @@
             padding: 0.2rem 0.5rem;
             font-size: 0.71rem;
             cursor: pointer;
-            white-space: nowrap;
-            margin-right: 0.3rem;
         }
 
         #messages-list {
@@ -752,12 +574,8 @@
             gap: 0.42rem;
             scroll-behavior: smooth;
         }
-
         #messages-list::-webkit-scrollbar { width: 5px; }
-        #messages-list::-webkit-scrollbar-thumb {
-            background: var(--bg-wood-light);
-            border-radius: 4px;
-        }
+        #messages-list::-webkit-scrollbar-thumb { background: var(--bg-wood-light); border-radius: 4px; }
 
         .msg-bubble {
             max-width: 84%;
@@ -767,86 +585,15 @@
             line-height: 1.52;
             position: relative;
             word-wrap: break-word;
-            user-select: text;
             border: 1px solid rgba(255,255,255,0.08);
-            transition: background-color 0.4s;
             text-align: right;
         }
-
-        .msg-bubble.me {
-            align-self: flex-start;
-            background-color: var(--msg-me-bg);
-            border-color: #7d4a31;
-            border-bottom-right-radius: 2px;
-        }
-
-        .msg-bubble.other {
-            align-self: flex-end;
-            background-color: var(--msg-other-bg);
-            border-color: #4d3122;
-            border-bottom-left-radius: 2px;
-        }
-
-        .msg-bubble.highlight-flash {
-            background-color: rgba(240, 157, 56, 0.45) !important;
-            border-color: var(--amber-bright) !important;
-        }
-
-        .msg-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 0.55rem;
-            margin-bottom: 0.14rem;
-        }
-
-        .msg-author {
-            font-size: 0.72rem;
-            color: var(--amber-bright);
-        }
-
-        .reply-trigger-btn {
-            background: none;
-            border: none;
-            color: var(--cream-muted);
-            font-size: 0.7rem;
-            cursor: pointer;
-            opacity: 0.85;
-            padding: 0 0.2rem;
-        }
-
-        .quoted-reply-box {
-            background: rgba(15, 8, 5, 0.55);
-            border-right: 3px solid var(--amber-glow);
-            border-radius: 4px;
-            padding: 0.2rem 0.45rem;
-            margin-bottom: 0.25rem;
-            font-size: 0.74rem;
-            cursor: pointer;
-            color: var(--cream-muted);
-            display: flex;
-            flex-direction: column;
-        }
-
-        .quoted-reply-box strong {
-            color: var(--amber-glow);
-            font-size: 0.68rem;
-        }
-
-        .quoted-reply-box span {
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            max-width: 230px;
-        }
-
-        .msg-meta {
-            font-size: 0.62rem;
-            color: rgba(246, 233, 215, 0.58);
-            text-align: left;
-            margin-top: 0.14rem;
-        }
-
+        .msg-bubble.me { align-self: flex-start; background-color: var(--msg-me-bg); border-color: #7d4a31; border-bottom-right-radius: 2px; }
+        .msg-bubble.other { align-self: flex-end; background-color: var(--msg-other-bg); border-color: #4d3122; border-bottom-left-radius: 2px; }
+        .msg-header { display: flex; justify-content: space-between; align-items: center; gap: 0.55rem; margin-bottom: 0.14rem; }
+        .msg-author { font-size: 0.72rem; color: var(--amber-bright); }
+        .reply-trigger-btn { background: none; border: none; color: var(--cream-muted); font-size: 0.7rem; cursor: pointer; }
+        .msg-meta { font-size: 0.62rem; color: rgba(246, 233, 215, 0.58); text-align: left; margin-top: 0.14rem; }
         .system-event-msg {
             align-self: center;
             background: rgba(20, 11, 7, 0.82);
@@ -858,46 +605,6 @@
             text-align: center;
         }
 
-        #reply-preview-bar {
-            display: none;
-            background: rgba(22, 13, 8, 0.95);
-            border-top: 1px solid var(--amber-glow);
-            padding: 0.28rem 0.65rem;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.74rem;
-            flex-shrink: 0;
-        }
-
-        .reply-preview-content {
-            border-right: 3px solid var(--amber-glow);
-            padding-right: 0.45rem;
-            overflow: hidden;
-            text-align: right;
-        }
-
-        .reply-preview-sender {
-            color: var(--amber-bright);
-            font-size: 0.69rem;
-        }
-
-        .reply-preview-text {
-            color: var(--cream-muted);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            max-width: 240px;
-        }
-
-        .cancel-reply-btn {
-            background: none;
-            border: none;
-            color: #ef4444;
-            font-size: 0.95rem;
-            cursor: pointer;
-            padding: 0 0.3rem;
-        }
-
         .chat-input-row {
             display: flex;
             gap: 0.38rem;
@@ -906,7 +613,6 @@
             border-top: 1px solid var(--bg-wood-light);
             flex-shrink: 0;
         }
-
         #chat-text-input {
             flex: 1;
             padding: 0.46rem 0.72rem;
@@ -918,11 +624,6 @@
             outline: none;
             text-align: right;
         }
-
-        #chat-text-input:focus {
-            border-color: var(--amber-glow);
-        }
-
         .send-msg-btn {
             background: linear-gradient(135deg, #e0872b, #a85017);
             border: 1px solid var(--amber-bright);
@@ -932,33 +633,6 @@
             font-size: 0.85rem;
             cursor: pointer;
         }
-
-        #restore-chat-btn {
-            position: fixed;
-            bottom: 14px;
-            right: 14px;
-            z-index: 60;
-            background: linear-gradient(135deg, #3d251a, #261710);
-            border: 2px solid var(--amber-glow);
-            color: var(--cream-soft);
-            padding: 0.55rem 1.05rem;
-            border-radius: 30px;
-            font-size: 0.84rem;
-            cursor: pointer;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.85);
-            display: none;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .unread-badge {
-            background-color: #ef4444;
-            color: white;
-            font-size: 0.72rem;
-            padding: 0.1rem 0.45rem;
-            border-radius: 12px;
-            display: none;
-        }
     </style>
 </head>
 <body>
@@ -966,7 +640,7 @@
     <div id="login-overlay">
         <div class="login-card">
             <div class="cafe-sign-badge">☕ کافه خلوت</div>
-            <p class="login-subtitle">پناهگاه دنج دیجیتال ما (نسخه ۱.۱.۳)</p>
+            <p class="login-subtitle">پناهگاه دنج دیجیتال ما (نسخه ۱.۱.۴)</p>
 
             <div class="form-group">
                 <label>نام شما در کافه:</label>
@@ -983,14 +657,13 @@
                 <div class="char-selector">
                     <div class="char-option selected" id="pick-char-male" onclick="selectCharacter('male')">
                         <div class="char-preview-wrap">
-                            <img id="login-img-male" src="Pixel Art Winter Character Sprite.png" alt="کاراکتر آقا" onerror="this.style.display='none';">
+                            <img id="login-img-male" src="Pixel Art Winter Character Sprite.png" alt="آقا" onerror="this.style.display='none';">
                         </div>
                         <span>کاراکتر آقا</span>
                     </div>
-
                     <div class="char-option" id="pick-char-female" onclick="selectCharacter('female')">
                         <div class="char-preview-wrap">
-                            <img id="login-img-female" src="Floral Hijab Pixel Art Character.png" alt="کاراکتر خانم" onerror="this.style.display='none';">
+                            <img id="login-img-female" src="Floral Hijab Pixel Art Character.png" alt="خانم" onerror="this.style.display='none';">
                         </div>
                         <span>کاراکتر خانم</span>
                     </div>
@@ -999,7 +672,7 @@
 
             <button class="enter-btn" onclick="enterCafe()">ورود به کافه خلوت 🔔</button>
             <button type="button" class="mobile-pack-trigger" onclick="toggleMobileAssetsModal()">
-                <span>📱 نصب دائمی فونت رویین و گرافیک کافه روی موبایل</span>
+                <span>📱 نصب دائمی فونت رویین و گرافیک کافه</span>
             </button>
         </div>
     </div>
@@ -1008,30 +681,16 @@
         <div class="hud-pill">
             <div id="peer-dot" class="status-dot"></div>
             <div class="status-texts">
-                <div class="room-title" id="hud-room-title" onclick="copyRoomCode()" title="کلیک برای کپی کد میز">میز: ---</div>
+                <div class="room-title" id="hud-room-title" onclick="copyRoomCode()">میز: ---</div>
                 <div class="peer-status-text" id="hud-peer-status">در حال اتصال به کافه...</div>
             </div>
         </div>
 
         <div class="hud-controls">
-            <button class="hud-btn" id="gramophone-hud-btn" onclick="toggleGramophoneModal()" title="گرامافون و موزیک مشترک کافه">
-                <span id="gram-hud-icon">📻</span>
-                <span>گرامافون</span>
-            </button>
-            <button class="hud-btn" id="weather-btn" onclick="cycleWeather(true)" title="تغییر آب‌وهوای بیرون پنجره">
-                <span id="weather-icon">🌧️</span>
-                <span id="weather-label">بارانی</span>
-            </button>
-            <button class="hud-btn" id="ambience-btn" onclick="toggleAmbience()" title="صدای محیط آب‌وهوا">
-                <span id="ambience-icon">🔇</span>
-                <span>محیط</span>
-            </button>
-            <button class="hud-btn" onclick="toggleMobileAssetsModal()" title="فونت رویین و گرافیک موبایل">
-                <span>📱 فونت/موبایل</span>
-            </button>
-            <button class="hud-btn" onclick="toggleHistoryModal()" title="مدیریت آرشیو چت‌ها">
-                <span>💾 آرشیو</span>
-            </button>
+            <button class="hud-btn" onclick="toggleGramophoneModal()">📻 گرامافون</button>
+            <button class="hud-btn" id="weather-btn" onclick="cycleWeather(true)">🌧️ بارانی</button>
+            <button class="hud-btn" id="ambience-btn" onclick="toggleAmbience()">🔇 محیط</button>
+            <button class="hud-btn" onclick="toggleMobileAssetsModal()">📱 فونت/موبایل</button>
         </div>
     </div>
 
@@ -1039,71 +698,29 @@
 
     <div class="cafe-modal" id="mobile-assets-modal">
         <div class="modal-header">
-            <h3>📱 پک فونت رویین و گرافیک موبایل (v1.1.3)</h3>
+            <h3>📱 پک فونت رویین و گرافیک کافه</h3>
             <button class="close-modal-btn" onclick="toggleMobileAssetsModal()">✕</button>
         </div>
-
-        <p style="font-size: 0.74rem; color: var(--cream-muted); line-height: 1.55; text-align: right;">
-            اگر عکس کافه یا فونت رویین لود نشد، از اینجا فایلهای پروژه را انتخاب کنید:
-        </p>
-
-        <div class="asset-status-grid">
-            <div class="asset-badge" id="stat-cafe-img">⚪ تصویر کافه</div>
-            <div class="asset-badge" id="stat-font-bold">⚪ رویین بولد</div>
-            <div class="asset-badge" id="stat-font-reg">⚪ رویین رگولار</div>
-            <div class="asset-badge" id="stat-char-imgs">⚪ اسپرایت کاراکترها</div>
-        </div>
-
-        <div style="display:flex; flex-direction:column; gap:0.45rem;">
-            <label class="gram-ctrl-btn" style="text-align:center; cursor:pointer; padding:0.5rem;">
-                📂 انتخاب فایل‌های پروژه (عکس کافه + فونت رویین)
-                <input type="file" multiple accept=".png,.jpg,.jpeg,.ttf,.woff,.woff2" style="display:none;" onchange="handleImportProjectAssets(event)">
-            </label>
-        </div>
+        <p style="font-size: 0.74rem; color: var(--cream-muted);">اگر عکس کافه یا فونت لود نشد، از اینجا فایلهای پروژه را انتخاب کنید:</p>
+        <label class="gram-ctrl-btn" style="text-align:center; cursor:pointer; padding:0.5rem;">
+            📂 انتخاب فایل‌های پروژه (عکس کافه + فونت رویین)
+            <input type="file" multiple accept=".png,.jpg,.jpeg,.ttf,.woff,.woff2" style="display:none;" onchange="handleImportProjectAssets(event)">
+        </label>
     </div>
 
     <div class="cafe-modal" id="gramophone-modal">
         <div class="modal-header">
-            <h3>📻 گرامافون مشترک کافه خلوت</h3>
+            <h3>📻 گرامافون مشترک کافه</h3>
             <button class="close-modal-btn" onclick="toggleGramophoneModal()">✕</button>
         </div>
-
         <div class="now-playing-box">
             <div class="np-info">
                 <div class="np-title" id="np-track-title">۱. باران شبانه کافه (Lofi)</div>
-                <div class="np-sub" id="np-sync-status">پخش همزمان دو نفره</div>
+                <div class="np-sub">پخش همزمان دو نفره</div>
             </div>
-            <div class="np-controls">
-                <button class="gram-ctrl-btn" id="gram-play-btn" onclick="toggleGramophonePlayback(true)">▶ پخش</button>
-            </div>
+            <button class="gram-ctrl-btn" id="gram-play-btn" onclick="toggleGramophonePlayback(true)">▶ پخش</button>
         </div>
-
-        <div class="volume-row">
-            <span>🔊 صدا:</span>
-            <input type="range" id="gram-volume" min="0" max="100" value="75" oninput="updateGramophoneVolume(this.value)">
-        </div>
-
         <div class="track-list" id="gram-track-list"></div>
-
-        <form class="add-track-form" onsubmit="handleAddCustomTrackUrl(event)">
-            <label>➕ افزودن لینک مستقیم MP3:</label>
-            <div class="mini-input-row">
-                <input type="text" id="custom-track-name" class="mini-input" placeholder="نام آهنگ" required>
-                <input type="url" id="custom-track-url" class="mini-input" placeholder="لینک مستقیم MP3" required>
-            </div>
-            <button type="submit" class="gram-ctrl-btn">🔗 افزودن آهنگ</button>
-        </form>
-    </div>
-
-    <div class="cafe-modal" id="history-modal">
-        <div class="modal-header">
-            <h3>💾 آرشیو دائمی گفتگوهای این میز</h3>
-            <button class="close-modal-btn" onclick="toggleHistoryModal()">✕</button>
-        </div>
-        <div id="archive-stats" style="font-size: 0.8rem; color: var(--amber-bright); text-align: right;"></div>
-        <div class="mini-input-row">
-            <button type="button" class="gram-ctrl-btn" style="flex:1;" onclick="exportChatHistory()">📥 دانلود چت‌ها (JSON)</button>
-        </div>
     </div>
 
     <audio id="external-audio-player" preload="auto"></audio>
@@ -1121,69 +738,21 @@
                         </clipPath>
                         <radialGradient id="warmHalo" cx="50%" cy="50%" r="50%">
                             <stop offset="0%" stop-color="#ffd584" stop-opacity="0.65"/>
-                            <stop offset="50%" stop-color="#f09d38" stop-opacity="0.24"/>
                             <stop offset="100%" stop-color="#f09d38" stop-opacity="0"/>
                         </radialGradient>
-                        <radialGradient id="candleHalo" cx="50%" cy="50%" r="50%">
-                            <stop offset="0%" stop-color="#ffea9f" stop-opacity="0.8"/>
-                            <stop offset="45%" stop-color="#ff9d2e" stop-opacity="0.32"/>
-                            <stop offset="100%" stop-color="#ff9d2e" stop-opacity="0"/>
-                        </radialGradient>
                     </defs>
-
                     <g clip-path="url(#refWindowClip)" class="interactive-hotspot" onclick="cycleWeather(true)">
                         <polygon id="window-atmosphere-tint" points="538,162 848,378 848,668 538,445" fill="#131c2e" opacity="0.18"/>
-                        <g id="window-weather-particles">
-                            <rect class="w-drop" x="575" y="200" width="3.5" height="22" rx="1.5" fill="#93c5fd" opacity="0.78">
-                                <animate attributeName="y" values="180;560" dur="0.9s" repeatCount="indefinite"/>
-                            </rect>
-                            <rect class="w-drop" x="625" y="240" width="3.5" height="22" rx="1.5" fill="#93c5fd" opacity="0.75">
-                                <animate attributeName="y" values="200;580" dur="1.1s" repeatCount="indefinite"/>
-                            </rect>
-                            <rect class="w-drop" x="670" y="210" width="3.5" height="22" rx="1.5" fill="#93c5fd" opacity="0.82">
-                                <animate attributeName="y" values="220;590" dur="0.82s" repeatCount="indefinite"/>
-                            </rect>
-                            <rect class="w-drop" x="715" y="280" width="3.5" height="22" rx="1.5" fill="#93c5fd" opacity="0.7">
-                                <animate attributeName="y" values="250;600" dur="1.02s" repeatCount="indefinite"/>
-                            </rect>
-                        </g>
                     </g>
-
-                    <g>
-                        <circle class="lamp-glow" cx="163" cy="340" r="65" fill="url(#warmHalo)"/>
-                        <circle class="lamp-glow" cx="308" cy="262" r="72" fill="url(#warmHalo)"/>
-                        <circle class="lamp-glow" cx="642" cy="312" r="85" fill="url(#warmHalo)"/>
-                        <circle class="lamp-glow" cx="938" cy="436" r="55" fill="url(#warmHalo)"/>
-                    </g>
-
-                    <g>
-                        <circle class="lamp-glow" cx="611" cy="554" r="38" fill="url(#candleHalo)"/>
-                        <ellipse class="candle-flicker" cx="611" cy="542" rx="4" ry="7" fill="#fff3b0"/>
-                        <circle class="lamp-glow" cx="308" cy="466" r="32" fill="url(#candleHalo)"/>
-                        <ellipse class="candle-flicker" cx="308" cy="454" rx="3.5" ry="6.5" fill="#fff3b0"/>
-                    </g>
-
-                    <g>
-                        <rect class="steam-p1" x="576" y="525" width="6" height="20" rx="3" fill="#f6e9d7" opacity="0.7"/>
-                        <rect class="steam-p2" x="654" y="562" width="6" height="20" rx="3" fill="#f6e9d7" opacity="0.7"/>
-                    </g>
-
-                    <g id="svg-gramophone-active" style="display:none;" transform="translate(870, 610)">
-                        <circle cx="50" cy="50" r="42" fill="#111" stroke="#333" stroke-width="4"/>
-                        <circle cx="50" cy="50" r="14" fill="#d99b36"/>
-                        <g style="animation: vinylSpin 1.8s infinite linear; transform-origin: 50px 50px;">
-                            <path d="M 20 30 Q 50 15 80 30" stroke="#3a3a3a" stroke-width="2" fill="none"/>
-                            <path d="M 15 50 Q 50 35 85 50" stroke="#3a3a3a" stroke-width="2" fill="none"/>
-                        </g>
-                        <text class="music-note-1" x="35" y="0" fill="#ffd07b" font-size="28">♪</text>
-                        <text class="music-note-2" x="65" y="-12" fill="#ffd07b" font-size="28">♫</text>
-                    </g>
+                    <circle class="lamp-glow" cx="163" cy="340" r="65" fill="url(#warmHalo)"/>
+                    <circle class="lamp-glow" cx="642" cy="312" r="85" fill="url(#warmHalo)"/>
+                    <rect class="steam-p1" x="576" y="525" width="6" height="20" rx="3" fill="#f6e9d7" opacity="0.7"/>
 
                     <g transform="translate(500, 410)">
-                        <text id="svg-name-male" x="-50" y="-10" fill="#f6e9d7" font-size="16" font-family="var(--font-bold)" text-anchor="middle" filter="drop-shadow(0px 2px 4px rgba(0,0,0,0.9))">آقا</text>
+                        <text id="svg-name-male" x="-50" y="-10" fill="#f6e9d7" font-size="16" font-family="var(--font-bold)" text-anchor="middle">آقا</text>
                     </g>
                     <g transform="translate(680, 450)">
-                        <text id="svg-name-female" x="50" y="-10" fill="#ffd07b" font-size="16" font-family="var(--font-bold)" text-anchor="middle" filter="drop-shadow(0px 2px 4px rgba(0,0,0,0.9))">خانم</text>
+                        <text id="svg-name-female" x="50" y="-10" fill="#ffd07b" font-size="16" font-family="var(--font-bold)" text-anchor="middle">خانم</text>
                     </g>
                 </svg>
             </div>
@@ -1192,236 +761,48 @@
         <div id="floating-chat-panel">
             <div class="chat-top-bar">
                 <div class="cafe-actions-bar">
-                    <button class="act-btn" onclick="sendCafeAction('☕ یک جرعه قهوه نوشید', '☕')">☕ نوشیدن قهوه</button>
+                    <button class="act-btn" onclick="sendCafeAction('☕ قهوه نوشید', '☕')">☕ قهوه</button>
                     <button class="act-btn" onclick="sendCafeAction('❤️ قلب فرستاد', '❤️')">❤️ قلب</button>
                     <button class="act-btn" onclick="sendCafeAction('👋 دست تکان داد', '👋')">👋 سلام</button>
-                    <button class="act-btn" onclick="sendCafeAction('✨ لبخند گرم زد', '✨')">✨ لبخند</button>
-                    <button class="act-btn" onclick="sendCafeAction('🌧️ به پنجره کافه خیره شد', '🌧️')">🌧️ تماشای پنجره</button>
-                    <button class="act-btn" onclick="toggleGramophoneModal()">📻 گرامافون</button>
+                    <button class="act-btn" onclick="sendCafeAction('✨ لبخند زد', '✨')">✨ لبخند</button>
                 </div>
                 <button class="hide-chat-btn" onclick="toggleChatPanel(true)">بستن ⬇</button>
             </div>
 
             <div id="messages-list"></div>
 
-            <div id="reply-preview-bar">
-                <div class="reply-preview-content">
-                    <div class="reply-preview-sender" id="reply-to-sender">پاسخ به:</div>
-                    <div class="reply-preview-text" id="reply-to-text">...</div>
-                </div>
-                <button class="cancel-reply-btn" onclick="cancelReply()">✕</button>
-            </div>
-
             <form class="chat-input-row" onsubmit="handleSendMessage(event)">
-                <input type="text" id="chat-text-input" placeholder="اینجا بنویس... (برای ریپلای روی پیام‌ها بزن)" autocomplete="off">
+                <input type="text" id="chat-text-input" placeholder="پیام..." autocomplete="off">
                 <button type="submit" class="send-msg-btn">ارسال</button>
             </form>
         </div>
     </div>
 
-    <button id="restore-chat-btn" onclick="toggleChatPanel(false)">
-        <span>💬 گفتگو</span>
-        <span class="unread-badge" id="unread-badge">0</span>
-    </button>
-
     <script>
         let cachedAssets = { cafeBg: null, fontBold: null, fontReg: null, charMale: null, charFemale: null };
-        let dbInstance = null;
         let chatHistory = [];
-        let currentReply = null;
-        let isChatHidden = false;
-        let unreadCount = 0;
         let roomCode = '';
         let roomTopic = '';
         let myName = '';
         let myChar = 'male';
         let mqttClient = null;
-        let myClientId = localStorage.getItem('khalvat_client_id_v2');
-        if (!myClientId) {
-            myClientId = 'khalvat_' + Math.random().toString(36).substring(2, 10);
-            localStorage.setItem('khalvat_client_id_v2', myClientId);
-        }
-
+        let myClientId = 'khalvat_' + Math.random().toString(36).substring(2, 10);
         let peerState = { online: false, name: '', char: 'female', lastSeen: 0 };
-        let heartbeatTimer = null;
-        let watchdogTimer = null;
-
-        const WEATHER_MODES = [
-            { id: 'rain', label: 'بارانی', icon: '🌧️', tint: '#0f172a', tintOp: 0.22, dropColor: '#93c5fd', dropW: 3.5, dropH: 22 },
-            { id: 'autumn', label: 'پاییزی', icon: '🍂', tint: '#451a03', tintOp: 0.24, dropColor: '#fb923c', dropW: 9, dropH: 7 },
-            { id: 'snow', label: 'برفی', icon: '❄️', tint: '#1e293b', tintOp: 0.26, dropColor: '#ffffff', dropW: 7, dropH: 7 }
-        ];
         let weatherIdx = 0;
-
-        let audioCtx = null;
-        let isAmbiencePlaying = false;
-        let activeSoundSource = null;
-        let activeEffectInterval = null;
-
-        let gramophonePlaylist = [
-            {
-                id: 'lofi_rainy_night',
-                title: '۱. باران شبانه کافه (Lofi Rhodes)',
-                type: 'synth',
-                tempo: 76,
-                chords: [[261.63, 329.63, 392.00, 493.88], [220.00, 261.63, 329.63, 392.00]],
-                melody: [523.25, 659.25, 587.33, 493.88, 523.25, 392.00]
-            },
-            {
-                id: 'lofi_espresso_breeze',
-                title: '۲. نسیم گرم اسپرسو (Cozy Jazz)',
-                type: 'synth',
-                tempo: 84,
-                chords: [[293.66, 349.23, 440.00, 523.25], [196.00, 246.94, 293.66, 349.23]],
-                melody: [587.33, 523.25, 440.00, 493.88]
-            }
+        const WEATHER_MODES = [
+            { id: 'rain', label: 'بارانی', icon: '🌧️' },
+            { id: 'autumn', label: 'پاییزی', icon: '🍂' },
+            { id: 'snow', label: 'برفی', icon: '❄️' }
         ];
 
-        let gramState = { isPlaying: false, currentTrackIdx: 0, volume: 0.75, synthTimer: null };
-
-        window.addEventListener('DOMContentLoaded', async () => {
-            renderHighDensityFallbackCanvas();
-            const savedProfile = JSON.parse(localStorage.getItem('khalvat_profile_v1') || '{}');
-            if (savedProfile.name) document.getElementById('login-name').value = savedProfile.name;
-            if (savedProfile.room) document.getElementById('login-room').value = savedProfile.room;
-            if (savedProfile.char) selectCharacter(savedProfile.char);
-
-            renderGramophonePlaylist();
-            dbInstance = await openCafeIndexedDB();
-            await initializeMobileAssetsAndFonts();
-        });
-
-        function renderHighDensityFallbackCanvas() {
+        window.addEventListener('DOMContentLoaded', () => {
             const canvas = document.getElementById('pixel-ref-canvas');
-            if (!canvas) return;
-            const ctx = canvas.getContext('2d');
-            ctx.imageSmoothingEnabled = false;
-            ctx.fillStyle = '#16111c';
-            ctx.fillRect(0, 0, 256, 256);
-        }
-
-        async function initializeMobileAssetsAndFonts() {
-            if (dbInstance) {
-                const storedList = await new Promise((resolve) => {
-                    try {
-                        const tx = dbInstance.transaction('cafe_assets', 'readonly');
-                        const req = tx.objectStore('cafe_assets').getAll();
-                        req.onsuccess = () => resolve(req.result || []);
-                        req.onerror = () => resolve([]);
-                    } catch (e) { resolve([]); }
-                });
-                storedList.forEach(item => { if (item && item.id && item.dataUrl) cachedAssets[item.id] = item.dataUrl; });
+            if (canvas) {
+                const ctx = canvas.getContext('2d');
+                ctx.fillStyle = '#16111c';
+                ctx.fillRect(0, 0, 256, 256);
             }
-            await tryAutoFetchLocalProjectFiles();
-            await applyCachedAssetsToDOM();
-            updateAssetStatusBadges();
-        }
-
-        async function tryAutoFetchLocalProjectFiles() {
-            const fileMap = [
-                { key: 'cafeBg', urls: ['Gramophone Glow in a Cozy Café.png', 'Gramophone%20Glow%20in%20a%20Cozy%20Caf%C3%A9.png'] },
-                { key: 'fontBold', urls: ['RooyinFree-Bold.woff2', 'RooyinFree-Bold.ttf', 'RooyinFreeNonEn-Bold.ttf'] },
-                { key: 'fontReg', urls: ['RooyinFree-Regular.woff2', 'RooyinFree-Regular.ttf', 'RooyinFreeNonEn-Regular.ttf'] },
-                { key: 'charMale', urls: ['Pixel Art Winter Character Sprite.png'] },
-                { key: 'charFemale', urls: ['Floral Hijab Pixel Art Character.png'] }
-            ];
-
-            for (const item of fileMap) {
-                if (cachedAssets[item.key]) continue;
-                for (const u of item.urls) {
-                    try {
-                        const resp = await fetch(u);
-                        if (resp.ok) {
-                            const blob = await resp.blob();
-                            const dataUrl = await blobToDataURL(blob);
-                            if (dataUrl && dataUrl.length > 100) {
-                                cachedAssets[item.key] = dataUrl;
-                                saveAssetToIDB(item.key, dataUrl);
-                                break;
-                            }
-                        }
-                    } catch (e) {}
-                }
-            }
-        }
-
-        function blobToDataURL(blob) {
-            return new Promise((resolve) => {
-                const reader = new FileReader();
-                reader.onload = (e) => resolve(e.target.result);
-                reader.onerror = () => resolve(null);
-                reader.readAsDataURL(blob);
-            });
-        }
-
-        function saveAssetToIDB(id, dataUrl) {
-            if (!dbInstance || !id || !dataUrl) return;
-            try {
-                const tx = dbInstance.transaction('cafe_assets', 'readwrite');
-                tx.objectStore('cafe_assets').put({ id: id, dataUrl: dataUrl, updatedAt: Date.now() });
-            } catch (e) {}
-        }
-
-        async function applyCachedAssetsToDOM() {
-            if (cachedAssets.cafeBg) {
-                const refImg = document.getElementById('ref-cafe-img');
-                if (refImg) { refImg.src = cachedAssets.cafeBg; refImg.style.display = 'block'; }
-            }
-            if (cachedAssets.charMale) {
-                const mImg = document.getElementById('login-img-male');
-                if (mImg) mImg.src = cachedAssets.charMale;
-            }
-            if (cachedAssets.charFemale) {
-                const fImg = document.getElementById('login-img-female');
-                if (fImg) fImg.src = cachedAssets.charFemale;
-            }
-
-            let cssRules = '';
-            if (cachedAssets.fontBold) {
-                cssRules += `@font-face { font-family: 'RooyinBold'; src: url('${cachedAssets.fontBold}'); font-weight: 700; font-display: swap; }\n`;
-            }
-            if (cachedAssets.fontReg) {
-                cssRules += `@font-face { font-family: 'RooyinRegular'; src: url('${cachedAssets.fontReg}'); font-weight: 400; font-display: swap; }\n`;
-            }
-            if (cssRules) {
-                const styleEl = document.getElementById('embedded-rooyin-fonts');
-                if (styleEl) styleEl.textContent = cssRules;
-            }
-        }
-
-        function updateAssetStatusBadges() {
-            const setBadge = (id, ready, label) => {
-                const el = document.getElementById(id);
-                if (!el) return;
-                if (ready) { el.classList.add('ready'); el.textContent = '🟢 ' + label; }
-                else { el.classList.remove('ready'); el.textContent = '⚪ ' + label; }
-            };
-            setBadge('stat-cafe-img', !!cachedAssets.cafeBg, 'تصویر کافه');
-            setBadge('stat-font-bold', !!cachedAssets.fontBold, 'رویین بولد');
-            setBadge('stat-font-reg', !!cachedAssets.fontReg, 'رویین رگولار');
-            setBadge('stat-char-imgs', !!(cachedAssets.charMale || cachedAssets.charFemale), 'کاراکترها');
-        }
-
-        function toggleMobileAssetsModal() {
-            document.getElementById('mobile-assets-modal').classList.toggle('open');
-            updateAssetStatusBadges();
-        }
-
-        async function handleImportProjectAssets(event) {
-            const files = Array.from(event.target.files || []);
-            for (const file of files) {
-                const name = file.name.toLowerCase();
-                let key = name.includes('bold') ? 'fontBold' : (name.includes('regular') ? 'fontReg' : (name.includes('cafe') || name.includes('gramophone') ? 'cafeBg' : ''));
-                if (key) {
-                    const dataUrl = await blobToDataURL(file);
-                    if (dataUrl) { cachedAssets[key] = dataUrl; saveAssetToIDB(key, dataUrl); }
-                }
-            }
-            await applyCachedAssetsToDOM();
-            updateAssetStatusBadges();
-            showToast('✅ فایل‌ها با موفقیت نصب شدند!');
-            event.target.value = '';
-        }
+        });
 
         function selectCharacter(charType) {
             myChar = charType;
@@ -1429,7 +810,7 @@
             document.getElementById('pick-char-female').classList.toggle('selected', charType === 'female');
         }
 
-        async function enterCafe() {
+        function enterCafe() {
             myName = document.getElementById('login-name').value.trim();
             roomCode = document.getElementById('login-room').value.trim();
 
@@ -1438,28 +819,16 @@
                 return;
             }
 
-            localStorage.setItem('khalvat_profile_v1', JSON.stringify({ name: myName, room: roomCode, char: myChar }));
-            unlockBrowserAudioEngine();
-            updateCharacterBadgesOnScene();
-
             document.getElementById('login-overlay').style.display = 'none';
             document.getElementById('top-hud').style.display = 'flex';
             document.getElementById('main-sanctuary').style.display = 'flex';
             document.getElementById('hud-room-title').textContent = 'میز: ' + roomCode;
 
-            playDoorChime(true);
-            await initDatabaseAndLoadHistory();
+            updateCharacterLabels();
             connectToCafeNetwork();
         }
 
-        function unlockBrowserAudioEngine() {
-            try {
-                if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                if (audioCtx.state === 'suspended') audioCtx.resume();
-            } catch (e) {}
-        }
-
-        function updateCharacterBadgesOnScene() {
+        function updateCharacterLabels() {
             const maleTxt = document.getElementById('svg-name-male');
             const femaleTxt = document.getElementById('svg-name-female');
             if (myChar === 'male') {
@@ -1471,77 +840,30 @@
             }
         }
 
-        function openCafeIndexedDB() {
-            return new Promise((resolve) => {
-                if (!window.indexedDB) { resolve(null); return; }
-                const req = indexedDB.open('KhalvatCafeDB_v1_1_3', 1);
-                req.onupgradeneeded = (e) => {
-                    const db = e.target.result;
-                    if (!db.objectStoreNames.contains('messages')) db.createObjectStore('messages', { keyPath: 'msgId' });
-                    if (!db.objectStoreNames.contains('cafe_assets')) db.createObjectStore('cafe_assets', { keyPath: 'id' });
-                };
-                req.onsuccess = (e) => resolve(e.target.result);
-                req.onerror = () => resolve(null);
-            });
-        }
-
-        async function initDatabaseAndLoadHistory() {
-            dbInstance = await openCafeIndexedDB();
-            let loaded = [];
-            if (dbInstance) {
-                loaded = await new Promise((resolve) => {
-                    const tx = dbInstance.transaction('messages', 'readonly');
-                    const req = tx.objectStore('messages').getAll();
-                    req.onsuccess = () => resolve(req.result || []);
-                    req.onerror = () => resolve([]);
-                });
-            }
-            chatHistory = loaded.filter(m => m.roomCode === roomCode);
-            chatHistory.sort((a, b) => (a.timestamp || 0) - (b.timestamp || 0));
-
-            const listEl = document.getElementById('messages-list');
-            listEl.innerHTML = '';
-            if (chatHistory.length > 0) {
-                chatHistory.forEach(m => renderMessageBubble(m, false));
-                scrollToBottom();
-            } else {
-                addSystemLog('به کافه خلوت خوش آمدید! ☕');
-            }
-        }
-
-        function saveMessageToStorage(msgObj) {
-            if (!msgObj || !msgObj.msgId) return false;
-            if (chatHistory.some(m => m.msgId === msgObj.msgId)) return false;
-            const enriched = { ...msgObj, roomCode: roomCode };
-            chatHistory.push(enriched);
-            if (dbInstance) {
-                try {
-                    const tx = dbInstance.transaction('messages', 'readwrite');
-                    tx.objectStore('messages').put(enriched);
-                } catch (e) {}
-            }
-            return true;
-        }
-
-        /* --- اتصال کاملاً پایدار MQTT --- */
         function connectToCafeNetwork() {
-            roomTopic = 'khalvat_sanctuary_v1_3/' + roomCode;
+            roomTopic = 'khalvat_sanctuary_v1_4/' + roomCode;
 
-            mqttClient = mqtt.connect('wss://broker.emqx.io:8084/mqtt', {
-                clientId: myClientId + '_' + Math.floor(Math.random() * 1000),
+            // اتصال پایدار با استفاده از پورت امن و بروکر چندگانه
+            mqttClient = mqtt.connect('wss://broker.hivemq.com:8884/mqtt', {
+                clientId: myClientId,
                 keepalive: 30,
                 reconnectPeriod: 2000,
-                connectTimeout: 15000
+                connectTimeout: 10000
             });
 
             mqttClient.on('connect', () => {
-                updatePeerStatusUI();
+                document.getElementById('peer-dot').classList.add('online');
+                document.getElementById('peer-status-text').textContent = 'متصل به شبکه کافه';
                 mqttClient.subscribe(roomTopic, (err) => {
                     if (!err) {
                         publishEvent({ type: 'join', sender: myName, char: myChar, id: myClientId });
-                        startHeartbeatSystem();
                     }
                 });
+            });
+
+            mqttClient.on('error', () => {
+                // فال‌بک خودکار در صورت خطا به بروکر دوم
+                tryMQTTSecondary();
             });
 
             mqttClient.on('message', (topic, payloadBuffer) => {
@@ -1549,48 +871,41 @@
                 try { data = JSON.parse(payloadBuffer.toString()); } catch (e) { return; }
                 if (data.id === myClientId) return;
 
-                switch (data.type) {
-                    case 'join':
-                        handlePeerActivity(data.sender, data.char);
-                        publishEvent({ type: 'here', sender: myName, char: myChar, weatherIdx: weatherIdx, id: myClientId });
-                        break;
-                    case 'here':
-                    case 'heartbeat':
-                        handlePeerActivity(data.sender, data.char);
-                        if (typeof data.weatherIdx === 'number' && data.weatherIdx !== weatherIdx) {
-                            weatherIdx = data.weatherIdx;
-                            applyWeatherVisuals();
-                        }
-                        break;
-                    case 'leave':
-                        handlePeerOffline(data.sender);
-                        break;
-                    case 'chat':
-                        handlePeerActivity(data.sender, data.char);
-                        if (saveMessageToStorage(data.msg)) {
-                            renderMessageBubble(data.msg, true);
-                            notifyIfChatHidden();
-                        }
-                        break;
-                    case 'action':
-                        handlePeerActivity(data.sender, data.char);
-                        showFloatingReaction('peer', data.emoji);
-                        addSystemLog(`${data.sender} ${data.text}`);
-                        break;
-                    case 'weather':
-                        if (typeof data.weatherIdx === 'number') {
-                            weatherIdx = data.weatherIdx;
-                            applyWeatherVisuals();
-                            addSystemLog(`${data.sender} آب‌وهوا را تغییر داد.`);
-                        }
-                        break;
-                    case 'music_sync':
-                        if (data.trackMeta) {
-                            applyRemoteMusicSync(data.trackMeta, data.isPlaying, data.sender);
-                        }
-                        break;
+                if (data.type === 'join' || data.type === 'here' || data.type === 'heartbeat') {
+                    peerState.online = true;
+                    peerState.name = data.sender;
+                    peerState.char = data.char;
+                    updatePeerStatusUI();
+                    updateCharacterLabels();
+                    if (data.type === 'join') {
+                        publishEvent({ type: 'here', sender: myName, char: myChar, id: myClientId });
+                    }
+                } else if (data.type === 'chat') {
+                    renderMessageBubble(data.msg, true);
+                } else if (data.type === 'action') {
+                    showFloatingReaction('peer', data.emoji);
+                    addSystemLog(`${data.sender} ${data.text}`);
                 }
             });
+
+            setInterval(() => {
+                publishEvent({ type: 'heartbeat', sender: myName, char: myChar, id: myClientId });
+            }, 8000);
+        }
+
+        function tryMQTTSecondary() {
+            try {
+                mqttClient = mqtt.connect('wss://broker.emqx.io:8084/mqtt', {
+                    clientId: myClientId,
+                    keepalive: 30,
+                    reconnectPeriod: 2000
+                });
+                mqttClient.on('connect', () => {
+                    mqttClient.subscribe(roomTopic, () => {
+                        publishEvent({ type: 'join', sender: myName, char: myChar, id: myClientId });
+                    });
+                });
+            } catch(e) {}
         }
 
         function publishEvent(obj) {
@@ -1599,68 +914,13 @@
             }
         }
 
-        function startHeartbeatSystem() {
-            if (heartbeatTimer) clearInterval(heartbeatTimer);
-            if (watchdogTimer) clearInterval(watchdogTimer);
-
-            heartbeatTimer = setInterval(() => {
-                publishEvent({ type: 'heartbeat', sender: myName, char: myChar, id: myClientId });
-            }, 8000);
-
-            watchdogTimer = setInterval(() => {
-                if (peerState.online && (Date.now() - peerState.lastSeen > 22000)) {
-                    handlePeerOffline(peerState.name);
-                }
-            }, 4000);
-        }
-
-        function handlePeerActivity(name, charType) {
-            const wasOffline = !peerState.online;
-            peerState.online = true;
-            peerState.name = name || 'یار شما';
-            if (charType) peerState.char = charType;
-            peerState.lastSeen = Date.now();
-
-            updatePeerStatusUI();
-            updateCharacterBadgesOnScene();
-
-            if (wasOffline) {
-                playDoorChime(true);
-                showToast(`🔔 «${peerState.name}» وارد کافه شد!`);
-                addSystemLog(`🔔 ${peerState.name} پشت میز نشست.`);
-            }
-        }
-
-        function handlePeerOffline(name) {
-            if (!peerState.online) return;
-            peerState.online = false;
-            updatePeerStatusUI();
-            updateCharacterBadgesOnScene();
-            playDoorChime(false);
-            showToast(`🚪 «${name || peerState.name}» کافه را ترک کرد`);
-            addSystemLog(`🚪 صندلی روبرو خالی شد.`);
-        }
-
         function updatePeerStatusUI() {
             const dot = document.getElementById('peer-dot');
             const statusTxt = document.getElementById('hud-peer-status');
-
             if (peerState.online) {
                 dot.classList.add('online');
-                statusTxt.textContent = `${peerState.name}: آنلاین (پشت میز ☕)`;
-                statusTxt.style.color = '#4ade80';
-            } else {
-                dot.classList.remove('online');
-                statusTxt.textContent = peerState.name ? `${peerState.name}: آفلاین` : 'منتظر ورود یار...';
-                statusTxt.style.color = '#9ca3af';
+                statusTxt.textContent = `${peerState.name}: آنلاین پشت میز ☕`;
             }
-        }
-
-        function showToast(message) {
-            const toast = document.getElementById('presence-toast');
-            toast.textContent = message;
-            toast.classList.add('show');
-            setTimeout(() => toast.classList.remove('show'), 4000);
         }
 
         function handleSendMessage(e) {
@@ -1669,92 +929,30 @@
             const text = input.value.trim();
             if (!text) return;
 
-            const now = new Date();
-            const timeStr = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
-
             const msgObj = {
-                msgId: 'm_' + Date.now() + '_' + Math.random().toString(36).substring(2, 6),
-                timestamp: Date.now(),
-                senderId: myClientId,
+                msgId: 'm_' + Date.now(),
                 senderName: myName,
                 text: text,
-                time: timeStr,
-                replyTo: currentReply ? { ...currentReply } : null
+                time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
             };
 
-            saveMessageToStorage(msgObj);
             renderMessageBubble(msgObj, true);
-
-            publishEvent({
-                type: 'chat',
-                sender: myName,
-                char: myChar,
-                id: myClientId,
-                msg: msgObj
-            });
-
+            publishEvent({ type: 'chat', sender: myName, msg: msgObj, id: myClientId });
             input.value = '';
-            cancelReply();
-            input.focus();
         }
 
         function renderMessageBubble(msg, autoScroll = true) {
             const listEl = document.getElementById('messages-list');
-            const isMe = msg.senderId === myClientId || msg.senderName === myName;
-
+            const isMe = msg.senderName === myName;
             const bubble = document.createElement('div');
             bubble.className = 'msg-bubble ' + (isMe ? 'me' : 'other');
-            bubble.id = 'bubble-' + msg.msgId;
-
-            let replyHtml = '';
-            if (msg.replyTo && msg.replyTo.msgId) {
-                replyHtml = `
-                    <div class="quoted-reply-box" onclick="scrollToMessage('${msg.replyTo.msgId}')">
-                        <strong>↩ پاسخ به ${escapeHtml(msg.replyTo.senderName)}:</strong>
-                        <span>${escapeHtml(msg.replyTo.text)}</span>
-                    </div>
-                `;
-            }
-
             bubble.innerHTML = `
-                <div class="msg-header">
-                    <span class="msg-author">${isMe ? 'شما' : escapeHtml(msg.senderName)}</span>
-                    <button type="button" class="reply-trigger-btn" title="ریپلای">↩</button>
-                </div>
-                ${replyHtml}
+                <div class="msg-header"><span class="msg-author">${isMe ? 'شما' : escapeHtml(msg.senderName)}</span></div>
                 <div class="msg-body">${escapeHtml(msg.text)}</div>
                 <div class="msg-meta">${msg.time || ''}</div>
             `;
-
-            bubble.querySelector('.reply-trigger-btn').onclick = (ev) => {
-                ev.stopPropagation();
-                activateReply(msg.msgId, msg.senderName, msg.text);
-            };
-
             listEl.appendChild(bubble);
-            if (autoScroll) scrollToBottom();
-        }
-
-        function activateReply(msgId, senderName, text) {
-            currentReply = { msgId, senderName, text };
-            document.getElementById('reply-to-sender').textContent = 'پاسخ به ' + senderName + ':';
-            document.getElementById('reply-to-text').textContent = text;
-            document.getElementById('reply-preview-bar').style.display = 'flex';
-            document.getElementById('chat-text-input').focus();
-        }
-
-        function cancelReply() {
-            currentReply = null;
-            document.getElementById('reply-preview-bar').style.display = 'none';
-        }
-
-        function scrollToMessage(targetMsgId) {
-            const targetEl = document.getElementById('bubble-' + targetMsgId);
-            if (targetEl) {
-                targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                targetEl.classList.add('highlight-flash');
-                setTimeout(() => targetEl.classList.remove('highlight-flash'), 1600);
-            }
+            if (autoScroll) listEl.scrollTop = listEl.scrollHeight;
         }
 
         function addSystemLog(text) {
@@ -1763,51 +961,13 @@
             div.className = 'system-event-msg';
             div.textContent = text;
             listEl.appendChild(div);
-            scrollToBottom();
-        }
-
-        function scrollToBottom() {
-            const listEl = document.getElementById('messages-list');
             listEl.scrollTop = listEl.scrollHeight;
         }
 
-        function toggleChatPanel(hide) {
-            isChatHidden = hide;
-            const sanctuary = document.getElementById('main-sanctuary');
-            const restoreBtn = document.getElementById('restore-chat-btn');
-            if (hide) {
-                sanctuary.classList.add('chat-minimized');
-                restoreBtn.style.display = 'flex';
-            } else {
-                sanctuary.classList.remove('chat-minimized');
-                restoreBtn.style.display = 'none';
-                unreadCount = 0;
-                updateUnreadBadge();
-                scrollToBottom();
-            }
-        }
-
-        function notifyIfChatHidden() {
-            if (isChatHidden) {
-                unreadCount++;
-                updateUnreadBadge();
-            }
-        }
-
-        function updateUnreadBadge() {
-            const badge = document.getElementById('unread-badge');
-            if (unreadCount > 0) {
-                badge.style.display = 'inline-block';
-                badge.textContent = unreadCount;
-            } else {
-                badge.style.display = 'none';
-            }
-        }
-
-        function sendCafeAction(actionText, emoji) {
+        function sendCafeAction(text, emoji) {
             showFloatingReaction('me', emoji);
-            addSystemLog(`شما ${actionText}`);
-            publishEvent({ type: 'action', sender: myName, char: myChar, text: actionText, emoji: emoji, id: myClientId });
+            addSystemLog(`شما ${text}`);
+            publishEvent({ type: 'action', sender: myName, text, emoji, id: myClientId });
         }
 
         function showFloatingReaction(who, emoji) {
@@ -1824,244 +984,25 @@
             setTimeout(() => el.remove(), 3200);
         }
 
-        function cycleWeather(broadcast = true) {
+        function cycleWeather() {
             weatherIdx = (weatherIdx + 1) % WEATHER_MODES.length;
-            applyWeatherVisuals();
-            if (broadcast) {
-                publishEvent({ type: 'weather', sender: myName, weatherIdx: weatherIdx, id: myClientId });
-            }
+            document.getElementById('weather-btn').textContent = WEATHER_MODES[weatherIdx].icon + ' ' + WEATHER_MODES[weatherIdx].label;
         }
 
-        function applyWeatherVisuals() {
-            const mode = WEATHER_MODES[weatherIdx];
-            document.getElementById('weather-icon').textContent = mode.icon;
-            document.getElementById('weather-label').textContent = mode.label;
-            document.getElementById('window-atmosphere-tint').setAttribute('fill', mode.tint);
-            document.getElementById('window-atmosphere-tint').setAttribute('opacity', mode.tintOp);
-        }
+        function toggleMobileAssetsModal() { document.getElementById('mobile-assets-modal').classList.toggle('open'); }
+        function toggleGramophoneModal() { document.getElementById('gramophone-modal').classList.toggle('open'); }
+        function toggleChatPanel(hide) { document.getElementById('main-sanctuary').classList.toggle('chat-minimized', hide); }
+        function copyRoomCode() { navigator.clipboard.writeText(roomCode); showToast('📋 کد میز کپی شد!'); }
 
-        function toggleAmbience() {
-            const btn = document.getElementById('ambience-btn');
-            const icon = document.getElementById('ambience-icon');
-            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-
-            if (isAmbiencePlaying) {
-                stopCurrentAmbienceNodes();
-                isAmbiencePlaying = false;
-                btn.classList.remove('active');
-                icon.textContent = '🔇';
-            } else {
-                if (audioCtx.state === 'suspended') audioCtx.resume();
-                isAmbiencePlaying = true;
-                btn.classList.add('active');
-                icon.textContent = '🔊';
-            }
-        }
-
-        function stopCurrentAmbienceNodes() {
-            if (activeSoundSource) {
-                try { activeSoundSource.stop(); } catch (e) {}
-                activeSoundSource = null;
-            }
-        }
-
-        function playDoorChime(isEntering) {
-            try {
-                if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                if (audioCtx.state === 'suspended') audioCtx.resume();
-                const osc = audioCtx.createOscillator();
-                const gain = audioCtx.createGain();
-                osc.type = 'sine';
-                const now = audioCtx.currentTime;
-                if (isEntering) {
-                    osc.frequency.setValueAtTime(587.33, now);
-                    osc.frequency.setValueAtTime(880, now + 0.14);
-                } else {
-                    osc.frequency.setValueAtTime(523.25, now);
-                    osc.frequency.setValueAtTime(392.00, now + 0.15);
-                }
-                gain.gain.setValueAtTime(0.07, now);
-                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.55);
-                osc.connect(gain);
-                gain.connect(audioCtx.destination);
-                osc.start(now);
-                osc.stop(now + 0.55);
-            } catch (e) {}
-        }
-
-        function copyRoomCode() {
-            navigator.clipboard.writeText(roomCode);
-            showToast(`📋 شماره میز (${roomCode}) کپی شد!`);
-        }
-
-        function toggleGramophoneModal() {
-            document.getElementById('gramophone-modal').classList.toggle('open');
-        }
-
-        function renderGramophonePlaylist() {
-            const listEl = document.getElementById('gram-track-list');
-            if (!listEl) return;
-            listEl.innerHTML = '';
-            gramophonePlaylist.forEach((t, idx) => {
-                const item = document.createElement('div');
-                item.className = 'track-item ' + (idx === gramState.currentTrackIdx ? 'active' : '');
-                item.innerHTML = `<span>${t.title}</span> <span>${idx === gramState.currentTrackIdx && gramState.isPlaying ? '🔊' : '▶'}</span>`;
-                item.onclick = () => selectAndPlayGramophoneTrack(idx, true);
-                listEl.appendChild(item);
-            });
-        }
-
-        function selectAndPlayGramophoneTrack(idx, broadcast = true) {
-            if (idx < 0 || idx >= gramophonePlaylist.length) return;
-            gramState.currentTrackIdx = idx;
-            renderGramophonePlaylist();
-            const track = gramophonePlaylist[idx];
-            document.getElementById('np-track-title').textContent = track.title;
-
-            startGramophoneEngine(track);
-            gramState.isPlaying = true;
-            document.getElementById('gram-play-btn').textContent = '⏸ توقف';
-            document.getElementById('gram-hud-icon').textContent = '🎶';
-            document.getElementById('svg-gramophone-active').style.display = 'block';
-
-            if (broadcast) {
-                publishEvent({
-                    type: 'music_sync',
-                    isPlaying: true,
-                    trackMeta: track,
-                    sender: myName,
-                    id: myClientId
-                });
-            }
-        }
-
-        function toggleGramophonePlayback(broadcast = true) {
-            if (gramState.isPlaying) {
-                stopGramophoneEngine();
-                gramState.isPlaying = false;
-                document.getElementById('gram-play-btn').textContent = '▶ پخش';
-                document.getElementById('gram-hud-icon').textContent = '📻';
-                document.getElementById('svg-gramophone-active').style.display = 'none';
-
-                if (broadcast) {
-                    publishEvent({ type: 'music_sync', isPlaying: false, trackMeta: gramophonePlaylist[gramState.currentTrackIdx], sender: myName, id: myClientId });
-                }
-            } else {
-                selectAndPlayGramophoneTrack(gramState.currentTrackIdx, broadcast);
-            }
-        }
-
-        function startGramophoneEngine(track) {
-            stopGramophoneEngine();
-            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            if (audioCtx.state === 'suspended') audioCtx.resume();
-
-            if (track.type === 'url' && track.url) {
-                const audioEl = document.getElementById('external-audio-player');
-                audioEl.src = track.url;
-                audioEl.volume = gramState.volume;
-                audioEl.play().catch(() => {});
-                return;
-            }
-            if (track.type === 'synth') {
-                playLofiSynthLoop(track);
-            }
-        }
-
-        function stopGramophoneEngine() {
-            if (gramState.synthTimer) { clearInterval(gramState.synthTimer); gramState.synthTimer = null; }
-            const audioEl = document.getElementById('external-audio-player');
-            if (audioEl) { audioEl.pause(); audioEl.currentTime = 0; }
-        }
-
-        function playLofiSynthLoop(track) {
-            let step = 0;
-            const intervalMs = (60 / track.tempo) * 250;
-            gramState.synthTimer = setInterval(() => {
-                if (!gramState.isPlaying || !audioCtx) return;
-                try {
-                    const now = audioCtx.currentTime;
-                    const chord = track.chords[Math.floor(step / 4) % track.chords.length];
-                    chord.forEach(freq => {
-                        const osc = audioCtx.createOscillator();
-                        const gain = audioCtx.createGain();
-                        osc.type = 'sine';
-                        osc.frequency.setValueAtTime(freq, now);
-                        gain.gain.setValueAtTime(0.015 * gramState.volume, now);
-                        gain.gain.exponentialRampToValueAtTime(0.0001, now + 1.2);
-                        osc.connect(gain);
-                        gain.connect(audioCtx.destination);
-                        osc.start(now);
-                        osc.stop(now + 1.25);
-                    });
-                    step++;
-                } catch (e) {}
-            }, intervalMs);
-        }
-
-        function updateGramophoneVolume(val) {
-            gramState.volume = val / 100;
-            const audioEl = document.getElementById('external-audio-player');
-            if (audioEl) audioEl.volume = gramState.volume;
-        }
-
-        function handleAddCustomTrackUrl(e) {
-            e.preventDefault();
-            const name = document.getElementById('custom-track-name').value.trim();
-            const url = document.getElementById('custom-track-url').value.trim();
-            if (!name || !url) return;
-
-            const newTrack = { id: 't_' + Date.now(), title: name, type: 'url', url: url };
-            gramophonePlaylist.push(newTrack);
-            renderGramophonePlaylist();
-            document.getElementById('custom-track-name').value = '';
-            document.getElementById('custom-track-url').value = '';
-            showToast('✅ آهنگ افزوده شد!');
-            selectAndPlayGramophoneTrack(gramophonePlaylist.length - 1, true);
-        }
-
-        function applyRemoteMusicSync(trackMeta, isPlaying, sender) {
-            if (!trackMeta) return;
-            const idx = gramophonePlaylist.findIndex(t => t.id === trackMeta.id);
-            if (idx !== -1) {
-                gramState.currentTrackIdx = idx;
-            } else if (trackMeta.type === 'url') {
-                gramophonePlaylist.push(trackMeta);
-                gramState.currentTrackIdx = gramophonePlaylist.length - 1;
-            }
-            renderGramophonePlaylist();
-
-            if (isPlaying) {
-                startGramophoneEngine(gramophonePlaylist[gramState.currentTrackIdx]);
-                gramState.isPlaying = true;
-                document.getElementById('gram-play-btn').textContent = '⏸ توقف';
-                document.getElementById('svg-gramophone-active').style.display = 'block';
-                showToast(`🎵 ${sender} گرامافون را روشن کرد`);
-            } else {
-                stopGramophoneEngine();
-                gramState.isPlaying = false;
-                document.getElementById('gram-play-btn').textContent = '▶ پخش';
-                document.getElementById('svg-gramophone-active').style.display = 'none';
-            }
-        }
-
-        function toggleHistoryModal() {
-            document.getElementById('history-modal').classList.toggle('open');
-            document.getElementById('archive-stats').textContent = `تکل پیام‌های این میز: ${chatHistory.length} پیام`;
-        }
-
-        function exportChatHistory() {
-            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(chatHistory, null, 2));
-            const dl = document.createElement('a');
-            dl.href = dataStr;
-            dl.download = `khalvat_archive_${roomCode}.json`;
-            dl.click();
-            dl.remove();
+        function showToast(msg) {
+            const t = document.getElementById('presence-toast');
+            t.textContent = msg;
+            t.classList.add('show');
+            setTimeout(() => t.classList.remove('show'), 3000);
         }
 
         function escapeHtml(str) {
-            if (!str) return '';
-            return str.replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m]));
+            return str ? str.replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])) : '';
         }
     </script>
 </body>
