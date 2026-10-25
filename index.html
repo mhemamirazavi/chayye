@@ -7,7 +7,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="کافه خلوت">
-    <title>کافه خلوت | پناهگاه دیجیتال ما (v1.1.2)</title>
+    <title>کافه خلوت | پناهگاه دیجیتال ما (v1.1.3)</title>
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
     <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
     <style id="embedded-rooyin-fonts"></style>
@@ -616,34 +616,6 @@
             white-space: nowrap;
         }
 
-        #music-transfer-progress {
-            display: none;
-            flex-direction: column;
-            gap: 0.25rem;
-            background: rgba(240, 157, 56, 0.12);
-            border: 1px dashed var(--amber-glow);
-            border-radius: 7px;
-            padding: 0.4rem 0.6rem;
-            font-size: 0.72rem;
-            color: var(--amber-bright);
-            text-align: right;
-        }
-
-        .progress-bar-bg {
-            width: 100%;
-            height: 6px;
-            background: var(--bg-espresso);
-            border-radius: 4px;
-            overflow: hidden;
-        }
-
-        #progress-bar-fill {
-            width: 0%;
-            height: 100%;
-            background: var(--amber-glow);
-            transition: width 0.2s;
-        }
-
         .track-list {
             display: flex;
             flex-direction: column;
@@ -994,7 +966,7 @@
     <div id="login-overlay">
         <div class="login-card">
             <div class="cafe-sign-badge">☕ کافه خلوت</div>
-            <p class="login-subtitle">پناهگاه دنج دیجیتال ما (نسخه ۱.۱.۲)</p>
+            <p class="login-subtitle">پناهگاه دنج دیجیتال ما (نسخه ۱.۱.۳)</p>
 
             <div class="form-group">
                 <label>نام شما در کافه:</label>
@@ -1011,45 +983,14 @@
                 <div class="char-selector">
                     <div class="char-option selected" id="pick-char-male" onclick="selectCharacter('male')">
                         <div class="char-preview-wrap">
-                            <img id="login-img-male" src="Pixel Art Winter Character Sprite.png" alt="کاراکتر آقا" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                            <svg style="display:none;" viewBox="0 0 24 32" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges">
-                                <rect x="6" y="2" width="12" height="2" fill="#140d0a"/>
-                                <rect x="5" y="4" width="14" height="3" fill="#291a14"/>
-                                <rect x="4" y="5" width="2" height="5" fill="#140d0a"/>
-                                <rect x="18" y="5" width="2" height="5" fill="#140d0a"/>
-                                <rect x="6" y="7" width="12" height="8" fill="#efb48e"/>
-                                <rect x="7" y="9" width="3" height="1" fill="#291a14"/>
-                                <rect x="14" y="9" width="3" height="1" fill="#291a14"/>
-                                <rect x="8" y="10" width="2" height="3" fill="#140d0a"/>
-                                <rect x="14" y="10" width="2" height="3" fill="#140d0a"/>
-                                <rect x="9" y="13" width="6" height="1" fill="#140d0a"/>
-                                <rect x="6" y="16" width="12" height="3" fill="#2d3033"/>
-                                <rect x="4" y="18" width="16" height="7" fill="#6e4228"/>
-                                <rect x="13" y="19" width="3" height="5" fill="#393d42"/>
-                                <rect x="6" y="25" width="5" height="4" fill="#262423"/>
-                                <rect x="13" y="25" width="5" height="4" fill="#262423"/>
-                            </svg>
+                            <img id="login-img-male" src="Pixel Art Winter Character Sprite.png" alt="کاراکتر آقا" onerror="this.style.display='none';">
                         </div>
                         <span>کاراکتر آقا</span>
                     </div>
 
                     <div class="char-option" id="pick-char-female" onclick="selectCharacter('female')">
                         <div class="char-preview-wrap">
-                            <img id="login-img-female" src="Floral Hijab Pixel Art Character.png" alt="کاراکتر خانم" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                            <svg style="display:none;" viewBox="0 0 24 32" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges">
-                                <rect x="6" y="2" width="12" height="2" fill="#181311"/>
-                                <rect x="4" y="4" width="16" height="12" fill="#181311"/>
-                                <rect x="7" y="3" width="2" height="2" fill="#f5d5c6"/>
-                                <rect x="12" y="2" width="2" height="2" fill="#f5d5c6"/>
-                                <rect x="16" y="5" width="2" height="2" fill="#f5d5c6"/>
-                                <rect x="7" y="7" width="10" height="8" fill="#f4bfa0"/>
-                                <rect x="8" y="10" width="2" height="3" fill="#140d0a"/>
-                                <rect x="14" y="10" width="2" height="3" fill="#140d0a"/>
-                                <rect x="10" y="13" width="4" height="1" fill="#140d0a"/>
-                                <rect x="4" y="17" width="16" height="8" fill="#593320"/>
-                                <rect x="6" y="25" width="5" height="6" fill="#422415"/>
-                                <rect x="13" y="25" width="5" height="6" fill="#422415"/>
-                            </svg>
+                            <img id="login-img-female" src="Floral Hijab Pixel Art Character.png" alt="کاراکتر خانم" onerror="this.style.display='none';">
                         </div>
                         <span>کاراکتر خانم</span>
                     </div>
@@ -1085,10 +1026,10 @@
                 <span id="ambience-icon">🔇</span>
                 <span>محیط</span>
             </button>
-            <button class="hud-btn" onclick="toggleMobileAssetsModal()" title="فونت رویین، گرافیک موبایل و سینک خودکار">
+            <button class="hud-btn" onclick="toggleMobileAssetsModal()" title="فونت رویین و گرافیک موبایل">
                 <span>📱 فونت/موبایل</span>
             </button>
-            <button class="hud-btn" onclick="toggleHistoryModal()" title="پشتیبان‌گیری و مدیریت کل تاریخچه چت‌ها">
+            <button class="hud-btn" onclick="toggleHistoryModal()" title="مدیریت آرشیو چت‌ها">
                 <span>💾 آرشیو</span>
             </button>
         </div>
@@ -1098,12 +1039,12 @@
 
     <div class="cafe-modal" id="mobile-assets-modal">
         <div class="modal-header">
-            <h3>📱 پک فونت رویین و گرافیک موبایل (v1.1.2)</h3>
+            <h3>📱 پک فونت رویین و گرافیک موبایل (v1.1.3)</h3>
             <button class="close-modal-btn" onclick="toggleMobileAssetsModal()">✕</button>
         </div>
 
         <p style="font-size: 0.74rem; color: var(--cream-muted); line-height: 1.55; text-align: right;">
-            با یکی از ۳ روش زیر، فونت <strong>رویین</strong> و تصویر <strong>کافه</strong> برای همیشه در حافظه موبایل شما و یارتان نصب می‌شود:
+            اگر عکس کافه یا فونت رویین لود نشد، از اینجا فایلهای پروژه را انتخاب کنید:
         </p>
 
         <div class="asset-status-grid">
@@ -1113,26 +1054,11 @@
             <div class="asset-badge" id="stat-char-imgs">⚪ اسپرایت کاراکترها</div>
         </div>
 
-        <div id="asset-sync-progress" style="display:none; flex-direction:column; gap:0.25rem; background:rgba(240,157,56,0.12); border:1px dashed var(--amber-glow); border-radius:7px; padding:0.4rem 0.6rem; font-size:0.72rem; color:var(--amber-bright); text-align: right;">
-            <span id="asset-sync-text">در حال انتقال فونت و گرافیک به موبایل یار... ۰٪</span>
-            <div class="progress-bar-bg">
-                <div id="asset-sync-fill" style="width:0%; height:100%; background:var(--amber-glow); transition:width 0.2s;"></div>
-            </div>
-        </div>
-
         <div style="display:flex; flex-direction:column; gap:0.45rem;">
             <label class="gram-ctrl-btn" style="text-align:center; cursor:pointer; padding:0.5rem;">
-                📂 ۱. انتخاب یکجای فایل‌های پروژه (عکس کافه + فونت رویین)
+                📂 انتخاب فایل‌های پروژه (عکس کافه + فونت رویین)
                 <input type="file" multiple accept=".png,.jpg,.jpeg,.ttf,.woff,.woff2" style="display:none;" onchange="handleImportProjectAssets(event)">
             </label>
-
-            <button type="button" class="gram-ctrl-btn" style="background:linear-gradient(135deg, #2563eb, #1d4ed8); padding:0.5rem;" onclick="broadcastAllCachedAssetsToPeer()">
-                📡 ۲. ارسال مستقیم فونت و عکس به موبایل یار (MQTT)
-            </button>
-
-            <button type="button" class="gram-ctrl-btn" style="background:linear-gradient(135deg, #15803d, #166534); padding:0.5rem;" onclick="exportSelfContainedMobileHTML()">
-                📦 ۳. دانلود فایل HTML تک‌فایلی موبایل (عکس و فونت داخل کد!)
-            </button>
         </div>
     </div>
 
@@ -1152,13 +1078,6 @@
             </div>
         </div>
 
-        <div id="music-transfer-progress">
-            <span id="music-transfer-text">در حال ارسال آهنگ برای یارتان... ۰٪</span>
-            <div class="progress-bar-bg">
-                <div id="progress-bar-fill"></div>
-            </div>
-        </div>
-
         <div class="volume-row">
             <span>🔊 صدا:</span>
             <input type="range" id="gram-volume" min="0" max="100" value="75" oninput="updateGramophoneVolume(this.value)">
@@ -1167,18 +1086,12 @@
         <div class="track-list" id="gram-track-list"></div>
 
         <form class="add-track-form" onsubmit="handleAddCustomTrackUrl(event)">
-            <label>➕ افزودن آهنگ جدید (لینک مستقیم یا فایل صوتی):</label>
+            <label>➕ افزودن لینک مستقیم MP3:</label>
             <div class="mini-input-row">
                 <input type="text" id="custom-track-name" class="mini-input" placeholder="نام آهنگ" required>
-                <input type="url" id="custom-track-url" class="mini-input" placeholder="لینک MP3" required>
+                <input type="url" id="custom-track-url" class="mini-input" placeholder="لینک مستقیم MP3" required>
             </div>
-            <div class="mini-input-row">
-                <button type="submit" class="gram-ctrl-btn" style="flex:1;">🔗 افزودن لینک</button>
-                <label class="gram-ctrl-btn" style="background: linear-gradient(135deg, #593320, #3a2014); cursor:pointer; display:flex; align-items:center;" title="انتخاب فایل MP3">
-                    📂 انتخاب فایل صوتی
-                    <input type="file" accept="audio/*" style="display:none;" onchange="handleSharedLocalAudioFile(event)">
-                </label>
-            </div>
+            <button type="submit" class="gram-ctrl-btn">🔗 افزودن آهنگ</button>
         </form>
     </div>
 
@@ -1187,16 +1100,9 @@
             <h3>💾 آرشیو دائمی گفتگوهای این میز</h3>
             <button class="close-modal-btn" onclick="toggleHistoryModal()">✕</button>
         </div>
-        <p style="font-size: 0.75rem; color: var(--cream-muted); line-height: 1.55; text-align: right;">
-            تمامی پیام‌های شما بدون محدودیت تعداد در دیتابیس مرورگر ذخیره می‌شوند.
-        </p>
         <div id="archive-stats" style="font-size: 0.8rem; color: var(--amber-bright); text-align: right;"></div>
         <div class="mini-input-row">
             <button type="button" class="gram-ctrl-btn" style="flex:1;" onclick="exportChatHistory()">📥 دانلود چت‌ها (JSON)</button>
-            <label class="gram-ctrl-btn" style="flex:1; text-align:center; cursor:pointer;">
-                📤 بازیابی فایل
-                <input type="file" accept=".json" style="display:none;" onchange="importChatHistory(event)">
-            </label>
         </div>
     </div>
 
@@ -1240,9 +1146,6 @@
                             <rect class="w-drop" x="715" y="280" width="3.5" height="22" rx="1.5" fill="#93c5fd" opacity="0.7">
                                 <animate attributeName="y" values="250;600" dur="1.02s" repeatCount="indefinite"/>
                             </rect>
-                            <rect class="w-drop" x="760" y="260" width="3.5" height="22" rx="1.5" fill="#93c5fd" opacity="0.8">
-                                <animate attributeName="y" values="270;605" dur="0.88s" repeatCount="indefinite"/>
-                            </rect>
                         </g>
                     </g>
 
@@ -1265,7 +1168,6 @@
                         <rect class="steam-p2" x="654" y="562" width="6" height="20" rx="3" fill="#f6e9d7" opacity="0.7"/>
                     </g>
 
-                    <!-- گرامافون پویا در صورت پخش موزیک -->
                     <g id="svg-gramophone-active" style="display:none;" transform="translate(870, 610)">
                         <circle cx="50" cy="50" r="42" fill="#111" stroke="#333" stroke-width="4"/>
                         <circle cx="50" cy="50" r="14" fill="#d99b36"/>
@@ -1323,95 +1225,82 @@
     </button>
 
     <script>
-        window.BAKED_CAFE_ASSETS = window.BAKED_CAFE_ASSETS || {};
+        let cachedAssets = { cafeBg: null, fontBold: null, fontReg: null, charMale: null, charFemale: null };
+        let dbInstance = null;
+        let chatHistory = [];
+        let currentReply = null;
+        let isChatHidden = false;
+        let unreadCount = 0;
+        let roomCode = '';
+        let roomTopic = '';
+        let myName = '';
+        let myChar = 'male';
+        let mqttClient = null;
+        let myClientId = localStorage.getItem('khalvat_client_id_v2');
+        if (!myClientId) {
+            myClientId = 'khalvat_' + Math.random().toString(36).substring(2, 10);
+            localStorage.setItem('khalvat_client_id_v2', myClientId);
+        }
 
-        let cachedAssets = {
-            cafeBg: null,
-            fontBold: null,
-            fontReg: null,
-            charMale: null,
-            charFemale: null
-        };
+        let peerState = { online: false, name: '', char: 'female', lastSeen: 0 };
+        let heartbeatTimer = null;
+        let watchdogTimer = null;
 
-        let incomingAssetBuffers = {};
+        const WEATHER_MODES = [
+            { id: 'rain', label: 'بارانی', icon: '🌧️', tint: '#0f172a', tintOp: 0.22, dropColor: '#93c5fd', dropW: 3.5, dropH: 22 },
+            { id: 'autumn', label: 'پاییزی', icon: '🍂', tint: '#451a03', tintOp: 0.24, dropColor: '#fb923c', dropW: 9, dropH: 7 },
+            { id: 'snow', label: 'برفی', icon: '❄️', tint: '#1e293b', tintOp: 0.26, dropColor: '#ffffff', dropW: 7, dropH: 7 }
+        ];
+        let weatherIdx = 0;
+
+        let audioCtx = null;
+        let isAmbiencePlaying = false;
+        let activeSoundSource = null;
+        let activeEffectInterval = null;
+
+        let gramophonePlaylist = [
+            {
+                id: 'lofi_rainy_night',
+                title: '۱. باران شبانه کافه (Lofi Rhodes)',
+                type: 'synth',
+                tempo: 76,
+                chords: [[261.63, 329.63, 392.00, 493.88], [220.00, 261.63, 329.63, 392.00]],
+                melody: [523.25, 659.25, 587.33, 493.88, 523.25, 392.00]
+            },
+            {
+                id: 'lofi_espresso_breeze',
+                title: '۲. نسیم گرم اسپرسو (Cozy Jazz)',
+                type: 'synth',
+                tempo: 84,
+                chords: [[293.66, 349.23, 440.00, 523.25], [196.00, 246.94, 293.66, 349.23]],
+                melody: [587.33, 523.25, 440.00, 493.88]
+            }
+        ];
+
+        let gramState = { isPlaying: false, currentTrackIdx: 0, volume: 0.75, synthTimer: null };
+
+        window.addEventListener('DOMContentLoaded', async () => {
+            renderHighDensityFallbackCanvas();
+            const savedProfile = JSON.parse(localStorage.getItem('khalvat_profile_v1') || '{}');
+            if (savedProfile.name) document.getElementById('login-name').value = savedProfile.name;
+            if (savedProfile.room) document.getElementById('login-room').value = savedProfile.room;
+            if (savedProfile.char) selectCharacter(savedProfile.char);
+
+            renderGramophonePlaylist();
+            dbInstance = await openCafeIndexedDB();
+            await initializeMobileAssetsAndFonts();
+        });
 
         function renderHighDensityFallbackCanvas() {
             const canvas = document.getElementById('pixel-ref-canvas');
             if (!canvas) return;
             const ctx = canvas.getContext('2d');
             ctx.imageSmoothingEnabled = false;
-
             ctx.fillStyle = '#16111c';
             ctx.fillRect(0, 0, 256, 256);
-
-            ctx.fillStyle = '#361b12';
-            ctx.beginPath();
-            ctx.moveTo(10, 56); ctx.lineTo(112, 4); ctx.lineTo(112, 118); ctx.lineTo(10, 170);
-            ctx.closePath(); ctx.fill();
-
-            ctx.fillStyle = '#2d150e';
-            ctx.beginPath();
-            ctx.moveTo(112, 4); ctx.lineTo(250, 74); ctx.lineTo(250, 188); ctx.lineTo(112, 118);
-            ctx.closePath(); ctx.fill();
-
-            ctx.fillStyle = '#4a2717';
-            ctx.beginPath();
-            ctx.moveTo(10, 170); ctx.lineTo(112, 118); ctx.lineTo(250, 188); ctx.lineTo(146, 248);
-            ctx.closePath(); ctx.fill();
-        }
-
-        window.addEventListener('DOMContentLoaded', async () => {
-            renderHighDensityFallbackCanvas();
-            setupMobilePWAManifest();
-
-            const savedProfile = JSON.parse(localStorage.getItem('khalvat_profile_v1') || '{}');
-            if (savedProfile.name) document.getElementById('login-name').value = savedProfile.name;
-            if (savedProfile.room) document.getElementById('login-room').value = savedProfile.room;
-            if (savedProfile.char) selectCharacter(savedProfile.char);
-
-            try {
-                const customTracks = JSON.parse(localStorage.getItem('khalvat_custom_tracks_v1') || '[]');
-                customTracks.forEach(t => {
-                    if (t && t.id && !gramophonePlaylist.some(x => x.id === t.id)) {
-                        gramophonePlaylist.push(t);
-                    }
-                });
-            } catch (e) {}
-
-            renderGramophonePlaylist();
-
-            dbInstance = await openCafeIndexedDB();
-            await initializeMobileAssetsAndFonts();
-        });
-
-        function setupMobilePWAManifest() {
-            try {
-                const manifestObj = {
-                    name: "کافه خلوت | پناهگاه دیجیتال ما",
-                    short_name: "کافه خلوت",
-                    start_url: ".",
-                    display: "standalone",
-                    background_color: "#120c14",
-                    theme_color: "#180e0b",
-                    orientation: "portrait"
-                };
-                const blob = new Blob([JSON.stringify(manifestObj)], { type: 'application/json' });
-                const link = document.createElement('link');
-                link.rel = 'manifest';
-                link.href = URL.createObjectURL(blob);
-                document.head.appendChild(link);
-            } catch (e) {}
         }
 
         async function initializeMobileAssetsAndFonts() {
-            if (window.BAKED_CAFE_ASSETS) {
-                for (const key of Object.keys(window.BAKED_CAFE_ASSETS)) {
-                    if (window.BAKED_CAFE_ASSETS[key]) {
-                        cachedAssets[key] = window.BAKED_CAFE_ASSETS[key];
-                    }
-                }
-            }
-
             if (dbInstance) {
                 const storedList = await new Promise((resolve) => {
                     try {
@@ -1421,13 +1310,8 @@
                         req.onerror = () => resolve([]);
                     } catch (e) { resolve([]); }
                 });
-                storedList.forEach(item => {
-                    if (item && item.id && item.dataUrl) {
-                        cachedAssets[item.id] = item.dataUrl;
-                    }
-                });
+                storedList.forEach(item => { if (item && item.id && item.dataUrl) cachedAssets[item.id] = item.dataUrl; });
             }
-
             await tryAutoFetchLocalProjectFiles();
             await applyCachedAssetsToDOM();
             updateAssetStatusBadges();
@@ -1481,37 +1365,23 @@
         async function applyCachedAssetsToDOM() {
             if (cachedAssets.cafeBg) {
                 const refImg = document.getElementById('ref-cafe-img');
-                if (refImg) {
-                    refImg.src = cachedAssets.cafeBg;
-                    refImg.style.display = 'block';
-                }
+                if (refImg) { refImg.src = cachedAssets.cafeBg; refImg.style.display = 'block'; }
             }
-
             if (cachedAssets.charMale) {
                 const mImg = document.getElementById('login-img-male');
-                if (mImg) { mImg.src = cachedAssets.charMale; mImg.style.display = 'block'; }
+                if (mImg) mImg.src = cachedAssets.charMale;
             }
             if (cachedAssets.charFemale) {
                 const fImg = document.getElementById('login-img-female');
-                if (fImg) { fImg.src = cachedAssets.charFemale; fImg.style.display = 'block'; }
+                if (fImg) fImg.src = cachedAssets.charFemale;
             }
 
             let cssRules = '';
             if (cachedAssets.fontBold) {
                 cssRules += `@font-face { font-family: 'RooyinBold'; src: url('${cachedAssets.fontBold}'); font-weight: 700; font-display: swap; }\n`;
-                try {
-                    const ffBold = new FontFace('RooyinBold', `url(${cachedAssets.fontBold})`, { weight: '700' });
-                    const loadedBold = await ffBold.load();
-                    document.fonts.add(loadedBold);
-                } catch (e) {}
             }
             if (cachedAssets.fontReg) {
                 cssRules += `@font-face { font-family: 'RooyinRegular'; src: url('${cachedAssets.fontReg}'); font-weight: 400; font-display: swap; }\n`;
-                try {
-                    const ffReg = new FontFace('RooyinRegular', `url(${cachedAssets.fontReg})`, { weight: '400' });
-                    const loadedReg = await ffReg.load();
-                    document.fonts.add(loadedReg);
-                } catch (e) {}
             }
             if (cssRules) {
                 const styleEl = document.getElementById('embedded-rooyin-fonts');
@@ -1520,261 +1390,38 @@
         }
 
         function updateAssetStatusBadges() {
-            const setBadge = (id, ready, labelReady, labelWait) => {
+            const setBadge = (id, ready, label) => {
                 const el = document.getElementById(id);
                 if (!el) return;
-                if (ready) {
-                    el.classList.add('ready');
-                    el.textContent = '🟢 ' + labelReady;
-                } else {
-                    el.classList.remove('ready');
-                    el.textContent = '⚪ ' + labelWait;
-                }
+                if (ready) { el.classList.add('ready'); el.textContent = '🟢 ' + label; }
+                else { el.classList.remove('ready'); el.textContent = '⚪ ' + label; }
             };
-            setBadge('stat-cafe-img', !!cachedAssets.cafeBg, 'تصویر کافه', 'تصویر کافه');
-            setBadge('stat-font-bold', !!cachedAssets.fontBold, 'رویین بولد', 'رویین بولد');
-            setBadge('stat-font-reg', !!cachedAssets.fontReg, 'رویین رگولار', 'رویین رگولار');
-            setBadge('stat-char-imgs', !!(cachedAssets.charMale || cachedAssets.charFemale), 'کاراکترها', 'کاراکترها');
+            setBadge('stat-cafe-img', !!cachedAssets.cafeBg, 'تصویر کافه');
+            setBadge('stat-font-bold', !!cachedAssets.fontBold, 'رویین بولد');
+            setBadge('stat-font-reg', !!cachedAssets.fontReg, 'رویین رگولار');
+            setBadge('stat-char-imgs', !!(cachedAssets.charMale || cachedAssets.charFemale), 'کاراکترها');
         }
 
         function toggleMobileAssetsModal() {
-            const modal = document.getElementById('mobile-assets-modal');
-            document.getElementById('gramophone-modal').classList.remove('open');
-            document.getElementById('history-modal').classList.remove('open');
-            modal.classList.toggle('open');
+            document.getElementById('mobile-assets-modal').classList.toggle('open');
             updateAssetStatusBadges();
         }
 
         async function handleImportProjectAssets(event) {
             const files = Array.from(event.target.files || []);
-            if (files.length === 0) return;
-
-            let importedCount = 0;
             for (const file of files) {
-                const nameLower = file.name.toLowerCase();
-                let targetKey = null;
-
-                if (nameLower.includes('gramophone') || nameLower.includes('cafe')) {
-                    targetKey = 'cafeBg';
-                } else if (nameLower.includes('winter') || nameLower.includes('male')) {
-                    targetKey = 'charMale';
-                } else if (nameLower.includes('floral') || nameLower.includes('hijab') || nameLower.includes('female')) {
-                    targetKey = 'charFemale';
-                } else if (nameLower.includes('bold')) {
-                    targetKey = 'fontBold';
-                } else if (nameLower.includes('regular') || nameLower.includes('rooyin')) {
-                    targetKey = 'fontReg';
-                } else if (file.type.startsWith('image/') && !cachedAssets.cafeBg) {
-                    targetKey = 'cafeBg';
-                }
-
-                if (targetKey) {
+                const name = file.name.toLowerCase();
+                let key = name.includes('bold') ? 'fontBold' : (name.includes('regular') ? 'fontReg' : (name.includes('cafe') || name.includes('gramophone') ? 'cafeBg' : ''));
+                if (key) {
                     const dataUrl = await blobToDataURL(file);
-                    if (dataUrl) {
-                        cachedAssets[targetKey] = dataUrl;
-                        saveAssetToIDB(targetKey, dataUrl);
-                        importedCount++;
-                    }
+                    if (dataUrl) { cachedAssets[key] = dataUrl; saveAssetToIDB(key, dataUrl); }
                 }
             }
-
             await applyCachedAssetsToDOM();
             updateAssetStatusBadges();
+            showToast('✅ فایل‌ها با موفقیت نصب شدند!');
             event.target.value = '';
-
-            if (importedCount > 0) {
-                showToast(`✅ ${importedCount} فایل در حافظه موبایل نصب شد!`);
-                if (mqttClient && mqttClient.connected) {
-                    broadcastAllCachedAssetsToPeer();
-                }
-            } else {
-                showToast('⚠️ لطفاً فایل‌های عکس یا فونت انتخاب کنید');
-            }
         }
-
-        function broadcastAllCachedAssetsToPeer(specificKeys = null) {
-            if (!mqttClient || !mqttClient.connected) {
-                showToast('⚠️ ابتدا وارد میز شوید');
-                return;
-            }
-            const keysToSend = specificKeys || ['fontBold', 'fontReg', 'cafeBg', 'charMale', 'charFemale'].filter(k => !!cachedAssets[k]);
-            if (keysToSend.length === 0) return;
-
-            let keyIdx = 0;
-            const sendNextAsset = () => {
-                if (keyIdx >= keysToSend.length) {
-                    const progBox = document.getElementById('asset-sync-progress');
-                    if (progBox) progBox.style.display = 'none';
-                    showToast('✅ فونت و گرافیک برای یارتان ارسال شد!');
-                    return;
-                }
-                const key = keysToSend[keyIdx++];
-                const dataStr = cachedAssets[key];
-                if (!dataStr) {
-                    sendNextAsset();
-                    return;
-                }
-                streamSingleAssetOverMQTT(key, dataStr, sendNextAsset);
-            };
-            sendNextAsset();
-        }
-
-        function streamSingleAssetOverMQTT(assetKey, dataStr, onComplete) {
-            const chunkSize = 22000;
-            const totalChunks = Math.ceil(dataStr.length / chunkSize);
-
-            publishEvent({
-                type: 'asset_sync_start',
-                sender: myName || 'یار',
-                assetKey: assetKey,
-                totalChunks: totalChunks,
-                id: myClientId
-            });
-
-            let idx = 0;
-            const progBox = document.getElementById('asset-sync-progress');
-            const progTxt = document.getElementById('asset-sync-text');
-            const progFill = document.getElementById('asset-sync-fill');
-            if (progBox) progBox.style.display = 'flex';
-
-            const pumpChunk = () => {
-                if (idx >= totalChunks) {
-                    publishEvent({
-                        type: 'asset_sync_end',
-                        sender: myName || 'یار',
-                        assetKey: assetKey,
-                        id: myClientId
-                    });
-                    if (onComplete) onComplete();
-                    return;
-                }
-                const slice = dataStr.slice(idx * chunkSize, (idx + 1) * chunkSize);
-                publishEvent({
-                    type: 'asset_sync_chunk',
-                    assetKey: assetKey,
-                    index: idx,
-                    chunk: slice,
-                    id: myClientId
-                });
-                idx++;
-                const pct = Math.round((idx / totalChunks) * 100);
-                if (progTxt) progTxt.textContent = `📤 ارسال پک موبایل: ${pct}٪`;
-                if (progFill) progFill.style.width = pct + '%';
-                setTimeout(pumpChunk, 35);
-            };
-            setTimeout(pumpChunk, 50);
-        }
-
-        function exportSelfContainedMobileHTML() {
-            const hasAny = cachedAssets.cafeBg || cachedAssets.fontBold || cachedAssets.fontReg;
-            if (!hasAny) {
-                showToast('⚠️ ابتدا فایل‌های پروژه را انتخاب کنید');
-                return;
-            }
-
-            let htmlSource = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
-            const bakedJson = JSON.stringify(cachedAssets);
-            htmlSource = htmlSource.replace(
-                'window.BAKED_CAFE_ASSETS = window.BAKED_CAFE_ASSETS || {};',
-                `window.BAKED_CAFE_ASSETS = ${bakedJson};`
-            );
-
-            const blob = new Blob([htmlSource], { type: 'text/html;charset=utf-8' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'chayye-mobile-complete-v1.1.2.html';
-            a.click();
-            URL.revokeObjectURL(url);
-            showToast('📦 فایل تک‌فایلی موبایل دانلود شد!');
-        }
-
-        let peerState = {
-            online: false,
-            name: '',
-            char: 'female',
-            lastSeen: 0
-        };
-        let heartbeatTimer = null;
-        let watchdogTimer = null;
-
-        let dbInstance = null;
-        let chatHistory = [];
-        let currentReply = null;
-        let isChatHidden = false;
-        let unreadCount = 0;
-        let roomCode = '';
-        let roomTopic = '';
-        let myClientId = localStorage.getItem('khalvat_client_id');
-        if (!myClientId) {
-            myClientId = 'khalvat_' + Math.random().toString(36).substring(2, 10);
-            localStorage.setItem('khalvat_client_id', myClientId);
-        }
-
-        const WEATHER_MODES = [
-            { id: 'rain', label: 'بارانی', icon: '🌧️', tint: '#0f172a', tintOp: 0.22, dropColor: '#93c5fd', dropW: 3.5, dropH: 22 },
-            { id: 'autumn', label: 'پاییزی', icon: '🍂', tint: '#451a03', tintOp: 0.24, dropColor: '#fb923c', dropW: 9, dropH: 7 },
-            { id: 'snow', label: 'برفی', icon: '❄️', tint: '#1e293b', tintOp: 0.26, dropColor: '#ffffff', dropW: 7, dropH: 7 }
-        ];
-        let weatherIdx = 0;
-
-        let audioCtx = null;
-        let isAmbiencePlaying = false;
-        let activeSoundSource = null;
-        let activeEffectInterval = null;
-
-        let gramophonePlaylist = [
-            {
-                id: 'lofi_rainy_night',
-                title: '۱. باران شبانه کافه (Lofi Rhodes)',
-                type: 'synth',
-                tempo: 76,
-                chords: [
-                    [261.63, 329.63, 392.00, 493.88],
-                    [220.00, 261.63, 329.63, 392.00],
-                    [174.61, 220.00, 261.63, 329.63],
-                    [196.00, 246.94, 293.66, 349.23]
-                ],
-                melody: [523.25, 659.25, 587.33, 493.88, 523.25, 392.00, 440.00, 392.00]
-            },
-            {
-                id: 'lofi_espresso_breeze',
-                title: '۲. نسیم گرم اسپرسو (Cozy Jazz Lofi)',
-                type: 'synth',
-                tempo: 84,
-                chords: [
-                    [293.66, 349.23, 440.00, 523.25],
-                    [196.00, 246.94, 293.66, 349.23],
-                    [261.63, 329.63, 392.00, 493.88],
-                    [220.00, 277.18, 329.63, 392.00]
-                ],
-                melody: [587.33, 523.25, 440.00, 493.88, 523.25, 659.25, 587.33, 523.25]
-            },
-            {
-                id: 'lofi_midnight_reverie',
-                title: '۳. رویای نیمه‌شب (Midnight MusicBox)',
-                type: 'synth',
-                tempo: 68,
-                chords: [
-                    [233.08, 293.66, 349.23, 440.00],
-                    [196.00, 233.08, 293.66, 349.23],
-                    [155.56, 196.00, 233.08, 293.66],
-                    [174.61, 220.00, 261.63, 349.23]
-                ],
-                melody: [698.46, 587.33, 523.25, 466.16, 587.33, 523.25, 440.00, 392.00]
-            }
-        ];
-
-        let gramState = {
-            isPlaying: false,
-            currentTrackIdx: 0,
-            volume: 0.75,
-            synthTimer: null,
-            vinylNoiseNode: null,
-            stepCounter: 0
-        };
-
-        let incomingAudioBuffers = {};
 
         function selectCharacter(charType) {
             myChar = charType;
@@ -1787,16 +1434,11 @@
             roomCode = document.getElementById('login-room').value.trim();
 
             if (!myName || !roomCode) {
-                showToast('⚠️ لطفاً نام خود و شماره میز مشترک را وارد کنید');
+                showToast('⚠️ نام و شماره میز را وارد کنید');
                 return;
             }
 
-            localStorage.setItem('khalvat_profile_v1', JSON.stringify({
-                name: myName,
-                room: roomCode,
-                char: myChar
-            }));
-
+            localStorage.setItem('khalvat_profile_v1', JSON.stringify({ name: myName, room: roomCode, char: myChar }));
             unlockBrowserAudioEngine();
             updateCharacterBadgesOnScene();
 
@@ -1807,43 +1449,19 @@
 
             playDoorChime(true);
             await initDatabaseAndLoadHistory();
-            await loadSavedSharedAudioTracksFromIDB();
             connectToCafeNetwork();
-
-            window.addEventListener('beforeunload', () => {
-                if (mqttClient && mqttClient.connected) {
-                    mqttClient.publish(roomTopic, JSON.stringify({
-                        type: 'leave',
-                        sender: myName,
-                        id: myClientId
-                    }));
-                }
-            });
         }
 
         function unlockBrowserAudioEngine() {
             try {
-                if (!audioCtx) {
-                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                }
-                if (audioCtx.state === 'suspended') {
-                    audioCtx.resume();
-                }
-                const audioEl = document.getElementById('external-audio-player');
-                if (audioEl) {
-                    audioEl.src = 'data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA';
-                    audioEl.play().then(() => {
-                        audioEl.pause();
-                        audioEl.currentTime = 0;
-                    }).catch(() => {});
-                }
+                if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                if (audioCtx.state === 'suspended') audioCtx.resume();
             } catch (e) {}
         }
 
         function updateCharacterBadgesOnScene() {
             const maleTxt = document.getElementById('svg-name-male');
             const femaleTxt = document.getElementById('svg-name-female');
-
             if (myChar === 'male') {
                 maleTxt.textContent = myName + ' (شما)';
                 femaleTxt.textContent = peerState.online ? peerState.name : 'منتظر یار...';
@@ -1853,29 +1471,14 @@
             }
         }
 
-        function getStorageKey() {
-            return 'khalvat_history_v1_' + roomCode;
-        }
-
         function openCafeIndexedDB() {
             return new Promise((resolve) => {
-                if (!window.indexedDB) {
-                    resolve(null);
-                    return;
-                }
-                const req = indexedDB.open('KhalvatCafeDB_v1_1_2', 3);
+                if (!window.indexedDB) { resolve(null); return; }
+                const req = indexedDB.open('KhalvatCafeDB_v1_1_3', 1);
                 req.onupgradeneeded = (e) => {
                     const db = e.target.result;
-                    if (!db.objectStoreNames.contains('messages')) {
-                        const store = db.createObjectStore('messages', { keyPath: 'msgId' });
-                        store.createIndex('roomCode', 'roomCode', { unique: false });
-                    }
-                    if (!db.objectStoreNames.contains('shared_tracks')) {
-                        db.createObjectStore('shared_tracks', { keyPath: 'id' });
-                    }
-                    if (!db.objectStoreNames.contains('cafe_assets')) {
-                        db.createObjectStore('cafe_assets', { keyPath: 'id' });
-                    }
+                    if (!db.objectStoreNames.contains('messages')) db.createObjectStore('messages', { keyPath: 'msgId' });
+                    if (!db.objectStoreNames.contains('cafe_assets')) db.createObjectStore('cafe_assets', { keyPath: 'id' });
                 };
                 req.onsuccess = (e) => resolve(e.target.result);
                 req.onerror = () => resolve(null);
@@ -1884,140 +1487,58 @@
 
         async function initDatabaseAndLoadHistory() {
             dbInstance = await openCafeIndexedDB();
-            let loadedMessages = [];
-
+            let loaded = [];
             if (dbInstance) {
-                loadedMessages = await new Promise((resolve) => {
-                    try {
-                        const tx = dbInstance.transaction('messages', 'readonly');
-                        const store = tx.objectStore('messages');
-                        const idx = store.index('roomCode');
-                        const req = idx.getAll(roomCode);
-                        req.onsuccess = () => resolve(req.result || []);
-                        req.onerror = () => resolve([]);
-                    } catch (e) {
-                        resolve([]);
-                    }
-                });
-            }
-
-            try {
-                const rawLocal = localStorage.getItem(getStorageKey());
-                const localMsgs = rawLocal ? JSON.parse(rawLocal) : [];
-                const mapById = new Map();
-                loadedMessages.forEach(m => mapById.set(m.msgId, m));
-                localMsgs.forEach(m => {
-                    if (m && m.msgId && !mapById.has(m.msgId)) {
-                        m.roomCode = roomCode;
-                        mapById.set(m.msgId, m);
-                        saveSingleMsgToIDB(m);
-                    }
-                });
-                chatHistory = Array.from(mapById.values());
-            } catch (e) {
-                chatHistory = loadedMessages;
-            }
-
-            chatHistory.sort((a, b) => (a.timestamp || 0) - (b.timestamp || 0));
-            syncLocalBackupMirror();
-
-            const listEl = document.getElementById('messages-list');
-            listEl.innerHTML = '';
-
-            if (chatHistory.length > 0) {
-                addSystemLog(`📜 تمام تاریخچه این میز (${chatHistory.length} پیام) بازیابی شد.`);
-                chatHistory.forEach(msg => renderMessageBubble(msg, false));
-                scrollToBottom();
-            } else {
-                addSystemLog('به کافه خلوت خوش آمدید! شما پشت میز نشستید ☕');
-            }
-            updateArchiveStatsUI();
-        }
-
-        async function loadSavedSharedAudioTracksFromIDB() {
-            if (!dbInstance) return;
-            try {
-                const savedTracks = await new Promise((resolve) => {
-                    const tx = dbInstance.transaction('shared_tracks', 'readonly');
-                    const req = tx.objectStore('shared_tracks').getAll();
+                loaded = await new Promise((resolve) => {
+                    const tx = dbInstance.transaction('messages', 'readonly');
+                    const req = tx.objectStore('messages').getAll();
                     req.onsuccess = () => resolve(req.result || []);
                     req.onerror = () => resolve([]);
                 });
-                savedTracks.forEach(t => {
-                    if (t && t.id && !gramophonePlaylist.some(x => x.id === t.id)) {
-                        gramophonePlaylist.push(t);
-                    }
-                });
-                renderGramophonePlaylist();
-            } catch (e) {}
-        }
+            }
+            chatHistory = loaded.filter(m => m.roomCode === roomCode);
+            chatHistory.sort((a, b) => (a.timestamp || 0) - (b.timestamp || 0));
 
-        function saveSharedAudioTrackToIDB(trackObj) {
-            if (!dbInstance || !trackObj || !trackObj.id) return;
-            try {
-                const tx = dbInstance.transaction('shared_tracks', 'readwrite');
-                tx.objectStore('shared_tracks').put(trackObj);
-            } catch (e) {}
-        }
-
-        function saveSingleMsgToIDB(msgObj) {
-            if (!dbInstance) return;
-            try {
-                const tx = dbInstance.transaction('messages', 'readwrite');
-                tx.objectStore('messages').put({ ...msgObj, roomCode: roomCode });
-            } catch (e) {}
-        }
-
-        function syncLocalBackupMirror() {
-            try {
-                localStorage.setItem(getStorageKey(), JSON.stringify(chatHistory));
-            } catch (e) {}
+            const listEl = document.getElementById('messages-list');
+            listEl.innerHTML = '';
+            if (chatHistory.length > 0) {
+                chatHistory.forEach(m => renderMessageBubble(m, false));
+                scrollToBottom();
+            } else {
+                addSystemLog('به کافه خلوت خوش آمدید! ☕');
+            }
         }
 
         function saveMessageToStorage(msgObj) {
             if (!msgObj || !msgObj.msgId) return false;
             if (chatHistory.some(m => m.msgId === msgObj.msgId)) return false;
-
             const enriched = { ...msgObj, roomCode: roomCode };
             chatHistory.push(enriched);
-            saveSingleMsgToIDB(enriched);
-            syncLocalBackupMirror();
-            updateArchiveStatsUI();
+            if (dbInstance) {
+                try {
+                    const tx = dbInstance.transaction('messages', 'readwrite');
+                    tx.objectStore('messages').put(enriched);
+                } catch (e) {}
+            }
             return true;
         }
 
+        /* --- اتصال کاملاً پایدار MQTT --- */
         function connectToCafeNetwork() {
-            roomTopic = 'khalvat_sanctuary_v1/' + roomCode;
-
-            const willPayload = JSON.stringify({
-                type: 'leave',
-                sender: myName,
-                id: myClientId
-            });
+            roomTopic = 'khalvat_sanctuary_v1_3/' + roomCode;
 
             mqttClient = mqtt.connect('wss://broker.emqx.io:8084/mqtt', {
                 clientId: myClientId + '_' + Math.floor(Math.random() * 1000),
-                keepalive: 60,
-                reconnectPeriod: 3500,
-                connectTimeout: 20000,
-                will: {
-                    topic: roomTopic,
-                    payload: willPayload,
-                    qos: 0,
-                    retain: false
-                }
+                keepalive: 30,
+                reconnectPeriod: 2000,
+                connectTimeout: 15000
             });
 
             mqttClient.on('connect', () => {
                 updatePeerStatusUI();
                 mqttClient.subscribe(roomTopic, (err) => {
                     if (!err) {
-                        publishEvent({
-                            type: 'join',
-                            sender: myName,
-                            char: myChar,
-                            id: myClientId
-                        });
+                        publishEvent({ type: 'join', sender: myName, char: myChar, id: myClientId });
                         startHeartbeatSystem();
                     }
                 });
@@ -2025,116 +1546,25 @@
 
             mqttClient.on('message', (topic, payloadBuffer) => {
                 let data;
-                try {
-                    data = JSON.parse(payloadBuffer.toString());
-                } catch (e) { return; }
-
+                try { data = JSON.parse(payloadBuffer.toString()); } catch (e) { return; }
                 if (data.id === myClientId) return;
 
                 switch (data.type) {
                     case 'join':
                         handlePeerActivity(data.sender, data.char);
-                        const activeTrack = gramophonePlaylist[gramState.currentTrackIdx];
-                        publishEvent({
-                            type: 'here',
-                            sender: myName,
-                            char: myChar,
-                            weatherIdx: weatherIdx,
-                            availableAssets: Object.keys(cachedAssets).filter(k => !!cachedAssets[k]),
-                            gramState: {
-                                isPlaying: gramState.isPlaying,
-                                trackMeta: activeTrack && activeTrack.type !== 'shared_data'
-                                    ? activeTrack
-                                    : (activeTrack ? { id: activeTrack.id, title: activeTrack.title, type: activeTrack.type } : null)
-                            },
-                            id: myClientId
-                        });
-                        broadcastFullHistorySync();
+                        publishEvent({ type: 'here', sender: myName, char: myChar, weatherIdx: weatherIdx, id: myClientId });
                         break;
-
                     case 'here':
+                    case 'heartbeat':
                         handlePeerActivity(data.sender, data.char);
                         if (typeof data.weatherIdx === 'number' && data.weatherIdx !== weatherIdx) {
                             weatherIdx = data.weatherIdx;
                             applyWeatherVisuals();
                         }
-                        if (data.gramState && data.gramState.isPlaying && !gramState.isPlaying && data.gramState.trackMeta) {
-                            applyRemoteMusicSync(data.gramState.trackMeta, true, 0, data.sender, true);
-                        }
-                        if (Array.isArray(data.availableAssets)) {
-                            const missingKeys = data.availableAssets.filter(k => !cachedAssets[k]);
-                            if (missingKeys.length > 0) {
-                                publishEvent({
-                                    type: 'request_missing_assets',
-                                    keys: missingKeys,
-                                    sender: myName,
-                                    id: myClientId
-                                });
-                            }
-                        }
                         break;
-
-                    case 'request_missing_assets':
-                        if (Array.isArray(data.keys)) {
-                            const validKeys = data.keys.filter(k => !!cachedAssets[k]);
-                            if (validKeys.length > 0) {
-                                broadcastAllCachedAssetsToPeer(validKeys);
-                            }
-                        }
-                        break;
-
-                    case 'asset_sync_start':
-                        incomingAssetBuffers[data.assetKey] = {
-                            key: data.assetKey,
-                            totalChunks: data.totalChunks,
-                            received: 0,
-                            chunks: new Array(data.totalChunks),
-                            sender: data.sender
-                        };
-                        break;
-
-                    case 'asset_sync_chunk':
-                        const aBuf = incomingAssetBuffers[data.assetKey];
-                        if (aBuf && typeof data.index === 'number') {
-                            if (!aBuf.chunks[data.index]) {
-                                aBuf.chunks[data.index] = data.chunk;
-                                aBuf.received++;
-                            }
-                            const pct = Math.min(99, Math.round((aBuf.received / aBuf.totalChunks) * 100));
-                            const progBox = document.getElementById('asset-sync-progress');
-                            const progTxt = document.getElementById('asset-sync-text');
-                            const progFill = document.getElementById('asset-sync-fill');
-                            if (progBox) progBox.style.display = 'flex';
-                            if (progTxt) progTxt.textContent = `📥 دریافت فونت/گرافیک: ${pct}٪`;
-                            if (progFill) progFill.style.width = pct + '%';
-                        }
-                        break;
-
-                    case 'asset_sync_end':
-                        const finishedAsset = incomingAssetBuffers[data.assetKey];
-                        if (finishedAsset) {
-                            const fullDataUrl = finishedAsset.chunks.join('');
-                            cachedAssets[finishedAsset.key] = fullDataUrl;
-                            saveAssetToIDB(finishedAsset.key, fullDataUrl);
-                            delete incomingAssetBuffers[data.assetKey];
-
-                            const progBox = document.getElementById('asset-sync-progress');
-                            if (progBox) progBox.style.display = 'none';
-
-                            applyCachedAssetsToDOM();
-                            updateAssetStatusBadges();
-                            showToast(`✨ فونت و گرافیک روی موبایل نصب شد!`);
-                        }
-                        break;
-
-                    case 'heartbeat':
-                        handlePeerActivity(data.sender, data.char);
-                        break;
-
                     case 'leave':
-                        handlePeerGracefullyOffline(data.sender || peerState.name);
+                        handlePeerOffline(data.sender);
                         break;
-
                     case 'chat':
                         handlePeerActivity(data.sender, data.char);
                         if (saveMessageToStorage(data.msg)) {
@@ -2142,31 +1572,11 @@
                             notifyIfChatHidden();
                         }
                         break;
-
-                    case 'request_full_history':
-                        broadcastFullHistorySync();
-                        break;
-
-                    case 'sync_history_batch':
-                        if (Array.isArray(data.messages)) {
-                            let added = 0;
-                            data.messages.forEach(m => {
-                                if (saveMessageToStorage(m)) added++;
-                            });
-                            if (added > 0) {
-                                chatHistory.sort((a, b) => (a.timestamp || 0) - (b.timestamp || 0));
-                                reRenderAllMessages();
-                                addSystemLog(`🔄 ${added} پیام همگام‌سازی شد.`);
-                            }
-                        }
-                        break;
-
                     case 'action':
                         handlePeerActivity(data.sender, data.char);
                         showFloatingReaction('peer', data.emoji);
                         addSystemLog(`${data.sender} ${data.text}`);
                         break;
-
                     case 'weather':
                         if (typeof data.weatherIdx === 'number') {
                             weatherIdx = data.weatherIdx;
@@ -2174,68 +1584,9 @@
                             addSystemLog(`${data.sender} آب‌وهوا را تغییر داد.`);
                         }
                         break;
-
-                    case 'audio_stream_start':
-                        incomingAudioBuffers[data.trackId] = {
-                            id: data.trackId,
-                            title: data.title,
-                            totalChunks: data.totalChunks,
-                            received: 0,
-                            chunks: new Array(data.totalChunks),
-                            sender: data.sender
-                        };
-                        const transferBox = document.getElementById('music-transfer-progress');
-                        if (transferBox) transferBox.style.display = 'flex';
-                        break;
-
-                    case 'audio_stream_chunk':
-                        const bufObj = incomingAudioBuffers[data.trackId];
-                        if (bufObj && typeof data.index === 'number') {
-                            if (!bufObj.chunks[data.index]) {
-                                bufObj.chunks[data.index] = data.chunk;
-                                bufObj.received++;
-                            }
-                            const pct = Math.min(99, Math.round((bufObj.received / bufObj.totalChunks) * 100));
-                            const tText = document.getElementById('music-transfer-text');
-                            const tFill = document.getElementById('progress-bar-fill');
-                            if (tText) tText.textContent = `📥 دریافت آهنگ از یار: ${pct}٪`;
-                            if (tFill) tFill.style.width = pct + '%';
-                        }
-                        break;
-
-                    case 'audio_stream_end':
-                        const finishedBuf = incomingAudioBuffers[data.trackId];
-                        if (finishedBuf) {
-                            const fullBase64 = finishedBuf.chunks.join('');
-                            delete incomingAudioBuffers[data.trackId];
-
-                            const transferBox = document.getElementById('music-transfer-progress');
-                            if (transferBox) transferBox.style.display = 'none';
-
-                            const newSharedTrack = {
-                                id: finishedBuf.id,
-                                title: finishedBuf.title + ' (ارسال‌شده توسط ' + finishedBuf.sender + ')',
-                                type: 'shared_data',
-                                dataUrl: fullBase64
-                            };
-
-                            if (!gramophonePlaylist.some(t => t.id === newSharedTrack.id)) {
-                                gramophonePlaylist.push(newSharedTrack);
-                                saveSharedAudioTrackToIDB(newSharedTrack);
-                            }
-                            renderGramophonePlaylist();
-                            showToast(`🎵 آهنگ مشترک جدید دریافت شد!`);
-
-                            const targetIdx = gramophonePlaylist.findIndex(t => t.id === finishedBuf.id);
-                            if (targetIdx !== -1) {
-                                selectAndPlayGramophoneTrack(targetIdx, true, 0, true);
-                            }
-                        }
-                        break;
-
                     case 'music_sync':
                         if (data.trackMeta) {
-                            applyRemoteMusicSync(data.trackMeta, data.isPlaying, data.currentTime || 0, data.sender, false);
+                            applyRemoteMusicSync(data.trackMeta, data.isPlaying, data.sender);
                         }
                         break;
                 }
@@ -2253,19 +1604,14 @@
             if (watchdogTimer) clearInterval(watchdogTimer);
 
             heartbeatTimer = setInterval(() => {
-                publishEvent({
-                    type: 'heartbeat',
-                    sender: myName,
-                    char: myChar,
-                    id: myClientId
-                });
-            }, 10000);
+                publishEvent({ type: 'heartbeat', sender: myName, char: myChar, id: myClientId });
+            }, 8000);
 
             watchdogTimer = setInterval(() => {
-                if (peerState.online && (Date.now() - peerState.lastSeen > 35000)) {
-                    handlePeerGracefullyOffline(peerState.name);
+                if (peerState.online && (Date.now() - peerState.lastSeen > 22000)) {
+                    handlePeerOffline(peerState.name);
                 }
-            }, 5000);
+            }, 4000);
         }
 
         function handlePeerActivity(name, charType) {
@@ -2274,10 +1620,6 @@
             peerState.name = name || 'یار شما';
             if (charType) peerState.char = charType;
             peerState.lastSeen = Date.now();
-            if (peerState.graceOfflineTimer) {
-                clearTimeout(peerState.graceOfflineTimer);
-                peerState.graceOfflineTimer = null;
-            }
 
             updatePeerStatusUI();
             updateCharacterBadgesOnScene();
@@ -2289,23 +1631,14 @@
             }
         }
 
-        function handlePeerGracefullyOffline(name) {
+        function handlePeerOffline(name) {
             if (!peerState.online) return;
-            if (peerState.graceOfflineTimer) return;
-
-            peerState.graceOfflineTimer = setTimeout(() => {
-                if (Date.now() - peerState.lastSeen > 28000) {
-                    peerState.online = false;
-                    peerState.graceOfflineTimer = null;
-                    updatePeerStatusUI();
-                    updateCharacterBadgesOnScene();
-                    playDoorChime(false);
-                    showToast(`🚪 «${name || peerState.name}» کافه را ترک کرد`);
-                    addSystemLog(`🚪 صندلی روبرو خالی شد.`);
-                } else {
-                    peerState.graceOfflineTimer = null;
-                }
-            }, 12000);
+            peerState.online = false;
+            updatePeerStatusUI();
+            updateCharacterBadgesOnScene();
+            playDoorChime(false);
+            showToast(`🚪 «${name || peerState.name}» کافه را ترک کرد`);
+            addSystemLog(`🚪 صندلی روبرو خالی شد.`);
         }
 
         function updatePeerStatusUI() {
@@ -2318,23 +1651,8 @@
                 statusTxt.style.color = '#4ade80';
             } else {
                 dot.classList.remove('online');
-                statusTxt.textContent = peerState.name
-                    ? `${peerState.name}: آفلاین`
-                    : 'منتظر ورود یار...';
+                statusTxt.textContent = peerState.name ? `${peerState.name}: آفلاین` : 'منتظر ورود یار...';
                 statusTxt.style.color = '#9ca3af';
-            }
-        }
-
-        function broadcastFullHistorySync() {
-            if (chatHistory.length === 0) return;
-            const batchSize = 80;
-            for (let i = 0; i < chatHistory.length; i += batchSize) {
-                const chunk = chatHistory.slice(i, i + batchSize);
-                publishEvent({
-                    type: 'sync_history_batch',
-                    messages: chunk,
-                    id: myClientId
-                });
             }
         }
 
@@ -2388,8 +1706,6 @@
             bubble.className = 'msg-bubble ' + (isMe ? 'me' : 'other');
             bubble.id = 'bubble-' + msg.msgId;
 
-            bubble.ondblclick = () => activateReply(msg.msgId, msg.senderName, msg.text);
-
             let replyHtml = '';
             if (msg.replyTo && msg.replyTo.msgId) {
                 replyHtml = `
@@ -2417,13 +1733,6 @@
 
             listEl.appendChild(bubble);
             if (autoScroll) scrollToBottom();
-        }
-
-        function reRenderAllMessages() {
-            const listEl = document.getElementById('messages-list');
-            listEl.innerHTML = '';
-            chatHistory.forEach(msg => renderMessageBubble(msg, false));
-            scrollToBottom();
         }
 
         function activateReply(msgId, senderName, text) {
@@ -2466,7 +1775,6 @@
             isChatHidden = hide;
             const sanctuary = document.getElementById('main-sanctuary');
             const restoreBtn = document.getElementById('restore-chat-btn');
-
             if (hide) {
                 sanctuary.classList.add('chat-minimized');
                 restoreBtn.style.display = 'flex';
@@ -2499,14 +1807,7 @@
         function sendCafeAction(actionText, emoji) {
             showFloatingReaction('me', emoji);
             addSystemLog(`شما ${actionText}`);
-            publishEvent({
-                type: 'action',
-                sender: myName,
-                char: myChar,
-                text: actionText,
-                emoji: emoji,
-                id: myClientId
-            });
+            publishEvent({ type: 'action', sender: myName, char: myChar, text: actionText, emoji: emoji, id: myClientId });
         }
 
         function showFloatingReaction(who, emoji) {
@@ -2527,12 +1828,7 @@
             weatherIdx = (weatherIdx + 1) % WEATHER_MODES.length;
             applyWeatherVisuals();
             if (broadcast) {
-                publishEvent({
-                    type: 'weather',
-                    sender: myName,
-                    weatherIdx: weatherIdx,
-                    id: myClientId
-                });
+                publishEvent({ type: 'weather', sender: myName, weatherIdx: weatherIdx, id: myClientId });
             }
         }
 
@@ -2542,38 +1838,12 @@
             document.getElementById('weather-label').textContent = mode.label;
             document.getElementById('window-atmosphere-tint').setAttribute('fill', mode.tint);
             document.getElementById('window-atmosphere-tint').setAttribute('opacity', mode.tintOp);
-
-            const drops = document.querySelectorAll('.w-drop');
-            drops.forEach(d => {
-                d.setAttribute('fill', mode.dropColor);
-                d.setAttribute('width', mode.dropW);
-                d.setAttribute('height', mode.dropH);
-            });
-
-            if (isAmbiencePlaying) {
-                rebuildAmbienceForCurrentWeather();
-            }
-        }
-
-        function stopCurrentAmbienceNodes() {
-            if (activeSoundSource) {
-                try { activeSoundSource.stop(); } catch (e) {}
-                try { activeSoundSource.disconnect(); } catch (e) {}
-                activeSoundSource = null;
-            }
-            if (activeEffectInterval) {
-                clearInterval(activeEffectInterval);
-                activeEffectInterval = null;
-            }
         }
 
         function toggleAmbience() {
             const btn = document.getElementById('ambience-btn');
             const icon = document.getElementById('ambience-icon');
-
-            if (!audioCtx) {
-                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            }
+            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
             if (isAmbiencePlaying) {
                 stopCurrentAmbienceNodes();
@@ -2584,171 +1854,25 @@
                 if (audioCtx.state === 'suspended') audioCtx.resume();
                 isAmbiencePlaying = true;
                 btn.classList.add('active');
-                rebuildAmbienceForCurrentWeather();
+                icon.textContent = '🔊';
             }
         }
 
-        function rebuildAmbienceForCurrentWeather() {
-            if (!audioCtx || !isAmbiencePlaying) return;
-            stopCurrentAmbienceNodes();
-
-            const modeId = WEATHER_MODES[weatherIdx].id;
-            const icon = document.getElementById('ambience-icon');
-
-            const bufferSize = 2 * audioCtx.sampleRate;
-            const noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
-            const output = noiseBuffer.getChannelData(0);
-
-            if (modeId === 'rain') {
-                icon.textContent = '🌧️🔊';
-                let b0 = 0, b1 = 0, b2 = 0;
-                for (let i = 0; i < bufferSize; i++) {
-                    const white = Math.random() * 2 - 1;
-                    b0 = 0.99 * b0 + white * 0.05;
-                    b1 = 0.95 * b1 + white * 0.12;
-                    b2 = 0.70 * b2 + white * 0.25;
-                    output[i] = (b0 + b1 + b2) * 0.14;
-                }
-
-                const src = audioCtx.createBufferSource();
-                src.buffer = noiseBuffer;
-                src.loop = true;
-
-                const filter = audioCtx.createBiquadFilter();
-                filter.type = 'bandpass';
-                filter.frequency.value = 1150;
-                filter.Q.value = 0.7;
-
-                src.connect(filter);
-                filter.connect(audioCtx.destination);
-                src.start(0);
-                activeSoundSource = src;
-
-                activeEffectInterval = setInterval(() => {
-                    if (!isAmbiencePlaying) return;
-                    if (Math.random() < 0.75) playRainDroplet();
-                }, 260);
-
-            } else if (modeId === 'autumn') {
-                icon.textContent = '🍂🔥';
-                let lastOut = 0;
-                for (let i = 0; i < bufferSize; i++) {
-                    const white = Math.random() * 2 - 1;
-                    output[i] = (lastOut + (0.015 * white)) / 1.015;
-                    lastOut = output[i];
-                    output[i] *= 0.12;
-                }
-
-                const src = audioCtx.createBufferSource();
-                src.buffer = noiseBuffer;
-                src.loop = true;
-
-                const filter = audioCtx.createBiquadFilter();
-                filter.type = 'lowpass';
-                filter.frequency.value = 340;
-
-                src.connect(filter);
-                filter.connect(audioCtx.destination);
-                src.start(0);
-                activeSoundSource = src;
-
-                activeEffectInterval = setInterval(() => {
-                    if (!isAmbiencePlaying) return;
-                    if (Math.random() < 0.85) playFireCrackle();
-                }, 190);
-
-            } else if (modeId === 'snow') {
-                icon.textContent = '❄️🎐';
-                let lastOut = 0;
-                for (let i = 0; i < bufferSize; i++) {
-                    const white = Math.random() * 2 - 1;
-                    output[i] = (lastOut + (0.008 * white)) / 1.008;
-                    lastOut = output[i];
-                    output[i] *= 0.08;
-                }
-
-                const src = audioCtx.createBufferSource();
-                src.buffer = noiseBuffer;
-                src.loop = true;
-
-                const filter = audioCtx.createBiquadFilter();
-                filter.type = 'lowpass';
-                filter.frequency.value = 210;
-
-                src.connect(filter);
-                filter.connect(audioCtx.destination);
-                src.start(0);
-                activeSoundSource = src;
-
-                activeEffectInterval = setInterval(() => {
-                    if (!isAmbiencePlaying) return;
-                    if (Math.random() < 0.55) playSnowChimeNote();
-                }, 1400);
+        function stopCurrentAmbienceNodes() {
+            if (activeSoundSource) {
+                try { activeSoundSource.stop(); } catch (e) {}
+                activeSoundSource = null;
             }
-        }
-
-        function playRainDroplet() {
-            try {
-                const now = audioCtx.currentTime;
-                const osc = audioCtx.createOscillator();
-                const gain = audioCtx.createGain();
-                osc.type = 'sine';
-                const baseFreq = 900 + Math.random() * 700;
-                osc.frequency.setValueAtTime(baseFreq, now);
-                osc.frequency.exponentialRampToValueAtTime(baseFreq * 1.4, now + 0.045);
-                gain.gain.setValueAtTime(0.018, now);
-                gain.gain.exponentialRampToValueAtTime(0.0005, now + 0.05);
-                osc.connect(gain);
-                gain.connect(audioCtx.destination);
-                osc.start(now);
-                osc.stop(now + 0.055);
-            } catch (e) {}
-        }
-
-        function playFireCrackle() {
-            try {
-                const now = audioCtx.currentTime;
-                const osc = audioCtx.createOscillator();
-                const gain = audioCtx.createGain();
-                osc.type = 'triangle';
-                osc.frequency.setValueAtTime(1800 + Math.random() * 2200, now);
-                gain.gain.setValueAtTime(0.024, now);
-                gain.gain.exponentialRampToValueAtTime(0.0005, now + 0.022);
-                osc.connect(gain);
-                gain.connect(audioCtx.destination);
-                osc.start(now);
-                osc.stop(now + 0.025);
-            } catch (e) {}
-        }
-
-        function playSnowChimeNote() {
-            try {
-                const notes = [1046.5, 1174.6, 1318.5, 1567.9, 1760.0];
-                const freq = notes[Math.floor(Math.random() * notes.length)];
-                const now = audioCtx.currentTime;
-                const osc = audioCtx.createOscillator();
-                const gain = audioCtx.createGain();
-                osc.type = 'sine';
-                osc.frequency.setValueAtTime(freq, now);
-                gain.gain.setValueAtTime(0.016, now);
-                gain.gain.exponentialRampToValueAtTime(0.0004, now + 1.2);
-                osc.connect(gain);
-                gain.connect(audioCtx.destination);
-                osc.start(now);
-                osc.stop(now + 1.25);
-            } catch (e) {}
         }
 
         function playDoorChime(isEntering) {
             try {
                 if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
                 if (audioCtx.state === 'suspended') audioCtx.resume();
-
                 const osc = audioCtx.createOscillator();
                 const gain = audioCtx.createGain();
                 osc.type = 'sine';
                 const now = audioCtx.currentTime;
-
                 if (isEntering) {
                     osc.frequency.setValueAtTime(587.33, now);
                     osc.frequency.setValueAtTime(880, now + 0.14);
@@ -2756,10 +1880,8 @@
                     osc.frequency.setValueAtTime(523.25, now);
                     osc.frequency.setValueAtTime(392.00, now + 0.15);
                 }
-
                 gain.gain.setValueAtTime(0.07, now);
                 gain.gain.exponentialRampToValueAtTime(0.001, now + 0.55);
-
                 osc.connect(gain);
                 gain.connect(audioCtx.destination);
                 osc.start(now);
@@ -2773,52 +1895,43 @@
         }
 
         function toggleGramophoneModal() {
-            const modal = document.getElementById('gramophone-modal');
-            document.getElementById('mobile-assets-modal').classList.remove('open');
-            document.getElementById('history-modal').classList.remove('open');
-            modal.classList.toggle('open');
+            document.getElementById('gramophone-modal').classList.toggle('open');
         }
 
         function renderGramophonePlaylist() {
             const listEl = document.getElementById('gram-track-list');
             if (!listEl) return;
             listEl.innerHTML = '';
-
             gramophonePlaylist.forEach((t, idx) => {
                 const item = document.createElement('div');
                 item.className = 'track-item ' + (idx === gramState.currentTrackIdx ? 'active' : '');
-                item.innerHTML = `<span>${t.title}</span> <span>${idx === gramState.currentTrackIdx && gramState.isPlaying ? '🔊 در حال پخش' : '▶'}</span>`;
-                item.onclick = () => selectAndPlayGramophoneTrack(idx, true, 0, true);
+                item.innerHTML = `<span>${t.title}</span> <span>${idx === gramState.currentTrackIdx && gramState.isPlaying ? '🔊' : '▶'}</span>`;
+                item.onclick = () => selectAndPlayGramophoneTrack(idx, true);
                 listEl.appendChild(item);
             });
         }
 
-        function selectAndPlayGramophoneTrack(idx, playNow, startTime = 0, broadcast = true) {
+        function selectAndPlayGramophoneTrack(idx, broadcast = true) {
             if (idx < 0 || idx >= gramophonePlaylist.length) return;
             gramState.currentTrackIdx = idx;
             renderGramophonePlaylist();
-
             const track = gramophonePlaylist[idx];
             document.getElementById('np-track-title').textContent = track.title;
 
-            if (playNow) {
-                startGramophoneEngine(track, startTime);
-                gramState.isPlaying = true;
-                document.getElementById('gram-play-btn').textContent = '⏸ توقف';
-                document.getElementById('gram-hud-icon').textContent = '🎶';
-                const activeGram = document.getElementById('svg-gramophone-active');
-                if (activeGram) activeGram.style.display = 'block';
+            startGramophoneEngine(track);
+            gramState.isPlaying = true;
+            document.getElementById('gram-play-btn').textContent = '⏸ توقف';
+            document.getElementById('gram-hud-icon').textContent = '🎶';
+            document.getElementById('svg-gramophone-active').style.display = 'block';
 
-                if (broadcast) {
-                    publishEvent({
-                        type: 'music_sync',
-                        isPlaying: true,
-                        trackMeta: track.type === 'shared_data' ? { id: track.id, title: track.title, type: 'shared_data' } : track,
-                        currentTime: 0,
-                        sender: myName,
-                        id: myClientId
-                    });
-                }
+            if (broadcast) {
+                publishEvent({
+                    type: 'music_sync',
+                    isPlaying: true,
+                    trackMeta: track,
+                    sender: myName,
+                    id: myClientId
+                });
             }
         }
 
@@ -2828,105 +1941,60 @@
                 gramState.isPlaying = false;
                 document.getElementById('gram-play-btn').textContent = '▶ پخش';
                 document.getElementById('gram-hud-icon').textContent = '📻';
-                const activeGram = document.getElementById('svg-gramophone-active');
-                if (activeGram) activeGram.style.display = 'none';
+                document.getElementById('svg-gramophone-active').style.display = 'none';
 
                 if (broadcast) {
-                    publishEvent({
-                        type: 'music_sync',
-                        isPlaying: false,
-                        trackMeta: gramophonePlaylist[gramState.currentTrackIdx],
-                        sender: myName,
-                        id: myClientId
-                    });
+                    publishEvent({ type: 'music_sync', isPlaying: false, trackMeta: gramophonePlaylist[gramState.currentTrackIdx], sender: myName, id: myClientId });
                 }
             } else {
-                selectAndPlayGramophoneTrack(gramState.currentTrackIdx, true, 0, broadcast);
+                selectAndPlayGramophoneTrack(gramState.currentTrackIdx, broadcast);
             }
         }
 
-        function startGramophoneEngine(track, startTime = 0) {
+        function startGramophoneEngine(track) {
             stopGramophoneEngine();
             if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
             if (audioCtx.state === 'suspended') audioCtx.resume();
-
-            if (track.type === 'shared_data' && track.dataUrl) {
-                const audioEl = document.getElementById('external-audio-player');
-                audioEl.src = track.dataUrl;
-                audioEl.volume = gramState.volume;
-                audioEl.currentTime = startTime;
-                audioEl.play().catch(() => {});
-                return;
-            }
 
             if (track.type === 'url' && track.url) {
                 const audioEl = document.getElementById('external-audio-player');
                 audioEl.src = track.url;
                 audioEl.volume = gramState.volume;
-                audioEl.currentTime = startTime;
                 audioEl.play().catch(() => {});
                 return;
             }
-
             if (track.type === 'synth') {
                 playLofiSynthLoop(track);
             }
         }
 
         function stopGramophoneEngine() {
-            if (gramState.synthTimer) {
-                clearInterval(gramState.synthTimer);
-                gramState.synthTimer = null;
-            }
+            if (gramState.synthTimer) { clearInterval(gramState.synthTimer); gramState.synthTimer = null; }
             const audioEl = document.getElementById('external-audio-player');
-            if (audioEl) {
-                audioEl.pause();
-                audioEl.currentTime = 0;
-            }
+            if (audioEl) { audioEl.pause(); audioEl.currentTime = 0; }
         }
 
         function playLofiSynthLoop(track) {
-            gramState.stepCounter = 0;
+            let step = 0;
             const intervalMs = (60 / track.tempo) * 250;
-
             gramState.synthTimer = setInterval(() => {
                 if (!gramState.isPlaying || !audioCtx) return;
                 try {
                     const now = audioCtx.currentTime;
-                    const chord = track.chords[Math.floor(gramState.stepCounter / 4) % track.chords.length];
-
+                    const chord = track.chords[Math.floor(step / 4) % track.chords.length];
                     chord.forEach(freq => {
                         const osc = audioCtx.createOscillator();
                         const gain = audioCtx.createGain();
                         osc.type = 'sine';
                         osc.frequency.setValueAtTime(freq, now);
-
                         gain.gain.setValueAtTime(0.015 * gramState.volume, now);
-                        gain.gain.exponentialRampToValueAtTime(0.0001, now + 1.4);
-
+                        gain.gain.exponentialRampToValueAtTime(0.0001, now + 1.2);
                         osc.connect(gain);
                         gain.connect(audioCtx.destination);
                         osc.start(now);
-                        osc.stop(now + 1.45);
+                        osc.stop(now + 1.25);
                     });
-
-                    if (gramState.stepCounter % 2 === 0) {
-                        const mFreq = track.melody[(gramState.stepCounter / 2) % track.melody.length];
-                        const oscM = audioCtx.createOscillator();
-                        const gainM = audioCtx.createGain();
-                        oscM.type = 'triangle';
-                        oscM.frequency.setValueAtTime(mFreq, now);
-
-                        gainM.gain.setValueAtTime(0.02 * gramState.volume, now);
-                        gainM.gain.exponentialRampToValueAtTime(0.0002, now + 0.45);
-
-                        oscM.connect(gainM);
-                        gainM.connect(audioCtx.destination);
-                        oscM.start(now);
-                        oscM.stop(now + 0.48);
-                    }
-
-                    gramState.stepCounter++;
+                    step++;
                 } catch (e) {}
             }, intervalMs);
         }
@@ -2943,185 +2011,57 @@
             const url = document.getElementById('custom-track-url').value.trim();
             if (!name || !url) return;
 
-            const newTrack = {
-                id: 'track_' + Date.now(),
-                title: name,
-                type: 'url',
-                url: url
-            };
-
+            const newTrack = { id: 't_' + Date.now(), title: name, type: 'url', url: url };
             gramophonePlaylist.push(newTrack);
-            saveSharedAudioTrackToIDB(newTrack);
-            try {
-                localStorage.setItem('khalvat_custom_tracks_v1', JSON.stringify(gramophonePlaylist.filter(t => t.type === 'url')));
-            } catch (e) {}
-
             renderGramophonePlaylist();
             document.getElementById('custom-track-name').value = '';
             document.getElementById('custom-track-url').value = '';
-            showToast('✅ آهنگ جدید افزوده شد!');
-
-            selectAndPlayGramophoneTrack(gramophonePlaylist.length - 1, true, 0, true);
+            showToast('✅ آهنگ افزوده شد!');
+            selectAndPlayGramophoneTrack(gramophonePlaylist.length - 1, true);
         }
 
-        function handleSharedLocalAudioFile(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                const base64Data = e.target.result;
-                const trackId = 'shared_audio_' + Date.now();
-                const trackTitle = file.name.replace(/\.[^/.]+$/, "");
-
-                const newTrack = {
-                    id: trackId,
-                    title: trackTitle + ' (فایل اشتراکی)',
-                    type: 'shared_data',
-                    dataUrl: base64Data
-                };
-
-                gramophonePlaylist.push(newTrack);
-                saveSharedAudioTrackToIDB(newTrack);
-                renderGramophonePlaylist();
-                selectAndPlayGramophoneTrack(gramophonePlaylist.length - 1, true, 0, false);
-
-                streamSharedAudioFileOverMQTT(trackId, trackTitle, base64Data);
-            };
-            reader.readAsDataURL(file);
-            event.target.value = '';
-        }
-
-        function streamSharedAudioFileOverMQTT(trackId, trackTitle, base64Str) {
-            const chunkSize = 22000;
-            const totalChunks = Math.ceil(base64Str.length / chunkSize);
-
-            publishEvent({
-                type: 'audio_stream_start',
-                sender: myName,
-                trackId: trackId,
-                title: trackTitle,
-                totalChunks: totalChunks,
-                id: myClientId
-            });
-
-            let idx = 0;
-            const transferBox = document.getElementById('music-transfer-progress');
-            const tText = document.getElementById('music-transfer-text');
-            const tFill = document.getElementById('progress-bar-fill');
-            if (transferBox) transferBox.style.display = 'flex';
-
-            const pump = () => {
-                if (idx >= totalChunks) {
-                    publishEvent({
-                        type: 'audio_stream_end',
-                        sender: myName,
-                        trackId: trackId,
-                        id: myClientId
-                    });
-                    if (transferBox) transferBox.style.display = 'none';
-                    showToast('✅ فایل صوتی برای یارتان ارسال و پخش شد!');
-                    return;
-                }
-                const slice = base64Str.slice(idx * chunkSize, (idx + 1) * chunkSize);
-                publishEvent({
-                    type: 'audio_stream_chunk',
-                    trackId: trackId,
-                    index: idx,
-                    chunk: slice,
-                    id: myClientId
-                });
-                idx++;
-                const pct = Math.round((idx / totalChunks) * 100);
-                if (tText) tText.textContent = `📤 ارسال فایل صوتی به یار: ${pct}٪`;
-                if (tFill) tFill.style.width = pct + '%';
-                setTimeout(pump, 30);
-            };
-            setTimeout(pump, 50);
-        }
-
-        function applyRemoteMusicSync(trackMeta, isPlaying, currentTime, sender, isJoinSync = false) {
+        function applyRemoteMusicSync(trackMeta, isPlaying, sender) {
             if (!trackMeta) return;
-            const existingIdx = gramophonePlaylist.findIndex(t => t.id === trackMeta.id);
-            if (existingIdx !== -1) {
-                gramState.currentTrackIdx = existingIdx;
-            } else if (trackMeta.type === 'url' || trackMeta.type === 'shared_data') {
+            const idx = gramophonePlaylist.findIndex(t => t.id === trackMeta.id);
+            if (idx !== -1) {
+                gramState.currentTrackIdx = idx;
+            } else if (trackMeta.type === 'url') {
                 gramophonePlaylist.push(trackMeta);
                 gramState.currentTrackIdx = gramophonePlaylist.length - 1;
             }
             renderGramophonePlaylist();
 
             if (isPlaying) {
-                selectAndPlayGramophoneTrack(gramState.currentTrackIdx, true, currentTime, false);
-                if (!isJoinSync) {
-                    showToast(`🎵 ${sender} گرامافون را روی آهنگ «${gramophonePlaylist[gramState.currentTrackIdx].title}» گذاشت`);
-                }
+                startGramophoneEngine(gramophonePlaylist[gramState.currentTrackIdx]);
+                gramState.isPlaying = true;
+                document.getElementById('gram-play-btn').textContent = '⏸ توقف';
+                document.getElementById('svg-gramophone-active').style.display = 'block';
+                showToast(`🎵 ${sender} گرامافون را روشن کرد`);
             } else {
                 stopGramophoneEngine();
                 gramState.isPlaying = false;
                 document.getElementById('gram-play-btn').textContent = '▶ پخش';
-                document.getElementById('gram-hud-icon').textContent = '📻';
-                const activeGram = document.getElementById('svg-gramophone-active');
-                if (activeGram) activeGram.style.display = 'none';
+                document.getElementById('svg-gramophone-active').style.display = 'none';
             }
         }
 
         function toggleHistoryModal() {
-            const modal = document.getElementById('history-modal');
-            document.getElementById('gramophone-modal').classList.remove('open');
-            document.getElementById('mobile-assets-modal').classList.remove('open');
-            modal.classList.toggle('open');
-            updateArchiveStatsUI();
-        }
-
-        function updateArchiveStatsUI() {
-            const stats = document.getElementById('archive-stats');
-            if (stats) {
-                stats.textContent = `تعداد کل پیام‌های ذخیره شده در این میز: ${chatHistory.length} پیام`;
-            }
+            document.getElementById('history-modal').classList.toggle('open');
+            document.getElementById('archive-stats').textContent = `تکل پیام‌های این میز: ${chatHistory.length} پیام`;
         }
 
         function exportChatHistory() {
             const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(chatHistory, null, 2));
-            const dlAnchor = document.createElement('a');
-            dlAnchor.setAttribute("href", dataStr);
-            dlAnchor.setAttribute("download", `khalvat_archive_room_${roomCode}_${Date.now()}.json`);
-            document.body.appendChild(dlAnchor);
-            dlAnchor.click();
-            dlAnchor.remove();
-            showToast('📥 آرشیو چت‌ها دانلود شد!');
-        }
-
-        function importChatHistory(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                try {
-                    const imported = JSON.parse(e.target.result);
-                    if (Array.isArray(imported)) {
-                        let added = 0;
-                        imported.forEach(m => {
-                            if (saveMessageToStorage(m)) added++;
-                        });
-                        chatHistory.sort((a, b) => (a.timestamp || 0) - (b.timestamp || 0));
-                        reRenderAllMessages();
-                        showToast(`✅ ${added} پیام جدید از فایل پشتیبان بازیابی شد!`);
-                    }
-                } catch (err) {
-                    showToast('⚠️ فرمت فایل پشتیبان نامعتبر است');
-                }
-            };
-            reader.readAsText(file);
-            event.target.value = '';
+            const dl = document.createElement('a');
+            dl.href = dataStr;
+            dl.download = `khalvat_archive_${roomCode}.json`;
+            dl.click();
+            dl.remove();
         }
 
         function escapeHtml(str) {
             if (!str) return '';
-            return str.replace(/[&<>"']/g, m => ({
-                '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
-            }[m]));
+            return str.replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m]));
         }
     </script>
 </body>
