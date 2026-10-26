@@ -1,72 +1,68 @@
 const CafeNetwork = (() => {
+    // ترتیب قطعی سرورها (همه کاربران ابتدا روی سرور اول EMQX همگام می‌شوند)
     const BROKERS = [
         'wss://broker.emqx.io:8084/mqtt',
-        'wss://broker.hivemq.com:8884/mqtt',
-        'wss://test.mosquitto.org:8081/mqtt'
+        'wss://broker.hivemq.com:8884/mqtt'
     ];
 
-    let activeClient = null;
-    let poolClients = [];
-    let myClientId = 'khalvat_v2_' + Math.random().toString(36).substring(2, 10);
-    let baseTopic = '';
+    let client = null;
+    let brokerIdx = 0;
+    let myClientId = 'khalvat_u_' + Math.random().toString(36).substring(2, 10);
+    let roomTopic = '';
     let presenceTopic = '';
     let heartbeatTimer = null;
+    let fallbackTimer = null;
     let callbacks = {};
+    let currentUser = null;
 
     function connect(roomCode, userData, eventCallbacks) {
-        callbacks = eventCallbacks;
-        baseTopic = `khalvat_cafe_v2/${roomCode}/events`;
-        presenceTopic = `khalvat_cafe_v2/${roomCode}/presence/${userData.char}`;
+        const cleanRoom = String(roomCode).trim();
+        currentUser = userData;
+        callbacks = eventCallbacks || {};
 
-        cleanupPool();
+        roomTopic = `khalvat_cafe_v201_room/${cleanRoom}`;
+        presenceTopic = `khalvat_cafe_v201_room/${cleanRoom}/presence/${userData.char}`;
 
-        // اتصال موازی (Race) به همه سرورها برای عبور قطعی از اختلالات اینترنت
-        BROKERS.forEach((brokerUrl) => {
-            try {
-                const client = mqtt.connect(brokerUrl, {
-                    clientId: myClientId + '_' + Math.random().toString(36).substring(2, 5),
-                    keepalive: 25,
-                    reconnectPeriod: 3000,
-                    connectTimeout: 8000,
-                    will: {
-                        topic: presenceTopic,
-                        payload: JSON.stringify({ type: 'leave', sender: userData.name, char: userData.char, id: myClientId }),
-                        qos: 0,
-                        retain: true
-                    }
-                });
-
-                poolClients.push(client);
-
-                client.on('connect', () => {
-                    if (!activeClient) {
-                        activeClient = client;
-                        // بستن بقیه کلاینت‌های اضافی بعد از پیدا کردن اولین سرور سالم
-                        poolClients.forEach(c => {
-                            if (c !== activeClient) {
-                                try { c.end(true); } catch (e) {}
-                            }
-                        });
-                        poolClients = [activeClient];
-                        setupActiveClient(userData);
-                    }
-                });
-            } catch (err) {}
-        });
+        brokerIdx = 0;
+        connectToCurrentBroker();
     }
 
-    function setupActiveClient(userData) {
-        if (callbacks.onConnected) callbacks.onConnected();
+    function connectToCurrentBroker() {
+        cleanup();
 
-        // سابسکرایب به کانال رویدادها و کانال حضور هر دو کاراکتر
-        const roomPresenceWildcard = baseTopic.replace('/events', '/presence/+');
-        activeClient.subscribe([baseTopic, roomPresenceWildcard], { qos: 0 }, (err) => {
-            if (!err) {
-                announcePresence(userData, 'join');
+        const brokerUrl = BROKERS[brokerIdx];
+        try {
+            client = mqtt.connect(brokerUrl, {
+                clientId: myClientId + '_' + Math.random().toString(36).substring(2, 5),
+                keepalive: 30,
+                reconnectPeriod: 3000,
+                connectTimeout: 7000
+            });
+        } catch (err) {
+            tryNextBroker();
+            return;
+        }
+
+        fallbackTimer = setTimeout(() => {
+            if (!client || !client.connected) {
+                tryNextBroker();
             }
+        }, 7500);
+
+        client.on('connect', () => {
+            if (fallbackTimer) clearTimeout(fallbackTimer);
+            if (callbacks.onConnected) callbacks.onConnected(brokerUrl);
+
+            const presenceWildcard = `${roomTopic}/presence/+`;
+            client.subscribe([roomTopic, presenceWildcard], { qos: 0 }, (err) => {
+                if (!err) {
+                    // اعلام حضور فوری + ذخیره در حافظه اتاق برای نفر دوم
+                    announcePresence(currentUser, 'join');
+                }
+            });
         });
 
-        activeClient.on('message', (topic, payloadBuffer) => {
+        client.on('message', (topic, payloadBuffer) => {
             let data;
             try {
                 data = JSON.parse(payloadBuffer.toString());
@@ -74,22 +70,28 @@ const CafeNetwork = (() => {
                 return;
             }
             if (!data || data.id === myClientId) return;
-
             if (callbacks.onMessage) callbacks.onMessage(data);
         });
 
-        activeClient.on('close', () => {
+        client.on('close', () => {
             if (callbacks.onDisconnected) callbacks.onDisconnected();
         });
 
         if (heartbeatTimer) clearInterval(heartbeatTimer);
         heartbeatTimer = setInterval(() => {
-            announcePresence(userData, 'heartbeat');
-        }, 6000);
+            if (client && client.connected && currentUser) {
+                announcePresence(currentUser, 'heartbeat');
+            }
+        }, 5000);
+    }
+
+    function tryNextBroker() {
+        brokerIdx = (brokerIdx + 1) % BROKERS.length;
+        connectToCurrentBroker();
     }
 
     function announcePresence(userData, eventType = 'heartbeat') {
-        if (!activeClient || !activeClient.connected) return;
+        if (!client || !client.connected) return;
         const payload = JSON.stringify({
             type: eventType,
             sender: userData.name,
@@ -97,27 +99,29 @@ const CafeNetwork = (() => {
             id: myClientId,
             ts: Date.now()
         });
-        // ذخیره وضعیت حضور به صورت Retained تا نفر دوم بلافاصله ببیند
-        activeClient.publish(presenceTopic, payload, { qos: 0, retain: true });
-        if (eventType === 'join') {
-            activeClient.publish(baseTopic, payload, { qos: 0, retain: false });
-        }
+        // ارسال روی کانال حضور با Retain و ارسال همزمان روی کانال اصلی اتاق
+        client.publish(presenceTopic, payload, { qos: 0, retain: true });
+        client.publish(roomTopic, payload, { qos: 0, retain: false });
     }
 
     function sendEvent(payloadObj) {
-        if (!activeClient || !activeClient.connected) return false;
-        const fullPayload = { ...payloadObj, id: myClientId, ts: Date.now() };
-        activeClient.publish(baseTopic, JSON.stringify(fullPayload), { qos: 0, retain: false });
+        if (!client || !client.connected) return false;
+        const fullPayload = {
+            ...payloadObj,
+            id: myClientId,
+            ts: Date.now()
+        };
+        client.publish(roomTopic, JSON.stringify(fullPayload), { qos: 0, retain: false });
         return true;
     }
 
-    function cleanupPool() {
+    function cleanup() {
+        if (fallbackTimer) clearTimeout(fallbackTimer);
         if (heartbeatTimer) clearInterval(heartbeatTimer);
-        poolClients.forEach(c => {
-            try { c.end(true); } catch (e) {}
-        });
-        poolClients = [];
-        activeClient = null;
+        if (client) {
+            try { client.end(true); } catch (e) {}
+            client = null;
+        }
     }
 
     return { connect, sendEvent, announcePresence };
