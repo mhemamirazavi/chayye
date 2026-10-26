@@ -7,7 +7,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="کافه خلوت">
-    <title>کافه خلوت | پناهگاه دیجیتال ما (v2.0.0)</title>
+    <title>کافه خلوت | پناهگاه دیجیتال ما (v2.0.1)</title>
     
     <link rel="manifest" href="manifest.json">
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
@@ -22,7 +22,7 @@
     <div id="login-overlay">
         <div class="login-card">
             <div class="cafe-sign-badge">☕ کافه خلوت</div>
-            <p class="login-subtitle">پناهگاه دنج دیجیتال ما • نسخه ۲.۰.۰</p>
+            <p class="login-subtitle">پناهگاه دنج دیجیتال ما • نسخه ۲.۰.۱</p>
 
             <div class="form-group">
                 <label>نام شما در کافه:</label>
@@ -30,7 +30,7 @@
             </div>
 
             <div class="form-group">
-                <label>شماره میز دو نفره (کد مشترک):</label>
+                <label>شماره میز دو نفره (کد مشترک شما و یارتان):</label>
                 <input type="text" id="login-room" class="pixel-input" placeholder="مثلاً: 1045" autocomplete="off">
             </div>
 
@@ -52,11 +52,11 @@
                 </div>
             </div>
 
-            <button class="enter-btn" onclick="CafeApp.enterCafe()">ورود به کافه خلوت 🔔</button>
+            <button type="button" class="enter-btn" onclick="CafeApp.enterCafe()">ورود به کافه خلوت 🔔</button>
         </div>
     </div>
 
-    <!-- نوار وضعیت بالا (HUD) مطابق طرح فاز دوم -->
+    <!-- نوار وضعیت بالا (HUD) -->
     <header class="top-hud" id="top-hud">
         <div class="hud-pill" onclick="CafeApp.copyRoomCode()" title="کپی کردن شماره میز">
             <div id="peer-dot" class="status-dot"></div>
@@ -67,65 +67,81 @@
         </div>
 
         <div class="hud-controls">
-            <button class="hud-btn" onclick="CafeApp.toggleGramophoneModal()">📻 گرامافون</button>
-            <button class="hud-btn" id="weather-btn" onclick="CafeApp.cycleWeather(true)">🌧️ بارانی</button>
-            <button class="hud-btn" id="ambience-btn" onclick="CafeApp.toggleAmbience()">🔇 محیط</button>
-            <button class="hud-btn" id="toggle-chat-hud-btn" onclick="CafeApp.toggleChatPanel()">💬 گفتگو</button>
+            <button type="button" class="hud-btn" onclick="CafeApp.toggleGramophoneModal()">📻 گرامافون</button>
+            <button type="button" class="hud-btn" id="weather-btn" onclick="CafeApp.cycleWeather(true)">🌧️ بارانی</button>
+            <button type="button" class="hud-btn" id="ambience-btn" onclick="CafeApp.toggleAmbience()">🔇 محیط</button>
+            <button type="button" class="hud-btn" id="toggle-chat-hud-btn" onclick="CafeApp.toggleChatPanel()">💬 گفتگو</button>
         </div>
     </header>
 
     <!-- اعلان رویدادهای کافه -->
     <div id="presence-toast"></div>
 
-    <!-- مودال گرامافون مشترک -->
+    <!-- مودال گرامافون مشترک (۳ ترک Lo-Fi + افزودن موزیک دلخواه) -->
     <div class="cafe-modal" id="gramophone-modal">
         <div class="modal-header">
             <h3>📻 گرامافون مشترک کافه</h3>
-            <button class="close-modal-btn" onclick="CafeApp.toggleGramophoneModal()">✕</button>
+            <button type="button" class="close-modal-btn" onclick="CafeApp.toggleGramophoneModal()">✕</button>
         </div>
+
         <div class="now-playing-box">
             <div class="np-info">
-                <div class="np-title" id="np-track-title">۱. باران شبانه کافه (Lo-Fi)</div>
-                <div class="np-sub" id="np-status-sub">پخش همزمان روی میز دو نفره</div>
+                <div class="np-title" id="np-track-title">۱. باران شبانه کافه (Lo-Fi Chill)</div>
+                <div class="np-sub" id="np-status-sub">آماده پخش روی میز دو نفره</div>
             </div>
-            <button class="gram-ctrl-btn" id="gram-play-btn" onclick="CafeApp.toggleGramophone()">▶ پخش</button>
+            <button type="button" class="gram-ctrl-btn" id="gram-play-btn" onclick="CafeApp.toggleGramophone(true)">▶ پخش</button>
         </div>
+
         <div class="track-list" id="gram-track-list"></div>
+
+        <!-- بخش افزودن موزیک دلخواه (لینک مشترک یا فایل محلی) -->
+        <div class="custom-music-box">
+            <div class="custom-music-title">➕ افزودن موزیک دلخواه به گرامافون:</div>
+            <div class="custom-url-row">
+                <input type="text" id="custom-track-title" class="mini-input" placeholder="نام آهنگ...">
+                <input type="url" id="custom-track-url" class="mini-input" placeholder="لینک مستقیم MP3...">
+                <button type="button" class="mini-add-btn" onclick="CafeApp.addCustomUrlTrack()">افزودن</button>
+            </div>
+            <label class="file-upload-btn">
+                🎵 انتخاب فایل صوتی از حافظه دستگاه
+                <input type="file" accept="audio/*" style="display:none;" onchange="CafeApp.addLocalFileTrack(event)">
+            </label>
+        </div>
     </div>
 
-    <!-- صحنه اصلی کافه (ایزومتریک Canvas) + پنل گفتگو -->
+    <!-- پلیر صوتی مخفی برای موزیک‌های سفارشی و استریم -->
+    <audio id="external-audio-player" preload="auto" loop></audio>
+
+    <!-- صحنه اصلی کافه + پنل گفتگو -->
     <main id="main-sanctuary">
         <section id="cafe-stage-wrapper">
             <div id="cafe-art-box">
-                <!-- موتور Canvas فاز سوم برای رندر صحنه، نورپردازی، باران و کاراکترها -->
                 <canvas id="cafe-canvas" width="1024" height="1024"></canvas>
-                <!-- لایه HTML شناور برای ایموجی‌ها و ری‌اکشن‌های بالای سر کاراکترها -->
                 <div id="reactions-layer"></div>
             </div>
         </section>
 
-        <!-- پنل گفتگوی پایین صفحه -->
         <section id="floating-chat-panel">
             <div class="chat-top-bar">
                 <div class="cafe-actions-bar">
-                    <button class="act-btn" onclick="CafeApp.sendAction('☕ فنجان قهوه را نوشید', '☕')">☕ قهوه</button>
-                    <button class="act-btn" onclick="CafeApp.sendAction('❤️ قلب فرستاد', '❤️')">❤️ قلب</button>
-                    <button class="act-btn" onclick="CafeApp.sendAction('👋 دست تکان داد', '👋')">👋 سلام</button>
-                    <button class="act-btn" onclick="CafeApp.sendAction('✨ لبخند گرمی زد', '✨')">✨ لبخند</button>
+                    <button type="button" class="act-btn" onclick="CafeApp.sendAction('☕ فنجان قهوه را نوشید', '☕')">☕ قهوه</button>
+                    <button type="button" class="act-btn" onclick="CafeApp.sendAction('❤️ قلب فرستاد', '❤️')">❤️ قلب</button>
+                    <button type="button" class="act-btn" onclick="CafeApp.sendAction('👋 دست تکان داد', '👋')">👋 سلام</button>
+                    <button type="button" class="act-btn" onclick="CafeApp.sendAction('✨ لبخند گرمی زد', '✨')">✨ لبخند</button>
                 </div>
-                <button class="hide-chat-btn" onclick="CafeApp.toggleChatPanel(true)">خلوت ⬇</button>
+                <button type="button" class="hide-chat-btn" onclick="CafeApp.toggleChatPanel(true)">خلوت ⬇</button>
             </div>
 
             <div id="messages-list"></div>
 
-            <form class="chat-input-row" onsubmit="CafeApp.handleSendMessage(event)">
+            <form class="chat-input-row" id="chat-form">
                 <input type="text" id="chat-text-input" placeholder="پیام خود را بنویسید..." autocomplete="off">
-                <button type="submit" class="send-msg-btn">ارسال</button>
+                <button type="submit" class="send-msg-btn" id="send-msg-btn">ارسال</button>
             </form>
         </section>
     </main>
 
-    <!-- ماژول‌های فاز سوم -->
+    <!-- ماژول‌های نسخه 2.0.1 -->
     <script src="network.js"></script>
     <script src="cafe-engine.js"></script>
     <script src="app.js"></script>
