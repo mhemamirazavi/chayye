@@ -8,12 +8,11 @@ const CafeEngine = (() => {
         myChar: 'male',
         peerOnline: false,
         peerName: 'منتظر یار...',
-        weather: 'rain', // rain, autumn, snow
+        weather: 'rain',
         gramophonePlaying: false,
         tick: 0
     };
 
-    // ذرات آب‌وهوا پشت پنجره ایزومتریک
     const particles = [];
     const steamParticles = [
         { x: 575, y: 525, offset: 0 },
@@ -25,7 +24,6 @@ const CafeEngine = (() => {
         if (!canvas) return;
         ctx = canvas.getContext('2d');
 
-        // بارگذاری تصویر اصلی کافه ایزومتریک فاز دوم
         cafeBgImg.src = 'Gramophone Glow in a Cozy Café.png';
         cafeBgImg.onload = () => { bgLoaded = true; };
 
@@ -35,12 +33,12 @@ const CafeEngine = (() => {
 
     function initWeatherParticles() {
         particles.length = 0;
-        for (let i = 0; i < 45; i++) {
+        for (let i = 0; i < 48; i++) {
             particles.push({
-                x: 550 + Math.random() * 300,
-                y: 175 + Math.random() * 430,
-                speedY: 2.5 + Math.random() * 2.5,
-                speedX: -0.6,
+                x: 555 + Math.random() * 290,
+                y: 175 + Math.random() * 410,
+                speedY: 2.6 + Math.random() * 2.2,
+                speedX: -0.5,
                 size: 2 + Math.random() * 2.5
             });
         }
@@ -54,69 +52,70 @@ const CafeEngine = (() => {
         state.tick += 0.035;
         ctx.clearRect(0, 0, 1024, 1024);
 
-        // ۱. رسم تصویر پس‌زمینه کافه ایزومتریک
         if (bgLoaded) {
             ctx.drawImage(cafeBgImg, 0, 0, 1024, 1024);
         } else {
-            drawFallbackIsometricRoom();
+            ctx.fillStyle = '#161018';
+            ctx.fillRect(0, 0, 1024, 1024);
         }
 
-        // ۲. رندر افکت باران/برف/پاییز در قاب پنجره ایزومتریک
-        drawWindowWeather();
-
-        // ۳. رندر هاله نور گرم چراغ‌های آویز و شمع روی میز دو نفره
+        drawWindowWeatherMasked();
         drawDynamicLighting();
-
-        // ۴. رندر بخار فنجان‌های قهوه روی میز
         drawCoffeeSteam();
 
-        // ۵. رندر نت‌های موسیقی گرامافون در صورت روشن بودن
         if (state.gramophonePlaying) {
             drawGramophoneNotes();
         }
 
-        // ۶. رندر برچسب نام کاراکترها بالای سرشان (مطابق اسکرین‌شات فاز دوم)
         drawCharacterLabels();
-
         requestAnimationFrame(renderLoop);
     }
 
-    function drawWindowWeather() {
+    function drawWindowWeatherMasked() {
         ctx.save();
-        // برش دقیق قاب پنجره ایزومتریک کافه
+
+        // ماسک چندضلعی هوشمند: فقط شیشه پنجره را شامل می‌شود و دور سر کاراکتر خانم و گلدان را برش می‌زند
         ctx.beginPath();
-        ctx.moveTo(552, 175);
-        ctx.lineTo(848, 332);
-        ctx.lineTo(848, 608);
-        ctx.lineTo(552, 442);
+        ctx.moveTo(554, 178); // گوشه بالا چپ پنجره
+        ctx.lineTo(846, 332); // گوشه بالا راست پنجره
+        ctx.lineTo(846, 595); // گوشه پایین راست پنجره
+        ctx.lineTo(748, 542); // لب پنجره سمت راست کاراکتر خانم
+        // دور زدن کامل سر و حجاب گل‌دار کاراکتر خانم (Exclude Silhouette)
+        ctx.lineTo(748, 458);
+        ctx.lineTo(715, 432);
+        ctx.lineTo(662, 432);
+        ctx.lineTo(645, 478);
+        // دور زدن گلدان روی میز و برگشت به لبه چپ پنجره
+        ctx.lineTo(605, 462);
+        ctx.lineTo(554, 435);
         ctx.closePath();
         ctx.clip();
 
         particles.forEach(p => {
             if (state.weather === 'rain') {
-                ctx.strokeStyle = 'rgba(185, 218, 255, 0.55)';
+                ctx.strokeStyle = 'rgba(185, 220, 255, 0.58)';
                 ctx.lineWidth = 2;
                 ctx.beginPath();
                 ctx.moveTo(p.x, p.y);
-                ctx.lineTo(p.x - 4, p.y + 14);
+                ctx.lineTo(p.x - 3, p.y + 13);
                 ctx.stroke();
                 p.y += p.speedY * 2.2;
                 p.x += p.speedX;
             } else if (state.weather === 'snow') {
-                ctx.fillStyle = 'rgba(255, 255, 255, 0.75)';
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
                 ctx.fillRect(p.x, p.y, p.size * 1.4, p.size * 1.4);
-                p.y += p.speedY * 0.6;
-                p.x += Math.sin(state.tick + p.y * 0.02) * 0.7;
+                p.y += p.speedY * 0.55;
+                p.x += Math.sin(state.tick + p.y * 0.02) * 0.75;
             } else if (state.weather === 'autumn') {
-                ctx.fillStyle = 'rgba(240, 135, 45, 0.75)';
-                ctx.fillRect(p.x, p.y, p.size * 1.8, p.size * 1.2);
-                p.y += p.speedY * 0.8;
-                p.x += Math.cos(state.tick + p.y * 0.02) * 0.9;
+                ctx.fillStyle = 'rgba(240, 140, 48, 0.78)';
+                ctx.fillRect(p.x, p.y, p.size * 1.9, p.size * 1.2);
+                p.y += p.speedY * 0.75;
+                p.x += Math.cos(state.tick + p.y * 0.02) * 0.95;
             }
 
-            if (p.y > 615) {
-                p.y = 170;
-                p.x = 552 + Math.random() * 295;
+            if (p.y > 595) {
+                p.y = 175;
+                p.x = 555 + Math.random() * 288;
             }
         });
 
@@ -125,14 +124,10 @@ const CafeEngine = (() => {
 
     function drawDynamicLighting() {
         const pulse = 0.88 + Math.sin(state.tick * 1.8) * 0.12;
-
-        // هاله چراغ بالای میز دو نفره
-        drawWarmGlow(638, 412, 125 * pulse, 0.24);
-        // هاله چراغ بالای بار قهوه سمت چپ
-        drawWarmGlow(168, 395, 95 * pulse, 0.2);
-        drawWarmGlow(310, 345, 85 * pulse, 0.18);
-        // شعله شمع روی میز دو نفره
-        drawWarmGlow(608, 522, 42 * pulse, 0.35);
+        drawWarmGlow(638, 412, 120 * pulse, 0.22);
+        drawWarmGlow(168, 395, 92 * pulse, 0.19);
+        drawWarmGlow(310, 345, 82 * pulse, 0.17);
+        drawWarmGlow(608, 522, 40 * pulse, 0.34);
     }
 
     function drawWarmGlow(x, y, radius, maxAlpha) {
@@ -148,8 +143,8 @@ const CafeEngine = (() => {
     function drawCoffeeSteam() {
         steamParticles.forEach(sp => {
             const progress = ((state.tick * 0.55 + sp.offset) % 1);
-            const yOffset = progress * 26;
-            const xSway = Math.sin(progress * Math.PI * 2) * 4;
+            const yOffset = progress * 24;
+            const xSway = Math.sin(progress * Math.PI * 2) * 3.5;
             const alpha = (1 - progress) * 0.65;
 
             ctx.fillStyle = `rgba(246, 233, 215, ${alpha})`;
@@ -179,10 +174,8 @@ const CafeEngine = (() => {
             ? `${state.myName} (شما)`
             : (state.peerOnline ? state.peerName : 'منتظر یار...');
 
-        // برچسب کاراکتر آقا (سمت چپ میز)
-        drawPixelBadge(452, 442, maleLabel, '#f6e9d7');
-        // برچسب کاراکتر خانم (سمت راست میز)
-        drawPixelBadge(712, 468, femaleLabel, '#ffd07b');
+        drawPixelBadge(452, 438, maleLabel, '#f6e9d7');
+        drawPixelBadge(705, 422, femaleLabel, '#ffd07b');
     }
 
     function drawPixelBadge(x, y, text, color) {
@@ -196,9 +189,8 @@ const CafeEngine = (() => {
         const boxW = metrics.width + padX * 2;
         const boxH = 30;
 
-        // کادر نیمه‌شفاف تیره زیر نام برای خوانایی عالی روی پس‌زمینه کافه
-        ctx.fillStyle = 'rgba(18, 10, 8, 0.72)';
-        ctx.strokeStyle = 'rgba(240, 157, 56, 0.45)';
+        ctx.fillStyle = 'rgba(18, 10, 8, 0.78)';
+        ctx.strokeStyle = 'rgba(240, 157, 56, 0.5)';
         ctx.lineWidth = 1.5;
         ctx.beginPath();
         ctx.roundRect(x - boxW / 2, y - boxH / 2, boxW, boxH, 8);
@@ -208,11 +200,6 @@ const CafeEngine = (() => {
         ctx.fillStyle = color;
         ctx.fillText(text, x, y + 1);
         ctx.restore();
-    }
-
-    function drawFallbackIsometricRoom() {
-        ctx.fillStyle = '#161018';
-        ctx.fillRect(0, 0, 1024, 1024);
     }
 
     return { init, updateState };
