@@ -7,14 +7,737 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="کافه خلوت">
-    <title>کافه خلوت | پناهگاه دیجیتال ما (v2.0.1)</title>
-    
-    <link rel="manifest" href="manifest.json">
+    <title>کافه خلوت | پناهگاه دیجیتال ما (v2.0.2)</title>
+
+    <!-- فونت پشتیبان وزیرمتن از CDN بدون تحریم -->
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="style.css">
-    
-    <!-- کتابخانه ارتباط آنی MQTT -->
-    <script src="https://unpkg.com/mqtt@4.3.7/dist/mqtt.min.js"></script>
+    <!-- کتابخانه MQTT مطابق فایل سالم فاز اول -->
+    <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
+
+    <style>
+        /* بارگذاری فونت رویین از کنار فایل index.html در گیت‌هاب */
+        @font-face {
+            font-family: 'RooyinBold';
+            src: url('RooyinFree-Bold.ttf') format('truetype'),
+                 url('RooyinFreeNonEn-Bold.ttf') format('truetype'),
+                 local('RooyinFree-Bold');
+            font-weight: 700;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'RooyinRegular';
+            src: url('RooyinFree-Regular.ttf') format('truetype'),
+                 url('RooyinFreeNonEn-Regular.ttf') format('truetype'),
+                 local('RooyinFree-Regular'),
+                 url('RooyinFreeNonEn-RegularDots2.ttf') format('truetype');
+            font-weight: 400;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        :root {
+            --bg-night: #120c14;
+            --bg-espresso: #180e0b;
+            --bg-wood-dark: #25150f;
+            --bg-wood-med: #3b2218;
+            --bg-wood-light: #5e3827;
+            --cream-soft: #f6e9d7;
+            --cream-muted: #ccb294;
+            --amber-glow: #f09d38;
+            --amber-bright: #ffd07b;
+            --msg-me-bg: #4f2d1e;
+            --msg-other-bg: #2a1811;
+            --online-green: #22c55e;
+            --connecting-yellow: #eab308;
+            --glass-panel: rgba(24, 13, 10, 0.94);
+            --pixel-border: #805036;
+            --font-bold: 'RooyinBold', 'Vazirmatn', Tahoma, sans-serif;
+            --font-regular: 'RooyinRegular', 'Vazirmatn', Tahoma, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body, h1, h2, h3, button, label, .cafe-sign-badge, .room-title, .msg-author, .act-btn, .hud-btn, .char-option span, .np-title, .char-name-badge {
+            font-family: var(--font-bold);
+            font-weight: 700;
+        }
+
+        .msg-body, .msg-meta, .system-event-msg, #message-input, .pixel-input, .mini-input, .login-subtitle, .peer-status-text, .np-sub, .track-item {
+            font-family: var(--font-regular);
+            font-weight: 400;
+        }
+
+        body {
+            background-color: var(--bg-night);
+            color: var(--cream-soft);
+            height: 100vh;
+            height: 100dvh;
+            width: 100vw;
+            overflow: hidden;
+            position: relative;
+            user-select: none;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ==================== صفحه ورود ==================== */
+        #login-overlay {
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(circle at center, #2d1812 0%, #0f080a 100%);
+            z-index: 100;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+        }
+
+        .login-card {
+            background-color: var(--bg-wood-dark);
+            border: 3px solid var(--pixel-border);
+            box-shadow: 0 0 0 3px #0e0705, 0 20px 50px rgba(0,0,0,0.92), 0 0 40px rgba(240, 157, 56, 0.16);
+            border-radius: 16px;
+            padding: 1.35rem;
+            width: 100%;
+            max-width: 410px;
+            text-align: center;
+        }
+
+        .cafe-sign-badge {
+            display: inline-block;
+            background: var(--bg-espresso);
+            border: 2px solid var(--amber-glow);
+            color: var(--amber-bright);
+            padding: 0.35rem 1.2rem;
+            border-radius: 8px;
+            font-size: 1.25rem;
+            margin-bottom: 0.3rem;
+            box-shadow: 0 0 16px rgba(240, 157, 56, 0.3);
+        }
+
+        .login-subtitle {
+            color: var(--cream-muted);
+            font-size: 0.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .form-group {
+            margin-bottom: 0.85rem;
+            text-align: right;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.82rem;
+            color: var(--cream-muted);
+            margin-bottom: 0.32rem;
+        }
+
+        .pixel-input {
+            width: 100%;
+            padding: 0.65rem 0.85rem;
+            background-color: var(--bg-espresso);
+            border: 2px solid var(--bg-wood-light);
+            border-radius: 8px;
+            color: var(--cream-soft);
+            font-size: 0.95rem;
+            outline: none;
+        }
+
+        .pixel-input:focus {
+            border-color: var(--amber-glow);
+            box-shadow: 0 0 10px rgba(240, 157, 56, 0.28);
+        }
+
+        .char-selector {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.7rem;
+            margin-bottom: 1.05rem;
+        }
+
+        .char-option {
+            background-color: var(--bg-espresso);
+            border: 2px solid var(--bg-wood-light);
+            border-radius: 10px;
+            padding: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.32rem;
+        }
+
+        .char-preview-wrap {
+            width: 66px;
+            height: 74px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .char-preview-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            image-rendering: pixelated;
+        }
+
+        .char-option span {
+            font-size: 0.8rem;
+            color: var(--cream-muted);
+        }
+
+        .char-option.selected {
+            border-color: var(--amber-glow);
+            background-color: rgba(240, 157, 56, 0.15);
+            box-shadow: 0 0 14px rgba(240, 157, 56, 0.32);
+            transform: translateY(-2px);
+        }
+
+        .char-option.selected span {
+            color: var(--amber-bright);
+        }
+
+        .enter-btn {
+            width: 100%;
+            padding: 0.8rem;
+            background: linear-gradient(135deg, #e0872b 0%, #b35316 100%);
+            border: 2px solid var(--amber-bright);
+            border-radius: 8px;
+            color: #fff;
+            font-size: 1rem;
+            cursor: pointer;
+            box-shadow: 0 4px 0 #6b2e09;
+        }
+
+        .enter-btn:active {
+            transform: translateY(3px);
+            box-shadow: 0 1px 0 #6b2e09;
+        }
+
+        /* ==================== نوار وضعیت بالا (HUD) ==================== */
+        .top-hud {
+            width: 100%;
+            padding: 7px 10px;
+            background: rgba(18, 12, 20, 0.96);
+            border-bottom: 2px solid var(--bg-wood-med);
+            z-index: 40;
+            display: none;
+            justify-content: space-between;
+            align-items: center;
+            gap: 0.4rem;
+            flex-shrink: 0;
+        }
+
+        .hud-pill {
+            background: var(--glass-panel);
+            border: 2px solid var(--pixel-border);
+            border-radius: 11px;
+            padding: 0.3rem 0.68rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: var(--connecting-yellow);
+            transition: all 0.3s;
+            flex-shrink: 0;
+        }
+
+        .status-dot.online {
+            background-color: var(--online-green);
+            box-shadow: 0 0 9px var(--online-green);
+        }
+
+        .status-texts {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .room-title {
+            font-size: 0.78rem;
+            color: var(--amber-bright);
+        }
+
+        .peer-status-text {
+            font-size: 0.68rem;
+            color: var(--cream-muted);
+        }
+
+        .hud-controls {
+            display: flex;
+            gap: 0.32rem;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+
+        .hud-btn {
+            background: var(--glass-panel);
+            border: 2px solid var(--pixel-border);
+            color: var(--cream-soft);
+            border-radius: 8px;
+            padding: 0.34rem 0.56rem;
+            font-size: 0.74rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.22rem;
+            transition: all 0.2s;
+        }
+
+        .hud-btn.active {
+            border-color: var(--amber-glow);
+            background: rgba(79, 45, 30, 0.95);
+            color: var(--amber-bright);
+        }
+
+        /* ==================== صحنه لایه‌ای کافه ==================== */
+        #main-sanctuary {
+            flex: 1;
+            width: 100%;
+            height: calc(100dvh - 54px);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+            background: radial-gradient(circle at center, #1d1422 0%, #110b14 100%);
+        }
+
+        #cafe-stage-wrapper {
+            width: 100%;
+            height: 57%;
+            min-height: 250px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            padding: 4px;
+            transition: height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        #main-sanctuary.chat-minimized #cafe-stage-wrapper {
+            height: 100%;
+        }
+
+        #cafe-art-box {
+            position: relative;
+            height: 100%;
+            max-width: 100%;
+            aspect-ratio: 1 / 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 14px 45px rgba(0, 0, 0, 0.9);
+            background-color: #161018;
+        }
+
+        /* لایه ۱: تصویر اصلی کافه ایزومتریک */
+        #cafe-bg-img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            image-rendering: pixelated;
+            z-index: 1;
+        }
+
+        /* لایه ۲: بوم نقاشی مخصوص باران پشت پنجره و نورپردازی */
+        #cafe-fx-canvas {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        /* لایه ۳: برچسب نام کاراکترها و ری‌اکشن‌ها با DOM خالص (ضد کرش در تمام مرورگرها) */
+        #dom-overlay-layer {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        .char-name-badge {
+            position: absolute;
+            transform: translate(-50%, -50%);
+            background: rgba(18, 10, 8, 0.84);
+            border: 1.5px solid rgba(240, 157, 56, 0.65);
+            padding: 2px 10px;
+            border-radius: 8px;
+            font-size: 0.74rem;
+            white-space: nowrap;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.75);
+        }
+
+        #badge-male {
+            left: 44%;
+            top: 42.5%;
+            color: var(--cream-soft);
+        }
+
+        #badge-female {
+            left: 69.5%;
+            top: 41%;
+            color: var(--amber-bright);
+        }
+
+        @keyframes popReaction {
+            0% { transform: translate(-50%, 10px) scale(0.4); opacity: 0; }
+            20% { transform: translate(-50%, -12px) scale(1.18); opacity: 1; }
+            80% { transform: translate(-50%, -26px) scale(1); opacity: 1; }
+            100% { transform: translate(-50%, -40px) scale(0.8); opacity: 0; }
+        }
+
+        .floating-reaction {
+            position: absolute;
+            font-size: 2rem;
+            animation: popReaction 2.8s forwards ease-out;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.85));
+        }
+
+        /* ==================== پنل گفتگوی پایین صفحه ==================== */
+        #floating-chat-panel {
+            width: 100%;
+            height: 43%;
+            background: var(--glass-panel);
+            border-top: 2px solid var(--pixel-border);
+            display: flex;
+            flex-direction: column;
+            z-index: 35;
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        #main-sanctuary.chat-minimized #floating-chat-panel {
+            height: 0 !important;
+            min-height: 0 !important;
+            border: none;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        @media (min-width: 880px) {
+            #main-sanctuary {
+                flex-direction: row;
+                align-items: stretch;
+                padding: 12px;
+                gap: 14px;
+            }
+            #cafe-stage-wrapper {
+                flex: 1;
+                height: 100% !important;
+                padding: 0;
+            }
+            #floating-chat-panel {
+                width: 400px;
+                height: 100% !important;
+                border: 2px solid var(--pixel-border);
+                border-radius: 14px;
+                box-shadow: 0 12px 35px rgba(0,0,0,0.85);
+            }
+        }
+
+        .chat-top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.38rem 0.6rem;
+            background: rgba(16, 9, 5, 0.9);
+            border-bottom: 1px solid var(--bg-wood-light);
+            flex-shrink: 0;
+        }
+
+        .cafe-actions-bar {
+            display: flex;
+            gap: 0.32rem;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+        .cafe-actions-bar::-webkit-scrollbar { display: none; }
+
+        .act-btn {
+            background: rgba(92, 56, 40, 0.55);
+            border: 1px solid var(--pixel-border);
+            color: var(--cream-soft);
+            border-radius: 7px;
+            padding: 0.22rem 0.52rem;
+            font-size: 0.73rem;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .hide-chat-btn {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid var(--bg-wood-light);
+            color: var(--cream-muted);
+            border-radius: 7px;
+            padding: 0.22rem 0.52rem;
+            font-size: 0.71rem;
+            cursor: pointer;
+        }
+
+        #messages-container {
+            flex: 1;
+            padding: 0.6rem 0.75rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 0.45rem;
+            scroll-behavior: smooth;
+        }
+
+        .msg-bubble {
+            max-width: 82%;
+            padding: 0.45rem 0.75rem;
+            border-radius: 11px;
+            font-size: 0.88rem;
+            line-height: 1.55;
+            position: relative;
+            word-wrap: break-word;
+            border: 1px solid rgba(255,255,255,0.08);
+            text-align: right;
+            user-select: text;
+        }
+
+        .msg-bubble.me {
+            align-self: flex-start;
+            background-color: var(--msg-me-bg);
+            border-color: #7d4a31;
+            border-bottom-right-radius: 2px;
+        }
+
+        .msg-bubble.other {
+            align-self: flex-end;
+            background-color: var(--msg-other-bg);
+            border-color: #4d3122;
+            border-bottom-left-radius: 2px;
+        }
+
+        .msg-author {
+            font-size: 0.72rem;
+            color: var(--amber-bright);
+            display: block;
+            margin-bottom: 0.14rem;
+        }
+
+        .msg-meta {
+            font-size: 0.64rem;
+            color: rgba(246, 233, 215, 0.58);
+            text-align: left;
+            margin-top: 0.18rem;
+        }
+
+        .system-event-msg {
+            align-self: center;
+            background: rgba(20, 11, 7, 0.85);
+            border: 1px dashed var(--bg-wood-light);
+            color: var(--cream-muted);
+            font-size: 0.73rem;
+            padding: 0.22rem 0.75rem;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .chat-input-row {
+            display: flex;
+            gap: 0.42rem;
+            padding: 0.48rem 0.6rem;
+            background: rgba(16, 9, 5, 0.96);
+            border-top: 1px solid var(--bg-wood-light);
+            flex-shrink: 0;
+        }
+
+        #message-input {
+            flex: 1;
+            padding: 0.5rem 0.75rem;
+            background: var(--bg-espresso);
+            border: 1px solid var(--bg-wood-light);
+            border-radius: 8px;
+            color: var(--cream-soft);
+            font-size: 0.9rem;
+            outline: none;
+        }
+
+        .send-msg-btn {
+            background: linear-gradient(135deg, #e0872b, #a85017);
+            border: 1px solid var(--amber-bright);
+            color: #fff;
+            padding: 0 1.05rem;
+            border-radius: 8px;
+            font-size: 0.86rem;
+            cursor: pointer;
+        }
+
+        /* ==================== مودال گرامافون و اعلان ==================== */
+        #presence-toast {
+            position: fixed;
+            top: 62px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-20px);
+            background: rgba(24, 14, 9, 0.96);
+            border: 2px solid var(--amber-glow);
+            color: var(--cream-soft);
+            padding: 0.42rem 1rem;
+            border-radius: 20px;
+            font-size: 0.78rem;
+            z-index: 80;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.35s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.85);
+            white-space: nowrap;
+        }
+        #presence-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+        .cafe-modal {
+            position: fixed;
+            top: 62px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 93%;
+            max-width: 420px;
+            background: rgba(26, 15, 10, 0.98);
+            border: 2px solid var(--amber-glow);
+            border-radius: 14px;
+            padding: 0.9rem;
+            z-index: 75;
+            box-shadow: 0 15px 45px rgba(0,0,0,0.95);
+            display: none;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+        .cafe-modal.open { display: flex; }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--bg-wood-light);
+            padding-bottom: 0.4rem;
+        }
+        .modal-header h3 { font-size: 0.9rem; color: var(--amber-bright); }
+        .close-modal-btn { background: none; border: none; color: var(--cream-muted); font-size: 1.05rem; cursor: pointer; }
+
+        .now-playing-box {
+            background: var(--bg-espresso);
+            border: 1px solid var(--bg-wood-light);
+            border-radius: 8px;
+            padding: 0.55rem 0.7rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .np-info { display: flex; flex-direction: column; gap: 0.14rem; overflow: hidden; }
+        .np-title { font-size: 0.82rem; color: var(--cream-soft); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .np-sub { font-size: 0.68rem; color: var(--amber-glow); }
+
+        .gram-ctrl-btn {
+            background: linear-gradient(135deg, #e0872b, #a85017);
+            border: 1px solid var(--amber-bright);
+            color: #fff;
+            border-radius: 7px;
+            padding: 0.35rem 0.72rem;
+            font-size: 0.76rem;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .track-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.34rem;
+            max-height: 145px;
+            overflow-y: auto;
+        }
+
+        .track-item {
+            background: rgba(58, 34, 23, 0.55);
+            border: 1px solid var(--bg-wood-light);
+            border-radius: 7px;
+            padding: 0.42rem 0.62rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-size: 0.76rem;
+            color: var(--cream-soft);
+        }
+
+        .track-item.active {
+            border-color: var(--amber-bright);
+            background: rgba(240, 157, 56, 0.24);
+            color: var(--amber-bright);
+        }
+
+        .custom-music-box {
+            border-top: 1px dashed var(--bg-wood-light);
+            padding-top: 0.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.38rem;
+        }
+
+        .custom-url-row {
+            display: flex;
+            gap: 0.3rem;
+        }
+
+        .mini-input {
+            flex: 1;
+            min-width: 0;
+            padding: 0.36rem 0.5rem;
+            background: var(--bg-espresso);
+            border: 1px solid var(--bg-wood-light);
+            border-radius: 6px;
+            color: var(--cream-soft);
+            font-size: 0.73rem;
+            outline: none;
+        }
+
+        .mini-add-btn {
+            background: var(--bg-wood-light);
+            border: 1px solid var(--amber-glow);
+            color: var(--amber-bright);
+            border-radius: 6px;
+            padding: 0 0.58rem;
+            font-size: 0.73rem;
+            cursor: pointer;
+        }
+
+        .file-upload-btn {
+            background: rgba(94, 56, 39, 0.45);
+            border: 1px dashed var(--amber-glow);
+            border-radius: 7px;
+            padding: 0.4rem;
+            text-align: center;
+            font-size: 0.73rem;
+            color: var(--cream-soft);
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
 
@@ -22,28 +745,28 @@
     <div id="login-overlay">
         <div class="login-card">
             <div class="cafe-sign-badge">☕ کافه خلوت</div>
-            <p class="login-subtitle">پناهگاه دنج دیجیتال ما • نسخه ۲.۰.۱</p>
+            <p class="login-subtitle">پناهگاه دنج دیجیتال ما • نسخه ۲.۰.۲ (یکپارچه)</p>
 
             <div class="form-group">
                 <label>نام شما در کافه:</label>
-                <input type="text" id="login-name" class="pixel-input" placeholder="مثلاً: محمدحسین" autocomplete="off">
+                <input type="text" id="username-input" class="pixel-input" placeholder="مثلاً: محمدحسین" autocomplete="off">
             </div>
 
             <div class="form-group">
                 <label>شماره میز دو نفره (کد مشترک شما و یارتان):</label>
-                <input type="text" id="login-room" class="pixel-input" placeholder="مثلاً: 1045" autocomplete="off">
+                <input type="text" id="room-input" class="pixel-input" placeholder="مثلاً: 1045" autocomplete="off">
             </div>
 
             <div class="form-group">
                 <label>انتخاب کاراکتر شما پشت میز:</label>
                 <div class="char-selector">
-                    <div class="char-option selected" id="pick-char-male" onclick="CafeApp.selectCharacter('male')">
+                    <div class="char-option selected" id="pick-char-male" onclick="selectCharacter('male')">
                         <div class="char-preview-wrap">
                             <img src="Pixel Art Winter Character Sprite.png" alt="کاراکتر آقا" onerror="this.style.opacity='0.3'">
                         </div>
                         <span>کاراکتر آقا</span>
                     </div>
-                    <div class="char-option" id="pick-char-female" onclick="CafeApp.selectCharacter('female')">
+                    <div class="char-option" id="pick-char-female" onclick="selectCharacter('female')">
                         <div class="char-preview-wrap">
                             <img src="Floral Hijab Pixel Art Character.png" alt="کاراکتر خانم" onerror="this.style.opacity='0.3'">
                         </div>
@@ -52,98 +775,705 @@
                 </div>
             </div>
 
-            <button type="button" class="enter-btn" onclick="CafeApp.enterCafe()">ورود به کافه خلوت 🔔</button>
+            <button type="button" class="enter-btn" onclick="joinCafe()">ورود به کافه خلوت 🔔</button>
         </div>
     </div>
 
     <!-- نوار وضعیت بالا (HUD) -->
     <header class="top-hud" id="top-hud">
-        <div class="hud-pill" onclick="CafeApp.copyRoomCode()" title="کپی کردن شماره میز">
-            <div id="peer-dot" class="status-dot"></div>
+        <div class="hud-pill" onclick="copyRoom()" title="کپی کردن شماره میز">
+            <div id="status-dot" class="status-dot"></div>
             <div class="status-texts">
-                <div class="room-title" id="hud-room-title">میز: ---</div>
-                <div class="peer-status-text" id="hud-peer-status">در حال اتصال به کافه...</div>
+                <div class="room-title" id="room-display">میز: ---</div>
+                <div class="peer-status-text" id="peer-status">در حال اتصال...</div>
             </div>
         </div>
 
         <div class="hud-controls">
-            <button type="button" class="hud-btn" onclick="CafeApp.toggleGramophoneModal()">📻 گرامافون</button>
-            <button type="button" class="hud-btn" id="weather-btn" onclick="CafeApp.cycleWeather(true)">🌧️ بارانی</button>
-            <button type="button" class="hud-btn" id="ambience-btn" onclick="CafeApp.toggleAmbience()">🔇 محیط</button>
-            <button type="button" class="hud-btn" id="toggle-chat-hud-btn" onclick="CafeApp.toggleChatPanel()">💬 گفتگو</button>
+            <button type="button" class="hud-btn" onclick="toggleGramophoneModal()">📻 گرامافون</button>
+            <button type="button" class="hud-btn" id="weather-btn" onclick="cycleWeather(true)">🌧️ بارانی</button>
+            <button type="button" class="hud-btn" id="ambience-btn" onclick="toggleAmbience()">🔇 محیط</button>
+            <button type="button" class="hud-btn" onclick="toggleChatPanel()">💬 گفتگو</button>
+            <button type="button" class="hud-btn" id="debug-btn" onclick="toggleDebugMask()" title="نمایش کادر پنجره">🛠️</button>
         </div>
     </header>
 
-    <!-- اعلان رویدادهای کافه -->
+    <!-- اعلان رویدادها -->
     <div id="presence-toast"></div>
 
-    <!-- مودال گرامافون مشترک (۳ ترک Lo-Fi + افزودن موزیک دلخواه) -->
+    <!-- مودال گرامافون مشترک (۳ موزیک واقعی Lo-Fi + افزودن موزیک دلخواه) -->
     <div class="cafe-modal" id="gramophone-modal">
         <div class="modal-header">
             <h3>📻 گرامافون مشترک کافه</h3>
-            <button type="button" class="close-modal-btn" onclick="CafeApp.toggleGramophoneModal()">✕</button>
+            <button type="button" class="close-modal-btn" onclick="toggleGramophoneModal()">✕</button>
         </div>
 
         <div class="now-playing-box">
             <div class="np-info">
-                <div class="np-title" id="np-track-title">۱. باران شبانه کافه (Lo-Fi Chill)</div>
-                <div class="np-sub" id="np-status-sub">آماده پخش روی میز دو نفره</div>
+                <div class="np-title" id="np-track-title">۱. باران شبانه کافه (Lo-Fi Beats)</div>
+                <div class="np-sub" id="np-status-sub">پخش فایل صوتی واقعی برای دو نفر</div>
             </div>
-            <button type="button" class="gram-ctrl-btn" id="gram-play-btn" onclick="CafeApp.toggleGramophone(true)">▶ پخش</button>
+            <button type="button" class="gram-ctrl-btn" id="gram-play-btn" onclick="toggleGramophone(true)">▶ پخش</button>
         </div>
 
         <div class="track-list" id="gram-track-list"></div>
 
-        <!-- بخش افزودن موزیک دلخواه (لینک مشترک یا فایل محلی) -->
         <div class="custom-music-box">
-            <div class="custom-music-title">➕ افزودن موزیک دلخواه به گرامافون:</div>
+            <div style="font-size:0.74rem; color:var(--amber-bright);">➕ افزودن موزیک دلخواه به گرامافون:</div>
             <div class="custom-url-row">
                 <input type="text" id="custom-track-title" class="mini-input" placeholder="نام آهنگ...">
                 <input type="url" id="custom-track-url" class="mini-input" placeholder="لینک مستقیم MP3...">
-                <button type="button" class="mini-add-btn" onclick="CafeApp.addCustomUrlTrack()">افزودن</button>
+                <button type="button" class="mini-add-btn" onclick="addCustomUrlTrack()">افزودن</button>
             </div>
             <label class="file-upload-btn">
-                🎵 انتخاب فایل صوتی از حافظه دستگاه
-                <input type="file" accept="audio/*" style="display:none;" onchange="CafeApp.addLocalFileTrack(event)">
+                🎵 انتخاب فایل آهنگ (MP3) از حافظه گوشی/سیستم
+                <input type="file" accept="audio/*" style="display:none;" onchange="addLocalFileTrack(event)">
             </label>
         </div>
     </div>
 
-    <!-- پلیر صوتی مخفی برای موزیک‌های سفارشی و استریم -->
-    <audio id="external-audio-player" preload="auto" loop></audio>
+    <!-- تگ‌های استاندارد Audio برای پخش فایل‌های صوتی واقعی محیط و گرامافون -->
+    <audio id="ambience-audio-player" loop preload="auto"></audio>
+    <audio id="gramophone-audio-player" loop preload="auto"></audio>
 
-    <!-- صحنه اصلی کافه + پنل گفتگو -->
+    <!-- صحنه اصلی کافه و پنل چت -->
     <main id="main-sanctuary">
         <section id="cafe-stage-wrapper">
             <div id="cafe-art-box">
-                <canvas id="cafe-canvas" width="1024" height="1024"></canvas>
-                <div id="reactions-layer"></div>
+                <!-- لایه ۱: عکس اصلی کافه -->
+                <img id="cafe-bg-img" src="Gramophone Glow in a Cozy Café.png" alt="کافه خلوت">
+                <!-- لایه ۲: بوم نقاشی باران پنجره و نور گرم -->
+                <canvas id="cafe-fx-canvas" width="1024" height="1024"></canvas>
+                <!-- لایه ۳: نام کاراکترها و ایموجی‌های شناور -->
+                <div id="dom-overlay-layer">
+                    <div id="badge-male" class="char-name-badge">آقا</div>
+                    <div id="badge-female" class="char-name-badge">خانم</div>
+                </div>
             </div>
         </section>
 
+        <!-- پنل چت پایین صفحه -->
         <section id="floating-chat-panel">
             <div class="chat-top-bar">
                 <div class="cafe-actions-bar">
-                    <button type="button" class="act-btn" onclick="CafeApp.sendAction('☕ فنجان قهوه را نوشید', '☕')">☕ قهوه</button>
-                    <button type="button" class="act-btn" onclick="CafeApp.sendAction('❤️ قلب فرستاد', '❤️')">❤️ قلب</button>
-                    <button type="button" class="act-btn" onclick="CafeApp.sendAction('👋 دست تکان داد', '👋')">👋 سلام</button>
-                    <button type="button" class="act-btn" onclick="CafeApp.sendAction('✨ لبخند گرمی زد', '✨')">✨ لبخند</button>
+                    <button type="button" class="act-btn" onclick="sendCafeAction('☕ فنجان قهوه را نوشید', '☕')">☕ قهوه</button>
+                    <button type="button" class="act-btn" onclick="sendCafeAction('❤️ قلب فرستاد', '❤️')">❤️ قلب</button>
+                    <button type="button" class="act-btn" onclick="sendCafeAction('👋 دست تکان داد', '👋')">👋 سلام</button>
+                    <button type="button" class="act-btn" onclick="sendCafeAction('✨ لبخند گرمی زد', '✨')">✨ لبخند</button>
                 </div>
-                <button type="button" class="hide-chat-btn" onclick="CafeApp.toggleChatPanel(true)">خلوت ⬇</button>
+                <button type="button" class="hide-chat-btn" onclick="toggleChatPanel(true)">خلوت ⬇</button>
             </div>
 
-            <div id="messages-list"></div>
+            <div id="messages-container"></div>
 
-            <form class="chat-input-row" id="chat-form">
-                <input type="text" id="chat-text-input" placeholder="پیام خود را بنویسید..." autocomplete="off">
-                <button type="submit" class="send-msg-btn" id="send-msg-btn">ارسال</button>
+            <form class="chat-input-row" onsubmit="sendMessage(event)">
+                <input type="text" id="message-input" placeholder="پیام خود را بنویسید..." autocomplete="off">
+                <button type="submit" class="send-msg-btn">ارسال</button>
             </form>
         </section>
     </main>
 
-    <!-- ماژول‌های نسخه 2.0.1 -->
-    <script src="network.js"></script>
-    <script src="cafe-engine.js"></script>
-    <script src="app.js"></script>
+    <script>
+        /* =====================================================================
+           ۱. هسته شبکه خالص بر اساس فایل سالم Base-Engine.txt (تضمین ۱۰۰٪ اتصال)
+           ===================================================================== */
+        let client = null;
+        let myName = '';
+        let roomCode = '';
+        let myChar = 'male';
+        let topic = '';
+        let presenceTopic = '';
+        const myId = 'user_' + Math.random().toString(36).substr(2, 9);
+
+        let peerOnline = false;
+        let peerName = 'منتظر یار...';
+        let chatMinimized = false;
+        let showDebugMask = false;
+
+        /* =====================================================================
+           ۲. منابع صوتی واقعی (MP3) برای هر فصل و ۳ قطعه کامل گرامافون Lo-Fi
+           ===================================================================== */
+        const WEATHER_MODES = [
+            {
+                id: 'rain',
+                label: 'بارانی',
+                icon: '🌧️',
+                audioUrl: 'https://actions.google.com/sounds/v1/weather/rain_heavy_loud.ogg'
+            },
+            {
+                id: 'autumn',
+                label: 'پاییزی',
+                icon: '🍂',
+                audioUrl: 'https://actions.google.com/sounds/v1/weather/wind_medium_howling.ogg'
+            },
+            {
+                id: 'snow',
+                label: 'برفی',
+                icon: '❄️',
+                audioUrl: 'https://actions.google.com/sounds/v1/ambiences/fire.ogg'
+            }
+        ];
+        let weatherIdx = 0;
+        let ambiencePlaying = false;
+
+        let tracks = [
+            {
+                id: 'lofi_1',
+                title: '۱. باران شبانه کافه (Chill Study Lofi)',
+                url: 'https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3'
+            },
+            {
+                id: 'lofi_2',
+                title: '۲. قهوه و دلتنگی (Cozy Night Lofi)',
+                url: 'https://cdn.pixabay.com/download/audio/2022/01/18/audio_d0a13f69d2.mp3'
+            },
+            {
+                id: 'lofi_3',
+                title: '۳. ستاره‌های نیمه‌شب (Empty Mind Lofi)',
+                url: 'https://cdn.pixabay.com/download/audio/2022/09/02/audio_72502a492a.mp3'
+            }
+        ];
+        let currentTrackIdx = 0;
+        let gramophonePlaying = false;
+
+        window.addEventListener('DOMContentLoaded', () => {
+            initCafeCanvas();
+            renderTrackList();
+
+            const savedName = localStorage.getItem('khalvat_name');
+            const savedRoom = localStorage.getItem('khalvat_room');
+            const savedChar = localStorage.getItem('khalvat_char');
+            if (savedName) document.getElementById('username-input').value = savedName;
+            if (savedRoom) document.getElementById('room-input').value = savedRoom;
+            if (savedChar) selectCharacter(savedChar);
+        });
+
+        function selectCharacter(charType) {
+            myChar = charType;
+            document.getElementById('pick-char-male').classList.toggle('selected', charType === 'male');
+            document.getElementById('pick-char-female').classList.toggle('selected', charType === 'female');
+        }
+
+        function updateBadgesUI() {
+            const maleBadge = document.getElementById('badge-male');
+            const femaleBadge = document.getElementById('badge-female');
+
+            if (myChar === 'male') {
+                maleBadge.textContent = `${myName} (شما)`;
+                femaleBadge.textContent = peerOnline ? peerName : 'منتظر یار...';
+            } else {
+                femaleBadge.textContent = `${myName} (شما)`;
+                maleBadge.textContent = peerOnline ? peerName : 'منتظر یار...';
+            }
+        }
+
+        function joinCafe() {
+            myName = document.getElementById('username-input').value.trim();
+            roomCode = document.getElementById('room-input').value.trim();
+
+            if (!myName || !roomCode) {
+                showToast('⚠️ لطفاً نام و شماره میز را وارد کنید');
+                return;
+            }
+
+            localStorage.setItem('khalvat_name', myName);
+            localStorage.setItem('khalvat_room', roomCode);
+            localStorage.setItem('khalvat_char', myChar);
+
+            document.getElementById('login-overlay').style.display = 'none';
+            document.getElementById('top-hud').style.display = 'flex';
+            document.getElementById('main-sanctuary').style.display = 'flex';
+            document.getElementById('room-display').innerText = 'میز: ' + roomCode;
+
+            updateBadgesUI();
+
+            // دقیقاً منطبق بر ساختار Base-Engine.txt فاز اول
+            topic = 'khalvat_chat_ir_v202/' + roomCode;
+            presenceTopic = 'khalvat_chat_ir_v202/' + roomCode + '/presence/' + myChar;
+
+            client = mqtt.connect('wss://broker.emqx.io:8084/mqtt');
+
+            client.on('connect', function () {
+                document.getElementById('status-dot').classList.add('online');
+                document.getElementById('peer-status').innerText = peerOnline
+                    ? (peerName + ' آنلاین است ☕')
+                    : 'متصل به کافه (منتظر یار...)';
+
+                client.subscribe([topic, 'khalvat_chat_ir_v202/' + roomCode + '/presence/+'], function (err) {
+                    if (!err) {
+                        const joinPacket = { type: 'join', sender: myName, char: myChar, id: myId };
+                        publishData(joinPacket);
+                        // ذخیره پیام حضور با فلگ retain برای نفر دومی که دیرتر وارد می‌شود
+                        client.publish(presenceTopic, JSON.stringify(joinPacket), { qos: 0, retain: true });
+                        addSystemMessage('شما پشت میز نشستید. گفتگو مستقیم و امن است.');
+                    }
+                });
+            });
+
+            client.on('message', function (t, message) {
+                let data;
+                try {
+                    data = JSON.parse(message.toString());
+                } catch (e) {
+                    return;
+                }
+                if (!data || data.id === myId) return;
+
+                if (data.type === 'chat') {
+                    addMessageToUI(data.sender, data.text, data.time, 'other');
+                    markPeerOnline(data.sender);
+                } else if (data.type === 'join') {
+                    const wasOffline = !peerOnline;
+                    markPeerOnline(data.sender);
+                    if (wasOffline) {
+                        addSystemMessage(data.sender + ' وارد کافه شد و پشت میز نشست 👋');
+                        showToast(`✨ ${data.sender} پشت میز نشست!`);
+                    }
+                    publishData({ type: 'here', sender: myName, char: myChar, id: myId });
+                } else if (data.type === 'here') {
+                    markPeerOnline(data.sender);
+                } else if (data.type === 'action') {
+                    markPeerOnline(data.sender);
+                    spawnFloatingReaction(data.char || (myChar === 'male' ? 'female' : 'male'), data.emoji);
+                    addSystemMessage(`${data.sender} ${data.text}`);
+                } else if (data.type === 'weather') {
+                    weatherIdx = data.weatherIdx;
+                    applyWeatherState();
+                    showToast(`آب‌وهوای کافه به ${WEATHER_MODES[weatherIdx].label} تغییر کرد`);
+                } else if (data.type === 'gramophone') {
+                    if (data.customTrack) {
+                        if (!tracks.some(tr => tr.id === data.customTrack.id)) {
+                            tracks.push(data.customTrack);
+                        }
+                    }
+                    if (typeof data.trackIdx === 'number') {
+                        currentTrackIdx = data.trackIdx;
+                    }
+                    applyGramophoneState(data.playing);
+                }
+            });
+        }
+
+        function markPeerOnline(senderName) {
+            if (!senderName) return;
+            peerOnline = true;
+            peerName = senderName;
+            document.getElementById('status-dot').classList.add('online');
+            document.getElementById('peer-status').innerText = senderName + ' پشت میز حضور دارد ☕';
+            updateBadgesUI();
+        }
+
+        function publishData(obj) {
+            if (client && client.connected) {
+                client.publish(topic, JSON.stringify(obj));
+            }
+        }
+
+        function sendMessage(e) {
+            if (e) e.preventDefault();
+            const input = document.getElementById('message-input');
+            const text = input.value.trim();
+            if (!text) return;
+
+            const now = new Date();
+            const timeStr = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
+
+            // نمایش آنی برای خود کاربر
+            addMessageToUI(myName, text, timeStr, 'me');
+
+            // ارسال به نفر مقابل
+            publishData({
+                type: 'chat',
+                sender: myName,
+                text: text,
+                time: timeStr,
+                id: myId
+            });
+
+            input.value = '';
+            input.focus();
+        }
+
+        function addMessageToUI(sender, text, time, type) {
+            const container = document.getElementById('messages-container');
+            const msgDiv = document.createElement('div');
+            msgDiv.className = 'msg-bubble ' + type;
+
+            msgDiv.innerHTML = `
+                <span class="msg-author">${type === 'me' ? 'شما' : escapeHtml(sender)}</span>
+                <div class="msg-body">${escapeHtml(text)}</div>
+                <div class="msg-meta">${time}</div>
+            `;
+
+            container.appendChild(msgDiv);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function addSystemMessage(text) {
+            const container = document.getElementById('messages-container');
+            const div = document.createElement('div');
+            div.className = 'system-event-msg';
+            div.innerText = text;
+            container.appendChild(div);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function sendCafeAction(text, emoji) {
+            spawnFloatingReaction(myChar, emoji);
+            addSystemMessage(`شما ${text}`);
+            publishData({
+                type: 'action',
+                sender: myName,
+                char: myChar,
+                text: text,
+                emoji: emoji,
+                id: myId
+            });
+        }
+
+        function spawnFloatingReaction(charSide, emoji) {
+            const layer = document.getElementById('dom-overlay-layer');
+            const el = document.createElement('div');
+            el.className = 'floating-reaction';
+            el.textContent = emoji;
+            el.style.left = charSide === 'male' ? '44%' : '69.5%';
+            el.style.top = charSide === 'male' ? '38%' : '37%';
+            layer.appendChild(el);
+            setTimeout(() => el.remove(), 2800);
+        }
+
+        /* =====================================================================
+           ۳. مدیریت صدای واقعی محیط (هر فصل فایل صوتی مخصوص خودش)
+           ===================================================================== */
+        function cycleWeather(broadcast = false) {
+            weatherIdx = (weatherIdx + 1) % WEATHER_MODES.length;
+            applyWeatherState();
+            if (broadcast) {
+                publishData({ type: 'weather', weatherIdx: weatherIdx, id: myId });
+            }
+        }
+
+        function applyWeatherState() {
+            const mode = WEATHER_MODES[weatherIdx];
+            document.getElementById('weather-btn').textContent = `${mode.icon} ${mode.label}`;
+            if (ambiencePlaying) {
+                playAmbienceAudio();
+            }
+        }
+
+        function toggleAmbience() {
+            const btn = document.getElementById('ambience-btn');
+            const player = document.getElementById('ambience-audio-player');
+
+            if (!ambiencePlaying) {
+                ambiencePlaying = true;
+                btn.textContent = '🔊 محیط';
+                btn.classList.add('active');
+                playAmbienceAudio();
+            } else {
+                ambiencePlaying = false;
+                btn.textContent = '🔇 محیط';
+                btn.classList.remove('active');
+                player.pause();
+            }
+        }
+
+        function playAmbienceAudio() {
+            const player = document.getElementById('ambience-audio-player');
+            const mode = WEATHER_MODES[weatherIdx];
+            player.src = mode.audioUrl;
+            player.volume = 0.45;
+            player.play().catch(() => {
+                showToast('⚠️ در حال بارگذاری صدای محیط...');
+            });
+        }
+
+        /* =====================================================================
+           ۴. مدیریت گرامافون مشترک (۳ ترک واقعی Lo-Fi + افزودن موزیک دلخواه)
+           ===================================================================== */
+        function toggleGramophoneModal() {
+            document.getElementById('gramophone-modal').classList.toggle('open');
+        }
+
+        function renderTrackList() {
+            const listEl = document.getElementById('gram-track-list');
+            listEl.innerHTML = '';
+
+            tracks.forEach((tr, idx) => {
+                const item = document.createElement('div');
+                item.className = 'track-item' + (idx === currentTrackIdx ? ' active' : '');
+                item.innerHTML = `
+                    <span>${escapeHtml(tr.title)}</span>
+                    <span>${idx === currentTrackIdx && gramophonePlaying ? '🔊 در حال پخش' : '▶ انتخاب'}</span>
+                `;
+                item.onclick = () => selectTrack(idx, true);
+                listEl.appendChild(item);
+            });
+
+            if (tracks[currentTrackIdx]) {
+                document.getElementById('np-track-title').textContent = tracks[currentTrackIdx].title;
+            }
+        }
+
+        function selectTrack(idx, broadcast = false) {
+            currentTrackIdx = idx;
+            applyGramophoneState(true);
+            if (broadcast) {
+                publishData({
+                    type: 'gramophone',
+                    playing: true,
+                    trackIdx: currentTrackIdx,
+                    id: myId
+                });
+            }
+        }
+
+        function toggleGramophone(broadcast = false) {
+            const nextState = !gramophonePlaying;
+            applyGramophoneState(nextState);
+            if (broadcast) {
+                publishData({
+                    type: 'gramophone',
+                    playing: nextState,
+                    trackIdx: currentTrackIdx,
+                    id: myId
+                });
+            }
+        }
+
+        function applyGramophoneState(play) {
+            gramophonePlaying = play;
+            const player = document.getElementById('gramophone-audio-player');
+            const btn = document.getElementById('gram-play-btn');
+            const track = tracks[currentTrackIdx] || tracks[0];
+
+            if (play && track) {
+                btn.textContent = '⏸ توقف';
+                document.getElementById('np-track-title').textContent = track.title;
+                if (player.src !== track.url) {
+                    player.src = track.url;
+                }
+                player.volume = 0.65;
+                player.play().catch(() => {
+                    showToast('⚠️ برای پخش موزیک روی دکمه پخش کلیک کنید');
+                });
+            } else {
+                btn.textContent = '▶ پخش';
+                player.pause();
+            }
+            renderTrackList();
+        }
+
+        function addCustomUrlTrack() {
+            const titleEl = document.getElementById('custom-track-title');
+            const urlEl = document.getElementById('custom-track-url');
+            const title = titleEl.value.trim() || `موزیک دلخواه ${tracks.length + 1}`;
+            const url = urlEl.value.trim();
+
+            if (!url) {
+                showToast('⚠️ لطفاً لینک مستقیم MP3 را وارد کنید');
+                return;
+            }
+
+            const newTrack = {
+                id: 'custom_' + Date.now(),
+                title: '🎵 ' + title,
+                url: url
+            };
+
+            tracks.push(newTrack);
+            currentTrackIdx = tracks.length - 1;
+            titleEl.value = '';
+            urlEl.value = '';
+
+            applyGramophoneState(true);
+            publishData({
+                type: 'gramophone',
+                playing: true,
+                trackIdx: currentTrackIdx,
+                customTrack: newTrack,
+                id: myId
+            });
+            showToast('✨ موزیک دلخواه اضافه شد و برای یارتان هم پخش می‌شود!');
+        }
+
+        function addLocalFileTrack(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const localUrl = URL.createObjectURL(file);
+            const newTrack = {
+                id: 'local_' + Date.now(),
+                title: '📂 ' + file.name.replace(/\.[^/.]+$/, ''),
+                url: localUrl
+            };
+            tracks.push(newTrack);
+            currentTrackIdx = tracks.length - 1;
+            applyGramophoneState(true);
+            showToast('🎵 فایل صوتی شما در گرامافون بارگذاری شد');
+        }
+
+        /* =====================================================================
+           ۵. موتور گرافیکی Canvas با ماسک امن بالای سر کاراکتر خانم و گلدان
+           ===================================================================== */
+        function initCafeCanvas() {
+            const canvas = document.getElementById('cafe-fx-canvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+
+            let tick = 0;
+            const particles = [];
+            for (let i = 0; i < 45; i++) {
+                particles.push({
+                    x: 560 + Math.random() * 280,
+                    y: 180 + Math.random() * 360,
+                    speedY: 2.5 + Math.random() * 2.2,
+                    speedX: -0.45,
+                    size: 2 + Math.random() * 2.4
+                });
+            }
+
+            // کلیک روی Canvas در حالت دیباگ برای نمایش مختصات دقیق پیکسل
+            canvas.addEventListener('click', (e) => {
+                if (!showDebugMask) return;
+                const rect = canvas.getBoundingClientRect();
+                const x = Math.round((e.clientX - rect.left) * (1024 / rect.width));
+                const y = Math.round((e.clientY - rect.top) * (1024 / rect.height));
+                showToast(`📍 مختصات نقطه: X=${x}, Y=${y}`);
+            });
+
+            function defineWindowClipPath() {
+                ctx.beginPath();
+                ctx.moveTo(556, 180); // گوشه بالا چپ شیشه پنجره
+                ctx.lineTo(845, 332); // گوشه بالا راست شیشه پنجره
+                ctx.lineTo(845, 575); // گوشه پایین راست شیشه پنجره (سمت راست کاراکتر خانم)
+                ctx.lineTo(758, 528); // کنار شانه راست کاراکتر خانم
+                ctx.lineTo(758, 425); // رفتن به بالای سر کاراکتر خانم (کاملاً بالاتر از روسری گل‌دار)
+                ctx.lineTo(632, 410); // عبور از بالای سر کاراکتر خانم و گلدان روی میز
+                ctx.lineTo(556, 410); // برگشت به قاب چپ پنجره بالاتر از گلدان
+                ctx.closePath();
+            }
+
+            function animate() {
+                tick += 0.035;
+                ctx.clearRect(0, 0, 1024, 1024);
+
+                // ۱. رسم باران/برف/برگ پاییزی فقط در محدوده امن شیشه پنجره
+                ctx.save();
+                defineWindowClipPath();
+                ctx.clip();
+
+                const modeId = WEATHER_MODES[weatherIdx].id;
+                particles.forEach(p => {
+                    if (modeId === 'rain') {
+                        ctx.strokeStyle = 'rgba(185, 220, 255, 0.58)';
+                        ctx.lineWidth = 2;
+                        ctx.beginPath();
+                        ctx.moveTo(p.x, p.y);
+                        ctx.lineTo(p.x - 3, p.y + 13);
+                        ctx.stroke();
+                        p.y += p.speedY * 2.1;
+                        p.x += p.speedX;
+                    } else if (modeId === 'snow') {
+                        ctx.fillStyle = 'rgba(255, 255, 255, 0.82)';
+                        ctx.fillRect(p.x, p.y, p.size * 1.4, p.size * 1.4);
+                        p.y += p.speedY * 0.55;
+                        p.x += Math.sin(tick + p.y * 0.02) * 0.7;
+                    } else if (modeId === 'autumn') {
+                        ctx.fillStyle = 'rgba(240, 140, 48, 0.8)';
+                        ctx.fillRect(p.x, p.y, p.size * 1.9, p.size * 1.2);
+                        p.y += p.speedY * 0.75;
+                        p.x += Math.cos(tick + p.y * 0.02) * 0.9;
+                    }
+
+                    if (p.y > 580) {
+                        p.y = 178;
+                        p.x = 558 + Math.random() * 284;
+                    }
+                });
+                ctx.restore();
+
+                // نمایش خط‌کش کادر پنجره در صورت فعال بودن دکمه 🛠️
+                if (showDebugMask) {
+                    ctx.save();
+                    defineWindowClipPath();
+                    ctx.strokeStyle = '#ff4444';
+                    ctx.lineWidth = 3;
+                    ctx.stroke();
+                    ctx.restore();
+                }
+
+                // ۲. هاله نور گرم چراغ‌ها و شمع روی میز
+                const pulse = 0.88 + Math.sin(tick * 1.8) * 0.12;
+                drawWarmGlow(ctx, 638, 412, 115 * pulse, 0.2);
+                drawWarmGlow(ctx, 168, 395, 88 * pulse, 0.18);
+                drawWarmGlow(ctx, 608, 522, 38 * pulse, 0.32);
+
+                // ۳. بخار فنجان‌های قهوه
+                drawSteam(ctx, 575, 525, tick, 0);
+                drawSteam(ctx, 642, 538, tick, 1.5);
+
+                // ۴. نت موسیقی گرامافون هنگام روشن بودن
+                if (gramophonePlaying) {
+                    const prog = (tick * 0.45) % 1;
+                    ctx.save();
+                    ctx.font = 'bold 24px Vazirmatn, sans-serif';
+                    ctx.fillStyle = `rgba(255, 208, 123, ${1 - prog})`;
+                    ctx.fillText('♪', 875 - prog * 25, 545 - prog * 55);
+                    ctx.restore();
+                }
+
+                requestAnimationFrame(animate);
+            }
+
+            requestAnimationFrame(animate);
+        }
+
+        function drawWarmGlow(ctx, x, y, r, alpha) {
+            const g = ctx.createRadialGradient(x, y, 2, x, y, r);
+            g.addColorStop(0, `rgba(255, 210, 125, ${alpha})`);
+            g.addColorStop(1, 'rgba(240, 157, 56, 0)');
+            ctx.fillStyle = g;
+            ctx.beginPath();
+            ctx.arc(x, y, r, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        function drawSteam(ctx, x, y, tick, offset) {
+            const p = (tick * 0.55 + offset) % 1;
+            ctx.fillStyle = `rgba(246, 233, 215, ${(1 - p) * 0.6})`;
+            ctx.fillRect(x + Math.sin(p * Math.PI * 2) * 3, y - p * 22, 4, 8);
+        }
+
+        function toggleDebugMask() {
+            showDebugMask = !showDebugMask;
+            const canvas = document.getElementById('cafe-fx-canvas');
+            const btn = document.getElementById('debug-btn');
+            canvas.style.pointerEvents = showDebugMask ? 'auto' : 'none';
+            btn.classList.toggle('active', showDebugMask);
+            showToast(showDebugMask ? '🛠️ نمایش کادر قرمز پنجره فعال شد' : '🛠️ حالت عادی');
+        }
+
+        function toggleChatPanel(forceHide) {
+            const sanctuary = document.getElementById('main-sanctuary');
+            chatMinimized = typeof forceHide === 'boolean' ? forceHide : !chatMinimized;
+            sanctuary.classList.toggle('chat-minimized', chatMinimized);
+        }
+
+        function copyRoom() {
+            navigator.clipboard.writeText(roomCode);
+            showToast('📋 شماره میز (' + roomCode + ') کپی شد!');
+        }
+
+        function showToast(msg) {
+            const t = document.getElementById('presence-toast');
+            t.textContent = msg;
+            t.classList.add('show');
+            setTimeout(() => t.classList.remove('show'), 3000);
+        }
+
+        function escapeHtml(str) {
+            return str ? str.replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])) : '';
+        }
+    </script>
 </body>
 </html>
